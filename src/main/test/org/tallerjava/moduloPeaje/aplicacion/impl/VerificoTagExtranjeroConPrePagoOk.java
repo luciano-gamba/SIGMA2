@@ -84,7 +84,7 @@ class VerificoTagExtranjeroConPrePagoOk {
             @Override
             public Vehiculo findByTag(int tag) {
                 Vehiculo vehiculo = new Vehiculo(1,
-                        new Identificador(1,"BAA 1111", tag),
+                        new Identificador("BAA 1111", tag),
                         "ford", "fiesta", Nacionalidad.EXTRANJERO);
                 return vehiculo;
             }
@@ -92,12 +92,12 @@ class VerificoTagExtranjeroConPrePagoOk {
 
             @Override
             public Preferencial obtenerTarifaPreferencial() {
-                return new Preferencial(180);
+                return new Preferencial();
             }
 
             @Override
             public Comun obtenerTarifaComun() {
-                return new Comun(180);
+                return new Comun();
             }
         };
     }
