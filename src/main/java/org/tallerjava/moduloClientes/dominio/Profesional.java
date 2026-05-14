@@ -11,10 +11,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
+@Entity(name = "ProfesionalClientes")
 @Inheritance(strategy = InheritanceType.JOINED)
 
-@Table(name = "CLIENTE_PROFESIONAL")
+@Table(name = "moduloClientes_CLIENTE_PROFESIONAL")
+
 public class Profesional extends Cliente {
 
     private Float porcentajeDescuento;

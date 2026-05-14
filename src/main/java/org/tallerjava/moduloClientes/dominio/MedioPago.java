@@ -8,10 +8,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
+@Entity(name = "MedioPagoClientes")
 @Inheritance(strategy = InheritanceType.JOINED)
 
-@Table(name = "MEDIOPAGO")
+@Table(name = "moduloClientes_MEDIOPAGO")
+
 public class MedioPago {
 
     @Id

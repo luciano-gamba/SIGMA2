@@ -7,10 +7,11 @@ import jakarta.persistence.Table;
 import lombok.Data;
 
 @Data
-@Entity
+@Entity(name = "TarjetaClientes")
 @Inheritance(strategy = InheritanceType.JOINED)
 
-@Table(name = "MEIDOPAGO_TARJETA")
+@Table(name = "moduloClientes_MEIDOPAGO_TARJETA")
+
 public class Tarjeta extends MedioPago{
 
     /*

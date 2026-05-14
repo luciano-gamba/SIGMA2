@@ -14,10 +14,16 @@
                 <property
                     name="jakarta.persistence.schema-generation.database.action"
                     value="drop-and-create" />
+
                 <property name="jakarta.persistence.sql-load-script-source"
                     value="META-INF/initial_data.sql" />
-                <property name="eclipselink.logging.level.sql" value="FINE" />
-                <property name="eclipselink.logging.parameters" value="true" />
+
+                <property name="hibernate.dialect"
+                    value="org.hibernate.dialect.MariaDBDialect"/>
+
+                
+                <!--property name="eclipselink.logging.level.sql" value="FINE" />
+                <property name="eclipselink.logging.parameters" value="true" /-->
                 <property name="hibernate.show_sql" value="true" />
             </properties>
         </persistence-unit>

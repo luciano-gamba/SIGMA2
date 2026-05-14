@@ -8,10 +8,13 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
+@Entity(name = "ClienteClientes") // Como quieran esto es un nombre interno yo lo entiendo mas con ClienteClientes
+// pero si quieren puede ser ClienteModulo para indicar que este Cliente es el
+// del moduloCliente da igual supongo
 @Inheritance(strategy = InheritanceType.JOINED)
 
-@Table(name = "CLIENTE")
+@Table(name = "moduloClientes_CLIENTE")
+
 public class Cliente {
 
     @Id

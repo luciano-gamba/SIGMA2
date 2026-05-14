@@ -10,10 +10,11 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
+@Entity(name = "ClienteCarga")
 @Inheritance(strategy = InheritanceType.JOINED)
 
-@Table(name = "CLIENTE")
+@Table(name = "moduloCarga_CLIENTE")
+
 public class Cliente {
 
     @Id
@@ -23,7 +24,11 @@ public class Cliente {
     protected String telefono;
     protected String contrasenia;
 
+    @OneToOne
+    @JoinColumn(name = "carga_activa_id")
     private Carga cargaActiva;
+
+    @OneToMany(mappedBy = "miCliente")
     private List<Carga> historialCargas;
 
 }

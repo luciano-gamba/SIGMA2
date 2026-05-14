@@ -9,10 +9,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@Entity
+@Entity(name = "ComunClientes")
 @Inheritance(strategy = InheritanceType.JOINED)
 
-@Table(name = "CLIENTE_COMUN")
+@Table(name = "moduloClientes_CLIENTE_COMUN")
+
 public class Comun extends Cliente {
 
 }

@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 
-@Table(name = "MEDIOPAGO")
+@Table(name = "moduloCarga_MEDIOPAGO")
 public class MedioPago {
 
     @Id
