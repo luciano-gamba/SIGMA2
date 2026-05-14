@@ -1,9 +1,10 @@
 package org.tallerjava.moduloPagos.dominio;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
+
 
 @Data
 @AllArgsConstructor
@@ -11,14 +12,11 @@ import lombok.NoArgsConstructor;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 
-@Table(name = "CLIENTE")
-public class Cliente {
+@Table(name = "MEDIOPAGO")
+public class MedioPago {
 
     @Id
-    protected String cedula;
-
-    protected String nombreCompleto;
-    protected String telefono;
-    protected String contrasenia;
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    private long id;
 
 }
