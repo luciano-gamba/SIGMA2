@@ -17,7 +17,7 @@ import jakarta.persistence.Table;
 
 @Data
 @AllArgsConstructor
-// @NoArgsConstructor
+@NoArgsConstructor
 
 @Entity
 
@@ -27,10 +27,6 @@ public class Carga {
     // private LocalDate fecha; Nos parece inecesario el atributo fecha de Carga
     // porque podemos tomar cuando se realizo la carga conviertiendo el horaInicio
     // en LocalDate
-    public Carga() {
-
-    }
-
     @Id
     private int id; // Podemos ver de cambiar los id para que sean longs pero por ahora da igual
                     // creo --Att Lucas

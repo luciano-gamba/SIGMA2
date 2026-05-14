@@ -20,16 +20,13 @@ import jakarta.persistence.Table;
 
 @Data
 @AllArgsConstructor
-// @NoArgsConstructor
+@NoArgsConstructor
 
 @Entity
 
 @Table(name = "moduloCarga_CARGADOR")
 
 public class Cargador {
-    public Cargador() {
-
-    }
 
     @Id
     private int id;

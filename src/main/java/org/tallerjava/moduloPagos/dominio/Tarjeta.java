@@ -1,23 +1,26 @@
-package org.tallerjava.moduloClientes.dominio;
+package org.tallerjava.moduloPagos.dominio;
+
+import java.time.LocalDate;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-@Entity(name = "TarjetaClientes")
+@AllArgsConstructor
+@NoArgsConstructor
+@Entity(name = "TarjetaPagos")
 @Inheritance(strategy = InheritanceType.JOINED)
-
-@Table(name = "moduloClientes_MEDIOPAGO_TARJETA")
-
+@Table(name = "moduloPagos_MEDIOPAGO_TARJETA")
 public class Tarjeta extends MedioPago{
 
-    /*
     private String numero;
-    private Date fechaVencimiento;
+    private LocalDate fechaVencimiento;
     private String digitoVerificador;
     //private EnumTipoTarjeta tipoTarjeta;
-    */
+    
 }
