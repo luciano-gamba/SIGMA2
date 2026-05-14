@@ -11,12 +11,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "CuentaUTEClientes")
+@Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 
-@Table(name = "moduloClientes_MEDIOPAGO_CUENTAUTE")
-
-public class CuentaUTE extends MedioPago {
+@Table(name = "MEDIOPAGO_CUENTAUTE")
+public class CuentaUTE extends MedioPago{
 
     private String numeroCuenta;
 

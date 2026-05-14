@@ -14,6 +14,10 @@ import org.tallerjava.moduloPeaje.dominio.*;
 import org.tallerjava.moduloPeaje.dominio.repo.PeajeRepositorio;
 import org.tallerjava.moduloPeaje.infraestructura.persistencia.PeajeRepositorioImpl;
 import org.tallerjava.moduloPeaje.interfase.evento.out.PublicadorEvento;
+import org.tallerjava.moduloClientes.aplicacion.ServicioClientes;
+import org.tallerjava.moduloClientes.dominio.Cliente;
+import org.tallerjava.moduloClientes.aplicacion.impl.ServicioClientesImpl;
+import org.tallerjava.moduloClientes.dominio.repo.ClientesRepositorio;
 
 @EnableWeld
 class VerificoTagExtranjeroConPrePagoOk {
@@ -34,10 +38,11 @@ class VerificoTagExtranjeroConPrePagoOk {
      */
     @WeldSetup
     public WeldInitiator weld =
-            WeldInitiator.from(ServicioPeajeImpl.class)
+            WeldInitiator.from(ServicioPeajeImpl.class, ServicioClientesImpl.class)
                     .addBeans(crearMockRepositorioImpl())
                     .addBeans(crearMockServiciosPagosFacade())
                     .addBeans(crearMockPublicadorEvento())
+                    .addBeans(crearMockClientesRepositorio())
                     .build();
 
 
@@ -51,6 +56,14 @@ class VerificoTagExtranjeroConPrePagoOk {
                 .types(PeajeRepositorio.class) //esto lo saco del @inject de ServicioPeajeImpl
                 .scope(ApplicationScoped.class)
                 .creating(crearRepoImpl())  //aca construyo la implementación que será usasa en este test
+                .build();
+    }
+
+    private Bean<?> crearMockClientesRepositorio() {
+        return MockBean.builder()
+                .types(ClientesRepositorio.class)
+                .scope(ApplicationScoped.class)
+                .creating(crearClientesRepoImpl())
                 .build();
     }
 
@@ -78,6 +91,19 @@ class VerificoTagExtranjeroConPrePagoOk {
      * relevante para ejecutar este test
      * @return
      */
+
+    private ClientesRepositorio crearClientesRepoImpl() {
+        return new ClientesRepositorio() {
+
+            @Override
+            public void guardarCliente(Cliente cliente) {
+                // fake
+
+                System.out.println("sirvo para algo??");
+            }
+        };
+    }
+
     private PeajeRepositorio crearRepoImpl() {
         return new PeajeRepositorioImpl() {
 
@@ -126,5 +152,12 @@ class VerificoTagExtranjeroConPrePagoOk {
                 //en este test, ya que el vehiculo recuperado desde el fake de repositorio
                 //(implementado arriba) siempre devolverá un vehiculo con tag hardcoded.
                 servicioPeaje.estaHabilitadoSincronico(10001,"BAA 1111"));
+    }
+
+    @Test
+    @DisplayName("Verifico usuario guardado")
+    void testearCliente(ServicioClientes servicioClientes) {
+        Cliente cliente = new Cliente("","","","");
+                servicioClientes.registrarCliente(cliente);
     }
 }

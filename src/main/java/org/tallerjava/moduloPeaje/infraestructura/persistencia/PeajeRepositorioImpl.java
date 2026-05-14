@@ -60,7 +60,7 @@ public class PeajeRepositorioImpl implements PeajeRepositorio {
     @Override
     public Comun obtenerTarifaComun() {
         TypedQuery<Comun> findLatest = em.createQuery(
-                "select t from Comun t order by t.fechaAplicacion desc ", Comun.class);
+                "select t from ClienteComun t order by t.fechaAplicacion desc ", Comun.class);
         findLatest.setMaxResults(1);
         try {
             return findLatest.getSingleResult();
