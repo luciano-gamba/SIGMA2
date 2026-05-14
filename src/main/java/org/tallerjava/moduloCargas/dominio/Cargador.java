@@ -12,15 +12,16 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Cargador {
-//    private TipoCargador tipoCargador;
-    private boolean tieneCable;
-//    private TipoConector tipoConector;
-    private int estadoCargador;
-    private LocalDateTime tiempoEstimadoFinalizacion; //si estadoCargador = ocupado
-    private LocalDate fechaEstimadaReparacion; //si estadoCargador = fueraDeServicio
-    private int potenciaMinima; //si tipoCargador = rapida
+    private int id;
+    // private TipoCargador tipoCargador; // Potencia de carga
+    private boolean tieneCable; // Si el cargador tiene cable o tenes que llevar el que te vino con el auto
+    // private TipoConector tipoConector; // Tipo 2 , CCS2, CYHAdeMO, GB/T
+    private int estadoCargador; // 0 Disponible , 1 Ocupado , 2 Fuera de Servicio
+    private LocalDateTime tiempoEstimadoFinalizacion; // si estadoCargador = ocupado
+    private LocalDate fechaEstimadaReparacion; // si estadoCargador = fueraDeServicio
+    private int potenciaMinima; // si tipoCargador = rapida
 
-    private Carga cargaActiva; //si estadoCargador = ocupado
+    private Carga cargaActiva; // si estadoCargador = ocupado
     private List<Carga> historialCargas;
 
 }

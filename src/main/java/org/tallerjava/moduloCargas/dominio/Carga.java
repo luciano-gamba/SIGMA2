@@ -11,14 +11,16 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Carga {
-    private LocalDate fecha;
+    // private LocalDate fecha; Nos parece inecesario el atributo fecha de Carga
+    // porque podemos tomar cuando se realizo la carga conviertiendo el horaInicio
+    // en LocalDate
     private LocalDateTime horaInicio;
     private LocalDateTime horaFin;
     private float importeTotal;
     private float recargoPorDemora;
     private int porcentajeAvance; //0-100 si estadoCarga = activa
     private LocalDateTime horaEstimadaFin; //si estadoCarga = activa
-    private int estadoCarga;
+    private boolean estadoCarga;
 
 
 }
