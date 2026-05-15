@@ -10,21 +10,17 @@ import org.tallerjava.moduloPagos.dominio.Tarjeta;
 
 public class ServicioPagosImpl implements ServicioPagos{
 
-    //private PublicadorEvento publicadorEvento;
-
     public void pagarCarga(Cliente cliente, float importe, MedioPago medioPago){
         if (medioPago instanceof Tarjeta){
-            Tarjeta t = (Tarjeta) medioPago;
-            //publicar algo REST??
+            System.out.println("comunicacion con el sistema externo de Tarjeta");
 
         }else if (medioPago instanceof CuentaUTE) {
-            CuentaUTE c = (CuentaUTE) medioPago;
-            //publicar algo REST??
+            System.out.println("comunicacion con el sistema externo de CuentaUTE");
         }
     }
 
     public void consultarPagos(Cliente cliente, LocalDate inicio, LocalDate fin){
-
+        
     }
 
-}
+} 
