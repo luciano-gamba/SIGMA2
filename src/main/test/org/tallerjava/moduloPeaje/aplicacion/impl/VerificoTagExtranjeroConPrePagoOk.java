@@ -9,6 +9,8 @@ import org.jboss.weld.junit5.WeldSetup;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.tallerjava.moduloClientes.dominio.ClienteComun;
+import org.tallerjava.moduloClientes.dominio.MedioPago;
 import org.tallerjava.moduloGestion.interfase.local.ServicioPagoFacade;
 import org.tallerjava.moduloPeaje.dominio.*;
 import org.tallerjava.moduloPeaje.dominio.repo.PeajeRepositorio;
@@ -18,6 +20,8 @@ import org.tallerjava.moduloClientes.aplicacion.ServicioClientes;
 import org.tallerjava.moduloClientes.dominio.Cliente;
 import org.tallerjava.moduloClientes.aplicacion.impl.ServicioClientesImpl;
 import org.tallerjava.moduloClientes.dominio.repo.ClientesRepositorio;
+
+import java.util.List;
 
 @EnableWeld
 class VerificoTagExtranjeroConPrePagoOk {
@@ -101,6 +105,21 @@ class VerificoTagExtranjeroConPrePagoOk {
 
                 System.out.println("sirvo para algo??");
             }
+
+            @Override
+            public List<Cliente> obtenerClientes() {
+                return List.of();
+            }
+
+            @Override
+            public Cliente getCliente(String ci, String contrasenia) {
+                return null;
+            }
+
+            @Override
+            public void altaMedioPago(Cliente cliente, MedioPago medioPago) {
+
+            }
         };
     }
 
@@ -157,7 +176,7 @@ class VerificoTagExtranjeroConPrePagoOk {
     @Test
     @DisplayName("Verifico usuario guardado")
     void testearCliente(ServicioClientes servicioClientes) {
-        Cliente cliente = new Cliente("","","","");
+        Cliente cliente = new ClienteComun();
                 servicioClientes.registrarCliente(cliente);
     }
 }

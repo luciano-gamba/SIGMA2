@@ -13,7 +13,16 @@ public interface ServicioClientes {
     // la otra opcion es pasarle cliente y fue
     // supongo que habria que tener en cuenta si e un usuario comun o profesional
 
+    public Cliente iniciarSesion(String ci, String contrasenia);
+    // que miercoles devuelvo aca XD, podria mostrar el cliente asi nomas
+    // pero me gustaria que se muestre algo en el curl, ya fue, devuelvo el usr XD
+
     public void altaMedioPago(Cliente cliente, MedioPago medioPago);
+    // no hay mucha vuelta que darle, es crear el medio de pago y guardarlo
+    // en la lista de usuarios, que haces leyendo esto? porque seguis leyendo?
+    // Boe, no se que andas buscando aca, seguir leyendo esto es al pepe
+    // pero bueno, ya que estas, mandame un mensaje que diga "Me hiciste leer todo esto al pepe"
+    // asi me rio un rato
 
     public List<Cliente> obtenerClientes();
     //devuelve los clientes del sistema.
@@ -33,6 +42,8 @@ public interface ServicioClientes {
     Entiendo que debe de ser con el uso de eventos
     ahora mismo no sabria como hacer que esto funcione como dice la
     letra siendo que no le pasamos los datos.
+
+    esto entiendo que se guarda en algun otro lado que no tiene que ver con el cliente
     */
 
 }

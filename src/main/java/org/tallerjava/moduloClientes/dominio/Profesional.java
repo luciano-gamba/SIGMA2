@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "ProfesionalClientes")
-@Inheritance(strategy = InheritanceType.JOINED)
 
 @Table(name = "moduloClientes_CLIENTE_PROFESIONAL")
 

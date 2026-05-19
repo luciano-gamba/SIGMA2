@@ -2,9 +2,9 @@ package org.tallerjava.moduloClientes.aplicacion.impl;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 import org.tallerjava.moduloClientes.aplicacion.ServicioClientes;
-import org.tallerjava.moduloClientes.dominio.Cliente;
-import org.tallerjava.moduloClientes.dominio.MedioPago;
+import org.tallerjava.moduloClientes.dominio.*;
 import org.tallerjava.moduloClientes.dominio.repo.ClientesRepositorio;
 
 import java.util.ArrayList;
@@ -18,21 +18,44 @@ public class ServicioClientesImpl implements ServicioClientes {
     private ClientesRepositorio repo;
 
     @Override
+    @Transactional
     public void registrarCliente(Cliente cliente){
         repo.guardarCliente(cliente);
-        System.out.println("FUNCIONAAAAAAAAAAAAAAAAAAAAA");
+        System.out.println("Guardando Cliente...");
     }
 
     @Override
+    @Transactional
+    public Cliente iniciarSesion(String ci, String contrasenia){
+        Cliente c = repo.getCliente(ci, contrasenia);
+        if (c == null) {
+            return null;
+        }else {
+            return c;
+        }
+
+    }
+
+    @Override
+    @Transactional
     public void altaMedioPago(Cliente cliente, MedioPago medioPago){
-        //aca va la implementacion
+
+        if ((medioPago instanceof CuentaUTE) && (cliente instanceof Profesional)){
+            throw new IllegalArgumentException(
+                    "Este cliente no acepta este medio de pago"
+            );
+        }else{
+            cliente.getMediosDePago().add(medioPago);
+            repo.altaMedioPago(cliente, medioPago);
+        }
+
     }
 
     @Override
     public List<Cliente> obtenerClientes(){
-        List<Cliente> listaClientes = new ArrayList<>();
+        List<Cliente> listaClientes;
 
-        //
+        listaClientes = repo.obtenerClientes();
 
         return listaClientes;
     }
