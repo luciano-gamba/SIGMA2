@@ -8,6 +8,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
@@ -27,7 +29,9 @@ public class Carga {
     // private LocalDate fecha; Nos parece inecesario el atributo fecha de Carga
     // porque podemos tomar cuando se realizo la carga conviertiendo el horaInicio
     // en LocalDate
+
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id; // Podemos ver de cambiar los id para que sean longs pero por ahora da igual
                     // creo --Att Lucas
 

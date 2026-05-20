@@ -9,10 +9,13 @@ import java.util.List;
 public interface ServicioCarga {
     public void iniciarCarga(Cliente c, MedioPago pago);
     public int verCargaActual(Cliente c);
-    public List<Carga> verHistorico(Cliente c, LocalDate inicio, LocalDate fin);
+
+    public List<Carga> verHistorico(Cliente c, LocalDateTime inicio, LocalDateTime fin);
     public void finalizarCarga(Cargador cargador, int carga, LocalDateTime recargo);
 
     public void altaEstacion(EstacionCarga estacion);
     public void altaCargador(Cargador cargador);
+
+    public void altaCarga(Carga carga, Cliente cliente);
     public List<EstacionCarga> obtenerEstaciones();
 }
