@@ -52,6 +52,11 @@ public class ServicioClientesImpl implements ServicioClientes {
         }else{
             cliente.getMediosDePago().add(medioPago);
             repo.altaMedioPago(cliente, medioPago);
+            if (medioPago instanceof ClienteTarjeta){
+                evento.publicarNuevaTarjeta((ClienteTarjeta)medioPago);
+            }else {
+                evento.publicarNuevaCuentaUTE((CuentaUTE)medioPago);
+            }
         }
 
     }
