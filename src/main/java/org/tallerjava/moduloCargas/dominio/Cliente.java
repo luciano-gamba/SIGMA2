@@ -31,4 +31,11 @@ public class Cliente {
     @OneToMany(mappedBy = "miCliente")
     private List<Carga> historialCargas;
 
+    public Cliente(String cedula, String nombreCompleto, String telefono, String contrasenia) {
+        this.cedula = cedula;
+        this.nombreCompleto = nombreCompleto;
+        this.telefono = telefono;
+        this.contrasenia = contrasenia;
+    }
+
 }

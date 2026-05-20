@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
+@Entity(name = "MedioPagoCarga")
 @Inheritance(strategy = InheritanceType.JOINED)
 
 @Table(name = "moduloCarga_MEDIOPAGO")

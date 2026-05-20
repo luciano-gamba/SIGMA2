@@ -9,23 +9,27 @@ import org.tallerjava.moduloCargas.aplicacion.ServicioCarga;
 import org.tallerjava.moduloCargas.dominio.*;
 import org.tallerjava.moduloCargas.dominio.repo.CargasRepositorio;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 
+@ApplicationScoped
 public class ServicioCargaImpl implements ServicioCarga {
 
     @Inject
     private CargasRepositorio repo;
 
-    public void iniciarCarga(Cliente c, MedioPago pago) {
-
+    public void iniciarCarga(Cargador cargador, Cliente c, MedioPago pago) {
+        // Esta operacion se expondra de manera remota con un endpoint
+        this.altaCarga(new Carga(cargador, c, pago));
     }
 
     public int verCargaActual(Cliente c) { //Esta operacion solo deberia llamarse si el cliente c tiene una carga activa
-        return c.getCargaActiva().getPorcentajeAvance();
+        return c.getCargaActiva().getPorcentajeAvance(); // Me puede llegar la cedula del cliente y lo busco en el repo
     }
 
     public List<Carga> verHistorico(Cliente c, LocalDateTime inicio, LocalDateTime fin) {
+        // Me puede llegar la cedula del cliente y lo busco en el repo
         List<Carga> listaCargasCliente = c.getHistorialCargas();
 
         List<Carga> historicoSegunFecha = new ArrayList<>();
@@ -38,8 +42,13 @@ public class ServicioCargaImpl implements ServicioCarga {
         return historicoSegunFecha;
     }
 
-    public void finalizarCarga(Cargador cargador, int carga, LocalDateTime recargo) {
+    public void finalizarCarga(Carga cargaClase, double tiempoRecargo) {
+        // Acá deberia calcular el recargo llamando a una operacion de la carga?
+        // deberia calcular cuanto se debe pagar y llamar a medioPago con un evento que
+        // este observe?
 
+        double importeTotal = cargaClase.generarTotal(tiempoRecargo);
+        // publicarPedidoImporte(cargaClase.getMiCliente(),importeTotal,cargaClase.getMiPago())
     }
     
     @Override
@@ -54,14 +63,22 @@ public class ServicioCargaImpl implements ServicioCarga {
         repo.guardarCargador(cargador);
     }
     
-    public void altaCarga(Carga carga, Cliente cliente){
-        repo.guardarCarga(carga, cliente);
+    @Override
+    @Transactional
+    public void altaCarga(Carga carga) {
+        repo.guardarCarga(carga);
     }
 
     @Override
     @Transactional
     public List<EstacionCarga> obtenerEstaciones() {
-
         return repo.obtenerEstaciones();
+    }
+
+    @Override
+    @Transactional
+    public void altaCliente(Cliente cliente) { // Se llama solamente cuando el ObserverModuloCliente observa que se creo
+        // un nuevo cliente en moduloClientes
+        repo.guardarCliente(cliente);
     }
 }

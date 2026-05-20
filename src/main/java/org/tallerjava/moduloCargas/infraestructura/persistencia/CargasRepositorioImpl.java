@@ -6,11 +6,13 @@ import java.util.List;
 import org.tallerjava.moduloCargas.dominio.*;
 import org.tallerjava.moduloCargas.dominio.repo.CargasRepositorio;
 
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 
+@ApplicationScoped
 public class CargasRepositorioImpl implements CargasRepositorio{
     
     @PersistenceContext
@@ -24,9 +26,12 @@ public class CargasRepositorioImpl implements CargasRepositorio{
         em.persist(cargador);
     }
 
-    public void guardarCarga(Carga carga, Cliente cliente){
+    public void guardarCarga(Carga carga) {
         em.persist(carga);
-        em.merge(cliente);
+        em.persist(carga.getMiPago());
+        em.merge(carga.getMiCliente());
+        em.merge(carga);
+        em.merge(carga.getCargador());
     }
 
     public List<EstacionCarga> obtenerEstaciones() {
@@ -49,6 +54,10 @@ public class CargasRepositorioImpl implements CargasRepositorio{
         } catch (NoResultException e) {
             return null;
         }
+    }
+
+    public void guardarCliente(Cliente cliente) {
+        em.persist(cliente);
     }
 
 }
