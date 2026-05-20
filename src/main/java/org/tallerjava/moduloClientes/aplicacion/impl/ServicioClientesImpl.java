@@ -6,6 +6,7 @@ import jakarta.transaction.Transactional;
 import org.tallerjava.moduloClientes.aplicacion.ServicioClientes;
 import org.tallerjava.moduloClientes.dominio.*;
 import org.tallerjava.moduloClientes.dominio.repo.ClientesRepositorio;
+import org.tallerjava.moduloClientes.interfase.evento.out.PublicadorEventoCliente;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,10 +18,14 @@ public class ServicioClientesImpl implements ServicioClientes {
     @Inject
     private ClientesRepositorio repo;
 
+    @Inject
+    private PublicadorEventoCliente evento;
+
     @Override
     @Transactional
     public void registrarCliente(Cliente cliente){
         repo.guardarCliente(cliente);
+        evento.publicarNuevoCliente(cliente);
         System.out.println("Guardando Cliente...");
     }
 
