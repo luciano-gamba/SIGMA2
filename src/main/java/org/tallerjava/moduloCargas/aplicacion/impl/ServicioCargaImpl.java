@@ -21,7 +21,16 @@ public class ServicioCargaImpl implements ServicioCarga {
 
     public void iniciarCarga(Cargador cargador, Cliente c, MedioPago pago) {
         // Esta operacion se expondra de manera remota con un endpoint
-        this.altaCarga(new Carga(cargador, c, pago));
+        cargador.setEstadoCargador(1);
+        // if(!repo.encontreCliente(c)){
+        // return;
+        // }
+        this.altaCarga(new Carga(cargador, c, pago)); // Verificar que exista el cliente
+        // this.altaMedioPago(pago);
+    }
+
+    public void setPorcentajeCarga(Cliente c, int porcentaje) {
+        c.getCargaActiva().setPorcentajeAvance(porcentaje);
     }
 
     public int verCargaActual(Cliente c) { //Esta operacion solo deberia llamarse si el cliente c tiene una carga activa
@@ -29,7 +38,7 @@ public class ServicioCargaImpl implements ServicioCarga {
     }
 
     public List<Carga> verHistorico(Cliente c, LocalDateTime inicio, LocalDateTime fin) {
-        // Me puede llegar la cedula del cliente y lo busco en el repo
+
         List<Carga> listaCargasCliente = c.getHistorialCargas();
 
         List<Carga> historicoSegunFecha = new ArrayList<>();
@@ -42,12 +51,19 @@ public class ServicioCargaImpl implements ServicioCarga {
         return historicoSegunFecha;
     }
 
-    public void finalizarCarga(Carga cargaClase, double tiempoRecargo) {
-        // Acá deberia calcular el recargo llamando a una operacion de la carga?
-        // deberia calcular cuanto se debe pagar y llamar a medioPago con un evento que
-        // este observe?
+    public void finalizarCarga(Cargador cargador, double tiempoRecargo) {
+        Carga c = cargador.getCargaActiva();
+        Cliente miCliente = c.getMiCliente();
 
-        double importeTotal = cargaClase.generarTotal(tiempoRecargo);
+        double importeTotal = c.generarTotal(tiempoRecargo);
+
+        cargador.setCargaActiva(null);
+        cargador.setEstadoCargador(0);
+        miCliente.setCargaActiva(null);
+        miCliente.agregarCargaAHistorial(c);
+
+        repo.guardarFinalizacionCarga(miCliente, c, cargador);
+
         // publicarPedidoImporte(cargaClase.getMiCliente(),importeTotal,cargaClase.getMiPago())
     }
     
@@ -59,7 +75,7 @@ public class ServicioCargaImpl implements ServicioCarga {
     
     @Override
     @Transactional
-    public void altaCargador(Cargador cargador) { 
+    public void altaCargador(Cargador cargador) { // Se deberia pasar a que estacion esta asociado
         repo.guardarCargador(cargador);
     }
     
@@ -77,7 +93,8 @@ public class ServicioCargaImpl implements ServicioCarga {
 
     @Override
     @Transactional
-    public void altaCliente(Cliente cliente) { // Se llama solamente cuando el ObserverModuloCliente observa que se creo
+    public void altaCliente(Cliente cliente) {
+        // Se llama solamente cuando el ObserverModuloCliente observa que se creo
         // un nuevo cliente en moduloClientes
         repo.guardarCliente(cliente);
     }

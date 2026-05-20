@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -36,6 +37,10 @@ public class Cliente {
         this.nombreCompleto = nombreCompleto;
         this.telefono = telefono;
         this.contrasenia = contrasenia;
+        this.historialCargas = new ArrayList<>();
     }
 
+    public void agregarCargaAHistorial(Carga c) {
+        this.historialCargas.add(c);
+    }
 }

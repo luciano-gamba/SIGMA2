@@ -9,18 +9,25 @@ import org.jboss.weld.junit5.WeldSetup;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.tallerjava.moduloClientes.dominio.ClienteComun;
-import org.tallerjava.moduloClientes.dominio.MedioPago;
 import org.tallerjava.moduloGestion.interfase.local.ServicioPagoFacade;
 import org.tallerjava.moduloPeaje.dominio.*;
 import org.tallerjava.moduloPeaje.dominio.repo.PeajeRepositorio;
 import org.tallerjava.moduloPeaje.infraestructura.persistencia.PeajeRepositorioImpl;
 import org.tallerjava.moduloPeaje.interfase.evento.out.PublicadorEvento;
+import org.tallerjava.moduloCargas.aplicacion.ServicioCarga;
+import org.tallerjava.moduloCargas.aplicacion.impl.ServicioCargaImpl;
+import org.tallerjava.moduloCargas.dominio.Carga;
+import org.tallerjava.moduloCargas.dominio.Cargador;
+import org.tallerjava.moduloCargas.dominio.EstacionCarga;
+import org.tallerjava.moduloCargas.dominio.repo.CargasRepositorio;
+import org.tallerjava.moduloCargas.test.CargasRepositorioFake;
 import org.tallerjava.moduloClientes.aplicacion.ServicioClientes;
-import org.tallerjava.moduloClientes.dominio.Cliente;
+import org.tallerjava.moduloClientes.dominio.*;
 import org.tallerjava.moduloClientes.aplicacion.impl.ServicioClientesImpl;
 import org.tallerjava.moduloClientes.dominio.repo.ClientesRepositorio;
+import org.tallerjava.moduloClientes.interfase.evento.out.PublicadorEventoCliente;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @EnableWeld
@@ -42,11 +49,13 @@ class VerificoTagExtranjeroConPrePagoOk {
      */
     @WeldSetup
     public WeldInitiator weld =
-            WeldInitiator.from(ServicioPeajeImpl.class, ServicioClientesImpl.class)
+            WeldInitiator.from(ServicioPeajeImpl.class, ServicioClientesImpl.class, ServicioCargaImpl.class)
                     .addBeans(crearMockRepositorioImpl())
                     .addBeans(crearMockServiciosPagosFacade())
                     .addBeans(crearMockPublicadorEvento())
                     .addBeans(crearMockClientesRepositorio())
+                    .addBeans(crearMockPublicadorEventoCliente())
+                    .addBeans(crearMockCargaRepositorio())
                     .build();
 
 
@@ -68,6 +77,41 @@ class VerificoTagExtranjeroConPrePagoOk {
                 .types(ClientesRepositorio.class)
                 .scope(ApplicationScoped.class)
                 .creating(crearClientesRepoImpl())
+                .build();
+    }
+
+    // Hecho por Lucas pero tal vez preferis cambiar algunas cosas Nahuel era pq
+    // queria poder usar los test
+    private Bean<?> crearMockPublicadorEventoCliente() {
+        return MockBean.builder()
+                .types(PublicadorEventoCliente.class)
+                .scope(ApplicationScoped.class)
+                .creating(new PublicadorEventoCliente() {
+                    @Override
+                    public void publicarNuevoCliente(Cliente cliente) {
+                        System.out.println("Disparo nuevo cliente para que otros modulos lo detecten con observadores");
+                    }
+
+                    @Override
+                    public void publicarNuevaTarjeta(ClienteTarjeta tarjeta) {
+                        System.out.println(
+                                "Disparo evento con la nueva tarjeta que cree para que los interesados lo observen");
+                    }
+
+                    @Override
+                    public void publicarNuevaCuentaUTE(CuentaUTE cuenta) {
+                        System.out.println(
+                                "Disparo evento con la nueva cuentaUTE que cree para que los interesados lo observen");
+                    }
+                })
+                .build();
+    }
+
+    private Bean<?> crearMockCargaRepositorio() {
+        return MockBean.builder()
+                .types(CargasRepositorio.class)
+                .scope(ApplicationScoped.class)
+                .creating(crearCargasRepoImpl())
                 .build();
     }
 
@@ -120,6 +164,17 @@ class VerificoTagExtranjeroConPrePagoOk {
             public void altaMedioPago(Cliente cliente, MedioPago medioPago) {
 
             }
+        };
+    }
+
+    private CargasRepositorio crearCargasRepoImpl() {
+        return new CargasRepositorioFake() {
+
+            @Override
+            public void guardarEstacion(EstacionCarga estacionCarga) {
+                System.out.println("Guardando estacion");
+            }
+
         };
     }
 
@@ -179,4 +234,13 @@ class VerificoTagExtranjeroConPrePagoOk {
         Cliente cliente = new ClienteComun();
                 servicioClientes.registrarCliente(cliente);
     }
+
+    @Test
+    @DisplayName("Verifico estacion de carga guardada")
+    void testearCliente(ServicioCarga servicioCarga) {
+        EstacionCarga estacion = new EstacionCarga("Estación en ANCAP San Carlos", "Alvariza y Treinta y tres",
+                "Maldonado", 150, 150);
+        servicioCarga.altaEstacion(estacion);
+    }
+
 }

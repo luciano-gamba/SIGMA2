@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.annotation.Generated;
@@ -37,4 +38,14 @@ public class EstacionCarga {
 
     @OneToMany(mappedBy = "miEstacionCarga")
     private List<Cargador> misCargadores;
+
+    public EstacionCarga(String descripcion, String calle, String departamento, int longitud, int latitud) {
+        this.descripcion = descripcion;
+        this.calle = calle;
+        this.departamento = departamento;
+        this.longitud = longitud;
+        this.latitud = latitud;
+        this.misCargadores = new ArrayList<>();
+    }
+
 }

@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.Entity;
@@ -53,4 +54,16 @@ public class Cargador {
     @ManyToOne
     @JoinColumn(name = "estacion_id")
     private EstacionCarga miEstacionCarga;
+
+    public Cargador(EnumTipoCargador tipoCargador, boolean tieneCable, EnumTipoConector tipoConector,
+            double costePorHora, EstacionCarga miEstacionCarga) {
+        this.tipoCargador = tipoCargador;
+        this.tieneCable = tieneCable;
+        this.tipoConector = tipoConector;
+        this.estadoCargador = 0;
+        this.costePorHora = costePorHora;
+        this.miEstacionCarga = miEstacionCarga;
+        this.historialCargas = new ArrayList<>();
+    }
+
 }

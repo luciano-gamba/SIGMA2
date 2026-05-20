@@ -19,4 +19,5 @@ public interface CargasRepositorio {
 
     public void guardarCliente(Cliente cliente);
 
+    public void guardarFinalizacionCarga(Cliente cliente, Carga carga, Cargador cargador);
 }

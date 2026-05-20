@@ -24,6 +24,7 @@ public class CargasRepositorioImpl implements CargasRepositorio{
 
     public void guardarCargador(Cargador cargador){
         em.persist(cargador);
+        em.merge(cargador.getMiEstacionCarga());
     }
 
     public void guardarCarga(Carga carga) {
@@ -60,4 +61,9 @@ public class CargasRepositorioImpl implements CargasRepositorio{
         em.persist(cliente);
     }
 
+    public void guardarFinalizacionCarga(Cliente cliente, Carga carga, Cargador cargador) {
+        em.merge(cliente);
+        em.merge(carga);
+        em.merge(cargador);
+    }
 }

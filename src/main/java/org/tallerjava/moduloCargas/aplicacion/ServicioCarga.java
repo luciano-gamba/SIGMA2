@@ -8,11 +8,14 @@ import java.util.List;
 
 public interface ServicioCarga {
     public void iniciarCarga(Cargador cargador, Cliente c, MedioPago pago);
+
     public int verCargaActual(Cliente c);
+
+    public void setPorcentajeCarga(Cliente c, int porcentaje);
 
     public List<Carga> verHistorico(Cliente c, LocalDateTime inicio, LocalDateTime fin);
 
-    public void finalizarCarga(Carga cargaClase, double tiempoRecargo);
+    public void finalizarCarga(Cargador cargador, double tiempoRecargo);
 
     public void altaEstacion(EstacionCarga estacion);
     public void altaCargador(Cargador cargador);

@@ -12,8 +12,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
@@ -41,9 +39,9 @@ public class Carga {
     private LocalDateTime horaFin;
     private double importeTotal;
     private double recargoPorDemora;
-    private int porcentajeAvance; //0-100 si estadoCarga = activa
-    private LocalDateTime horaEstimadaFin; //si estadoCarga = activa
-    private boolean estadoCarga;
+    private int porcentajeAvance; // 0-100 si cargando = true
+    private LocalDateTime horaEstimadaFin; // si cargando = true
+    private boolean cargando;
     // Carga OK o carga pendiente dado lo que devuelva el modulo de pago cuando le
     // pides que se pague la carga
 
@@ -65,11 +63,18 @@ public class Carga {
         this.miCliente = miCliente;
         this.miPago = miPago;
         this.horaInicio = LocalDateTime.now();
-        this.estadoCarga = true;
+        this.cargando = true;
     }
 
     public double generarTotal(double tiempoRecargo) {
+        // Asumo que esta sera la operacion encargada de todo lo que tiene que ver con
+        // finalizarCarga desde tomar cual es la hora fin,
+        // marcar que ya no esta cargando y tal vez en
+        // ServicioCargaImpl hacer que el cliente deje de tener Asignada la Carga como
+        // CargaActiva y se agregue en su historial de cargas
         double constantePrecioCarga = this.cargador.getCostePorHora(); // Preguntar a profe
+
+        // Aca setearia que es la hora fin?
 
         double tiempoConectado = this.horaInicio.until(this.horaFin, ChronoUnit.MINUTES) / 60;
         // Como until me devuelve un long lo paso a horas ya que asumo que
@@ -77,6 +82,10 @@ public class Carga {
         double totalConectado = constantePrecioCarga * tiempoConectado;
 
         double totalRecargo = constantePrecioCarga * tiempoRecargo;
+
+        this.recargoPorDemora = totalRecargo; // Supongo que si se muestra en el historial de Cargas se debe guardar aca
+
+        this.cargando = false;
 
         this.importeTotal = totalConectado + totalRecargo;
 
