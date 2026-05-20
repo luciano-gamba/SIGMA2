@@ -38,7 +38,7 @@ public class ServicioCargaImpl implements ServicioCarga {
     }
 
     public List<Carga> verHistorico(Cliente c, LocalDateTime inicio, LocalDateTime fin) {
-
+        // Me puede llegar la cedula del cliente y lo busco en el repo
         List<Carga> listaCargasCliente = c.getHistorialCargas();
 
         List<Carga> historicoSegunFecha = new ArrayList<>();

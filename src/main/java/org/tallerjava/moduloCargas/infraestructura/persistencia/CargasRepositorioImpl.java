@@ -61,6 +61,18 @@ public class CargasRepositorioImpl implements CargasRepositorio{
         em.persist(cliente);
     }
 
+    public Cargador getCargador(int idCargador){
+        String sql = "Select c from Cargador c where c.id = :idCargador" ;
+
+        TypedQuery<Cargador> findById = em.createQuery(sql,Cargador.class).setParameter("id", idCargador);
+        try {
+            return findById.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
+
     public void guardarFinalizacionCarga(Cliente cliente, Carga carga, Cargador cargador) {
         em.merge(cliente);
         em.merge(carga);
