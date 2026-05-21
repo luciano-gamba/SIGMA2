@@ -1,6 +1,5 @@
 package org.tallerjava.moduloCargas.aplicacion.impl;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +22,10 @@ public class ServicioCargaImpl implements ServicioCarga {
     @Inject
     private PublicadorEventoCarga evento;
 
-    public void iniciarCarga(Cargador cargador, Cliente c, long pago) {
+    public void iniciarCarga(int idCargador, String cedula, long pago) {
+        Cargador cargador = repo.getCargador(idCargador);
+        Cliente c = repo.getCliente(cedula);
+
         // Esta operacion se expondra de manera remota con un endpoint
         cargador.setEstadoCargador(1);
         // if(!repo.encontreCliente(c)){
@@ -33,15 +35,19 @@ public class ServicioCargaImpl implements ServicioCarga {
         // this.altaMedioPago(pago);
     }
 
-    public void setPorcentajeCarga(Cliente c, int porcentaje) {
+    public void setPorcentajeCarga(String cedula, int porcentaje) {
+        Cliente c = repo.getCliente(cedula);
         c.getCargaActiva().setPorcentajeAvance(porcentaje);
     }
 
-    public int verCargaActual(Cliente c) { //Esta operacion solo deberia llamarse si el cliente c tiene una carga activa
+    public int verCargaActual(String cedula) { //Esta operacion solo deberia llamarse si el cliente c tiene una carga activa
+        Cliente c = repo.getCliente(cedula);
         return c.getCargaActiva().getPorcentajeAvance(); // Me puede llegar la cedula del cliente y lo busco en el repo
     }
 
-    public List<Carga> verHistorico(Cliente c, LocalDateTime inicio, LocalDateTime fin) {
+    public List<Carga> verHistorico(String cedula, LocalDateTime inicio, LocalDateTime fin) {
+        Cliente c = repo.getCliente(cedula);
+
         // Me puede llegar la cedula del cliente y lo busco en el repo
         List<Carga> listaCargasCliente = c.getHistorialCargas();
 
@@ -55,7 +61,9 @@ public class ServicioCargaImpl implements ServicioCarga {
         return historicoSegunFecha;
     }
 
-    public void finalizarCarga(Cargador cargador, double tiempoRecargo) {
+    public void finalizarCarga(int idCar, double tiempoRecargo) {
+        Cargador cargador = repo.getCargador(idCar);
+
         Carga c = cargador.getCargaActiva();
         Cliente miCliente = c.getMiCliente();
 
@@ -79,7 +87,9 @@ public class ServicioCargaImpl implements ServicioCarga {
     
     @Override
     @Transactional
-    public void altaCargador(Cargador cargador) { // Se deberia pasar a que estacion esta asociado
+    public void altaCargador(Cargador cargador, int idEstacionCarga) { // Se deberia pasar a que estacion esta asociado
+        EstacionCarga estacion = repo.getEstacion(idEstacionCarga);
+        cargador.setMiEstacionCarga(estacion);
         repo.guardarCargador(cargador);
     }
     
