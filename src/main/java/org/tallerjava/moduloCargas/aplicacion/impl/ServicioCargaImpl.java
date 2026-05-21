@@ -12,6 +12,7 @@ import org.tallerjava.moduloCargas.dominio.repo.CargasRepositorio;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import org.tallerjava.moduloCargas.interfase.evento.out.PublicadorEventoCarga;
 
 @ApplicationScoped
 public class ServicioCargaImpl implements ServicioCarga {
@@ -19,13 +20,16 @@ public class ServicioCargaImpl implements ServicioCarga {
     @Inject
     private CargasRepositorio repo;
 
-    public void iniciarCarga(Cargador cargador, Cliente c, MedioPago pago) {
+    @Inject
+    private PublicadorEventoCarga evento;
+
+    public void iniciarCarga(Cargador cargador, Cliente c, long pago) {
         // Esta operacion se expondra de manera remota con un endpoint
         cargador.setEstadoCargador(1);
         // if(!repo.encontreCliente(c)){
         // return;
         // }
-        this.altaCarga(new Carga(cargador, c, pago)); // Verificar que exista el cliente
+        this.altaCarga(new Carga(cargador, c, new MedioPago(pago))); // Verificar que exista el cliente
         // this.altaMedioPago(pago);
     }
 
@@ -64,7 +68,7 @@ public class ServicioCargaImpl implements ServicioCarga {
 
         repo.guardarFinalizacionCarga(miCliente, c, cargador);
 
-        // publicarPedidoImporte(cargaClase.getMiCliente(),importeTotal,cargaClase.getMiPago())
+        evento.publicarNuevoPagoCarga(miCliente.getCedula(),importeTotal,c.getMiPago().getId());
     }
     
     @Override

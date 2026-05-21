@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ServicioCarga {
-    public void iniciarCarga(Cargador cargador, Cliente c, MedioPago pago);
+    public void iniciarCarga(Cargador cargador, Cliente c, long pago);
 
     public int verCargaActual(Cliente c);
 

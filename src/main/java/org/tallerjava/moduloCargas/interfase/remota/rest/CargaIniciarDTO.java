@@ -11,5 +11,5 @@ import org.tallerjava.moduloCargas.dominio.*;
 public class CargaIniciarDTO {
     private int idCargador;
     private String cedula;
-    private int idMedioPago;
+    private long idMedioPago;
 }

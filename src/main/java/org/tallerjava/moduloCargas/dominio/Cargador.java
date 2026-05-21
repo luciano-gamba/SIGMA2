@@ -1,5 +1,6 @@
 package org.tallerjava.moduloCargas.dominio;
 
+import jakarta.json.bind.annotation.JsonbTransient;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -53,6 +54,7 @@ public class Cargador {
 
     @ManyToOne
     @JoinColumn(name = "estacion_id")
+//    @JsonbTransient
     private EstacionCarga miEstacionCarga;
 
     public Cargador(EnumTipoCargador tipoCargador, boolean tieneCable, EnumTipoConector tipoConector,
@@ -63,6 +65,16 @@ public class Cargador {
         this.estadoCargador = 0;
         this.costePorHora = costePorHora;
         this.miEstacionCarga = miEstacionCarga;
+        this.historialCargas = new ArrayList<>();
+    }
+
+    public Cargador(EnumTipoCargador tipoCargador, boolean tieneCable, EnumTipoConector tipoConector,
+                    double costePorHora) {
+        this.tipoCargador = tipoCargador;
+        this.tieneCable = tieneCable;
+        this.tipoConector = tipoConector;
+        this.estadoCargador = 0;
+        this.costePorHora = costePorHora;
         this.historialCargas = new ArrayList<>();
     }
 

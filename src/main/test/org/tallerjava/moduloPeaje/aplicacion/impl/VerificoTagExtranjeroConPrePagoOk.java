@@ -146,7 +146,6 @@ class VerificoTagExtranjeroConPrePagoOk {
             @Override
             public void guardarCliente(Cliente cliente) {
                 // fake
-
                 System.out.println("sirvo para algo??");
             }
 

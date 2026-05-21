@@ -36,7 +36,7 @@ public class CargasRepositorioImpl implements CargasRepositorio{
     }
 
     public List<EstacionCarga> obtenerEstaciones() {
-        String sql = "Select ec from estacionCarga ec" ; //se usa el entity name 
+        String sql = "SELECT DISTINCT e FROM estacionCarga e LEFT JOIN FETCH e.misCargadores" ; //se usa el entity name Select ec from estacionCarga ec
 
         TypedQuery<EstacionCarga> obtenerEstaciones = em.createQuery(sql,EstacionCarga.class);
         try{
@@ -72,6 +72,16 @@ public class CargasRepositorioImpl implements CargasRepositorio{
         }
     }
 
+    public EstacionCarga getEstacion(int idEstacion){
+        String sql = "Select ec from estacionCarga ec where ec.id = :idEstacion" ;
+
+        TypedQuery<EstacionCarga> findById = em.createQuery(sql,EstacionCarga.class).setParameter("id", idEstacion);
+        try {
+            return findById.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
 
     public void guardarFinalizacionCarga(Cliente cliente, Carga carga, Cargador cargador) {
         em.merge(cliente);

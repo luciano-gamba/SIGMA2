@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CargaFinalizarDTO {
-    private int idCarga;
-//    private String cedula; // como encuentro la carga?? con cedula del cliente?
+    private int idCargador;
     private double tiempoRecargo;
 }

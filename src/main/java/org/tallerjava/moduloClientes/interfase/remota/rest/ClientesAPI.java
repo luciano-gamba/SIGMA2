@@ -19,10 +19,10 @@ public class ClientesAPI {
     private ServicioClientes servicioClientes;
 
     //Cliente comun
-    //curl -X POST -v http://localhost:8080/SIGMA2/trafico/moduloCliente -H "Content-Type: application/json" -d '{"cedula":"55326750","nombreCompleto":"Alan Nahuel Machado Sosa","telefono":"094755370","contrasenia":"1234","mediosDePago":[]}'
+    //curl -X POST -v http://localhost:8080/SIGMA2/moduloCliente -H "Content-Type: application/json" -d '{"cedula":"55326750","nombreCompleto":"Alan Nahuel Machado Sosa","telefono":"094755370","contrasenia":"1234","mediosDePago":[]}'
 
     //Cliente profesional (TAXI, 20% de descuento)
-    //curl -X POST -v http://localhost:8080/SIGMA2/trafico/moduloCliente -H "Content-Type: application/json" -d '{"cedula":"55326751","nombreCompleto":"Alan Nahuel Machado Sosa","telefono":"094755370","contrasenia":"1234","porcentajeDescuento":"20","tipo":"TAXI"}'
+    //curl -X POST -v http://localhost:8080/SIGMA2/moduloCliente -H "Content-Type: application/json" -d '{"cedula":"55326751","nombreCompleto":"Alan Nahuel Machado Sosa","telefono":"094755370","contrasenia":"1234","porcentajeDescuento":"20","tipo":"TAXI"}'
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public void registrarCliente(ClientesDTO clienteDTO){
@@ -32,7 +32,7 @@ public class ClientesAPI {
         servicioClientes.registrarCliente(cli);
     }
 
-    //curl http://localhost:8080/SIGMA2/trafico/moduloCliente/getClientes
+    //curl http://localhost:8080/SIGMA2/moduloCliente/getClientes
     @GET
     @Path("/getClientes")
     @Produces(MediaType.APPLICATION_JSON)
@@ -40,7 +40,7 @@ public class ClientesAPI {
         return servicioClientes.obtenerClientes();
     }
 
-    //curl -X POST -v http://localhost:8080/SIGMA2/trafico/moduloCliente/iniciarSesion -H "Content-Type: application/json" -d '{"cedula":"55326750","contrasenia":"1234"}'
+    //curl -X POST -v http://localhost:8080/SIGMA2/moduloCliente/iniciarSesion -H "Content-Type: application/json" -d '{"cedula":"55326750","contrasenia":"1234"}'
     @POST
     @Path("/iniciarSesion")
     @Consumes(MediaType.APPLICATION_JSON)

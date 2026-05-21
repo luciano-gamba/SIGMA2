@@ -22,17 +22,19 @@ public class CargasAPI {
     @Inject
     private CargasRepositorio repo;
 
+    //curl -X POST -v http://localhost:8080/SIGMA2/moduloCarga/ -H "Content-Type: application/json" -d '{}'
     @POST
+    @Path("/carga/iniciar")
     @Consumes(MediaType.APPLICATION_JSON)
     public void iniciarCarga(CargaIniciarDTO dto){
         Cargador cargador = repo.getCargador(dto.getIdCargador());
         Cliente c = repo.getCliente(dto.getCedula());
-//        MedioPago pago = repo.getMedioPago(dto.getIdMedioPago());
-//        servicioCarga.iniciarCarga(cargador,c,pago);
-        // hasta que no se haga la integracion de MedioPago a la BD y a este modulo no puede andar este endpoint
+        long pago = dto.getIdMedioPago();
+        servicioCarga.iniciarCarga(cargador,c,pago);
     }
 
     @GET
+    @Path("/get/cargaActual")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public int verCargaActual(String cedula){
@@ -41,6 +43,7 @@ public class CargasAPI {
     }
 
     @GET
+    @Path("/get/historico")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
     public List<Carga> verHistorico(HistoricoDTO dto){
@@ -50,22 +53,36 @@ public class CargasAPI {
         return servicioCarga.verHistorico(c, inicio, fin);
     }
 
-    @POST
-    @Consumes(MediaType.APPLICATION_JSON)
-    public void finalizarCarga(CargaFinalizarDTO dto){
-//        Carga car = repo.getCarga(); // como encuentro la carga??
-//        servicioCarga.finalizarCarga(car, dto.getTiempoRecargo());
+//    curl -v http://localhost:8080/SIGMA2/moduloCargas/get/estaciones
+    @GET
+    @Path("/get/estaciones")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<EstacionCarga> obtenerEstaciones(){
+        return servicioCarga.obtenerEstaciones();
     }
 
     @POST
+    @Path("/carga/finalizar")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void finalizarCarga(CargaFinalizarDTO dto){
+        Cargador car = repo.getCargador(dto.getIdCargador());
+        servicioCarga.finalizarCarga(car, dto.getTiempoRecargo());
+    }
+
+//    curl -X POST -v http://localhost:8080/SIGMA2/moduloCargas/alta/estacion -H "Content-Type: application/json" -d '{"descripcion":"Estacion de carga de San Luis","calle":"artigas esquina 12","departamento":"Canelones","longitud":"1947","latitud":"9284"}'
+    @POST
+    @Path("/alta/estacion")
     @Consumes(MediaType.APPLICATION_JSON)
     public void altaEstacion(EstacionCarga estacion){ //id, desc, calle, dep, longitud, latitud
         servicioCarga.altaEstacion(estacion);
     }
 
     @POST
+    @Path("/alta/cargador")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void altaCargador(Cargador c){
-
+    public void altaCargador(Cargador c, int idEstacionCarga){
+        EstacionCarga estacion = repo.getEstacion(idEstacionCarga);
+        c.setMiEstacionCarga(estacion);
+        servicioCarga.altaCargador(c);
     }
 }

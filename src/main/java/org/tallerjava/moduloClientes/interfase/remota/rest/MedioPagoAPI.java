@@ -18,10 +18,10 @@ public class MedioPagoAPI {
     private ServicioClientes servicioClientes;
 
     //cliente Comun (cuentaUTE)
-    //curl -X POST -v http://localhost:8080/SIGMA2/trafico/MedioPago -H "Content-Type: application/json" -d '{"cliente":{"cedula":"55326750","nombreCompleto":"Alan Nahuel Machado Sosa","telefono":"094755370","contrasenia":"1234"},"medioPago":{"numeroCuenta":"001002003"}}'
+    //curl -X POST -v http://localhost:8080/SIGMA2/MedioPago -H "Content-Type: application/json" -d '{"cliente":{"cedula":"55326750","nombreCompleto":"Alan Nahuel Machado Sosa","telefono":"094755370","contrasenia":"1234"},"medioPago":{"numeroCuenta":"001002003"}}'
 
     //cliente Profesional (CuentaUTE)
-    //curl -X POST -v http://localhost:8080/SIGMA2/trafico/MedioPago -H "Content-Type: application/json" -d '{"cliente":{"cedula":"55326751","nombreCompleto":"Alan Nahuel Machado Sosa","telefono":"094755370","contrasenia":"1234","porcentajeDescuento":"20","tipo":"TAXI"},"medioPago":{"numeroCuenta":"001002003"}}'
+    //curl -X POST -v http://localhost:8080/SIGMA2/MedioPago -H "Content-Type: application/json" -d '{"cliente":{"cedula":"55326751","nombreCompleto":"Alan Nahuel Machado Sosa","telefono":"094755370","contrasenia":"1234","porcentajeDescuento":"20","tipo":"TAXI"},"medioPago":{"numeroCuenta":"001002003"}}'
     //tendria que devolver "Este cliente no acepta este medio de pago" con un error 500
     @POST
     @Consumes(MediaType.APPLICATION_JSON)

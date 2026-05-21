@@ -41,4 +41,14 @@ public class CargasRepositorioFake implements CargasRepositorio{
     public Cliente getCliente(String cedula){
         return new Cliente();
     }
+
+    @Override
+    public Cargador getCargador(int idCargador){
+         return new Cargador();
+    }
+
+    @Override
+    public EstacionCarga getEstacion(int idEstacion){
+         return new EstacionCarga();
+    }
 }
