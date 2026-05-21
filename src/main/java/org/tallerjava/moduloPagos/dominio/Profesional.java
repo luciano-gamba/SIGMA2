@@ -16,8 +16,5 @@ import lombok.NoArgsConstructor;
 
 @Table(name = "moduloPagos_CLIENTE_PROFESIONAL")
 public class Profesional extends Cliente {
-
     private Float porcentajeDescuento;
-    private EnumTipoProfesional tipo;
-
 }

@@ -11,7 +11,6 @@ import lombok.AllArgsConstructor;
 @NoArgsConstructor
 @Entity(name = "MedioPagoPagos")
 @Inheritance(strategy = InheritanceType.JOINED)
-
 @Table(name = "moduloPagos_MEDIOPAGO")
 public class MedioPago {
 
