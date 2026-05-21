@@ -8,17 +8,12 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "ClientePagos")
-@Inheritance(strategy = InheritanceType.JOINED)
-
+@Entity(name = "moduloPagos_EntityCliente")
 @Table(name = "moduloPagos_CLIENTE")
 public class Cliente {
 
     @Id
-    protected String cedula;
-
-    protected String nombreCompleto;
-    protected String telefono;
-    protected String contrasenia;
+    private String cedula;
+    private String nombreCompleto;
 
 }
