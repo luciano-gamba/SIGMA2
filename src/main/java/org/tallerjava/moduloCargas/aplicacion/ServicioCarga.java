@@ -2,26 +2,27 @@ package org.tallerjava.moduloCargas.aplicacion;
 
 import org.tallerjava.moduloCargas.dominio.*;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
 public interface ServicioCarga {
-    public void iniciarCarga(Cargador cargador, Cliente c, long pago);
+    void iniciarCarga(int idCargador, String cedula, long pago);
 
-    public int verCargaActual(Cliente c);
+    int verCargaActual(String cedula);
 
-    public void setPorcentajeCarga(Cliente c, int porcentaje);
+    void setPorcentajeCarga(String cedula, int porcentaje);
 
-    public List<Carga> verHistorico(Cliente c, LocalDateTime inicio, LocalDateTime fin);
+    List<Carga> verHistorico(String cedula, LocalDateTime inicio, LocalDateTime fin);
 
-    public void finalizarCarga(Cargador cargador, double tiempoRecargo);
+    void finalizarCarga(int idCar, double tiempoRecargo);
 
-    public void altaEstacion(EstacionCarga estacion);
-    public void altaCargador(Cargador cargador);
+    void altaEstacion(EstacionCarga estacion);
 
-    public void altaCarga(Carga carga);
-    public List<EstacionCarga> obtenerEstaciones();
+    void altaCargador(Cargador cargador, int idEstacionCarga);
 
-    public void altaCliente(Cliente cliente);
+    void altaCarga(Carga carga);
+
+    List<EstacionCarga> obtenerEstaciones();
+
+    void altaCliente(Cliente cliente);
 }
