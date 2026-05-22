@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 
-@Table(name = "MEIDOPAGO_TARJETA")
+@Table(name = "moduloClientes_MEDIOPAGO_TARJETA")
 public class ClienteTarjeta extends MedioPago{
 
     private String numero;

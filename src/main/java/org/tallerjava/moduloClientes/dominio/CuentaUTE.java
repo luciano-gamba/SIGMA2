@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
 
-@Table(name = "MEDIOPAGO_CUENTAUTE")
+@Table(name = "moduloClientes_MEDIOPAGO_CUENTAUTE")
 public class CuentaUTE extends MedioPago{
 
     private String numeroCuenta;

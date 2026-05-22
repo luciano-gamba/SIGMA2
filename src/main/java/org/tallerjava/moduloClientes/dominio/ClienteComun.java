@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 
-@Table(name = "CLIENTE_COMUN")
+@Table(name = "moduloClientes_CLIENTE_COMUN")
 public class ClienteComun extends Cliente {
 
 }
