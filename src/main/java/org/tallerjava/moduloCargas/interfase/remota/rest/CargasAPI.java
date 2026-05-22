@@ -78,10 +78,14 @@ public class CargasAPI {
         servicioCarga.altaEstacion(estacion);
     }
 
+//  curl -X POST -v http://localhost:8080/SIGMA2/moduloCargas/alta/cargador -H "Content-Type: application/json" -d '{"tipoCargador": 2,"tieneCable": true,"tipoConector": 2,"costePorHora": 3,"miEstacionCarga": 1}'
     @POST
     @Path("/alta/cargador")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void altaCargador(Cargador c, int idEstacionCarga){
+    public void altaCargador(CargadorDTO dto){
+        System.out.println("ID ESTACION CARGA: " + dto.getMiEstacionCarga());
+        Cargador c = dto.buildCargador();
+        int idEstacionCarga = dto.getMiEstacionCarga();
         servicioCarga.altaCargador(c, idEstacionCarga);
     }
 }

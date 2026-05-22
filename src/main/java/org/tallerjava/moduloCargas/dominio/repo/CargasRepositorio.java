@@ -24,4 +24,6 @@ public interface CargasRepositorio {
     public EstacionCarga getEstacion(int idEstacion);
 
     public void guardarFinalizacionCarga(Cliente cliente, Carga carga, Cargador cargador);
+
+    void guardarCargaAprobada(Cliente cliente, Carga carga);
 }

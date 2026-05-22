@@ -88,7 +88,7 @@ class VerificoTagExtranjeroConPrePagoOk {
                 .scope(ApplicationScoped.class)
                 .creating(new PublicadorEventoCliente() {
                     @Override
-                    public void publicarNuevoCliente(Cliente cliente) {
+                    public void publicarNuevoCliente(Cliente cliente, double descuento) {
                         System.out.println("Disparo nuevo cliente para que otros modulos lo detecten con observadores");
                     }
 

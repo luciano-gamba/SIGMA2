@@ -51,4 +51,7 @@ public class CargasRepositorioFake implements CargasRepositorio{
     public EstacionCarga getEstacion(int idEstacion){
          return new EstacionCarga();
     }
+
+    @Override
+    public void guardarCargaAprobada(Cliente cliente, Carga carga){ return; }
 }

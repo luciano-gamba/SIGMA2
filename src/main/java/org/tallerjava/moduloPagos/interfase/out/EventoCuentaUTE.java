@@ -8,4 +8,5 @@ import lombok.Data;
 public class EventoCuentaUTE {
     private boolean aprovado;
     private String mensaje;
+    private String cedula;
 }

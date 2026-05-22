@@ -26,6 +26,10 @@ public class ServicioCargaImpl implements ServicioCarga {
         Cargador cargador = repo.getCargador(idCargador);
         Cliente c = repo.getCliente(cedula);
 
+        if(c.getCargaPendiente()!=null){
+            //si tiene alguna carga pendiente de pagar, no le permite iniciar una carga nueva hasta que la pague
+            return;
+        }
         // Esta operacion se expondra de manera remota con un endpoint
         cargador.setEstadoCargador(1);
         // if(!repo.encontreCliente(c)){
@@ -67,12 +71,12 @@ public class ServicioCargaImpl implements ServicioCarga {
         Carga c = cargador.getCargaActiva();
         Cliente miCliente = c.getMiCliente();
 
-        double importeTotal = c.generarTotal(tiempoRecargo);
+        double importeTotal = c.generarTotal(tiempoRecargo, miCliente.getDescuento());
 
         cargador.setCargaActiva(null);
         cargador.setEstadoCargador(0);
         miCliente.setCargaActiva(null);
-        miCliente.agregarCargaAHistorial(c);
+        miCliente.setCargaPendiente(c);
 
         repo.guardarFinalizacionCarga(miCliente, c, cargador);
 
@@ -88,6 +92,7 @@ public class ServicioCargaImpl implements ServicioCarga {
     @Override
     @Transactional
     public void altaCargador(Cargador cargador, int idEstacionCarga) { // Se deberia pasar a que estacion esta asociado
+        System.out.println("ID ESTACION CARGA DESDE ALTA CARGADOR: " + idEstacionCarga);
         EstacionCarga estacion = repo.getEstacion(idEstacionCarga);
         cargador.setMiEstacionCarga(estacion);
         repo.guardarCargador(cargador);
@@ -112,4 +117,21 @@ public class ServicioCargaImpl implements ServicioCarga {
         // un nuevo cliente en moduloClientes
         repo.guardarCliente(cliente);
     }
+
+    @Override
+    @Transactional
+    public void cargaAprovada(boolean aceptado, String cedula) {
+        if(!aceptado){
+            return;
+        }else{
+            Cliente c = repo.getCliente(cedula);
+            Carga carga = c.getCargaPendiente();
+            c.agregarCargaAHistorial(carga);
+            c.setCargaPendiente(null);
+
+            repo.guardarCargaAprobada(c,carga);
+        }
+    }
+
+
 }

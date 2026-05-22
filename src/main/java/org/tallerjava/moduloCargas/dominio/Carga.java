@@ -66,7 +66,7 @@ public class Carga {
         this.cargando = true;
     }
 
-    public double generarTotal(double tiempoRecargo) {
+    public double generarTotal(double tiempoRecargo, double descuento) {
         // Asumo que esta sera la operacion encargada de todo lo que tiene que ver con
         // finalizarCarga desde tomar cual es la hora fin,
         // marcar que ya no esta cargando y tal vez en
@@ -76,7 +76,7 @@ public class Carga {
 
         // Aca setearia que es la hora fin?
 
-        double tiempoConectado = this.horaInicio.until(this.horaFin, ChronoUnit.MINUTES) / 60;
+        double tiempoConectado = (double) this.horaInicio.until(this.horaFin, ChronoUnit.MINUTES) / 60;
         // Como until me devuelve un long lo paso a horas ya que asumo que
         // constantePrecioCarga es el precio por horas
         double totalConectado = constantePrecioCarga * tiempoConectado;
@@ -87,7 +87,9 @@ public class Carga {
 
         this.cargando = false;
 
-        this.importeTotal = totalConectado + totalRecargo;
+        double total = (totalConectado + totalRecargo);
+
+        this.importeTotal = total - total*descuento;
 
         return this.importeTotal;
     }

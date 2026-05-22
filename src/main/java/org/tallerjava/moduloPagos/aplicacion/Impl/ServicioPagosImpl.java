@@ -64,7 +64,7 @@ public class ServicioPagosImpl implements ServicioPagos {
                         "\nDigito verificador: " + ((Tarjeta) medioPago).getDigitoVerificador());
                         
                 // por ahora los pagos son siempre exitosos
-                publicador.publicarEventoTarjeta(true, "Pago efectuado con éxito");
+                publicador.publicarEventoTarjeta(true, "Pago efectuado con éxito", cedulaCliente);
                 pago.setAprovado(true);
 
             } else if (medioPago instanceof CuentaUTE) {
@@ -75,7 +75,7 @@ public class ServicioPagosImpl implements ServicioPagos {
                         "\nNumero: " + ((CuentaUTE) medioPago).getNumeroCuenta());
 
                 // por ahora los pagos son siempre exitosos
-                publicador.publicarEventoCuentaUTE(true, "Pago efectuado con éxito");
+                publicador.publicarEventoCuentaUTE(true, "Pago efectuado con éxito", cedulaCliente);
                 pago.setAprovado(true);
             }
         }

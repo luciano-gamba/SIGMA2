@@ -9,23 +9,16 @@ import org.tallerjava.moduloClientes.interfase.evento.out.ClienteNuevoCliente;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.event.Observes;
 import jakarta.inject.Inject;
+import org.tallerjava.moduloPagos.interfase.out.EventoTarjeta;
 
 @ApplicationScoped
-public class ObserverModuloCliente {
+public class ObserverModuloPagos {
     //private static final Logger log = Logger.getLogger(ObserverModuloCliente.class);
 
     @Inject
     private ServicioCarga servicioCarga;
 
-    public void accept(@Observes ClienteNuevoCliente event){
-        Cliente cliente = new Cliente(
-            event.getCedula(),
-            event.getNombreCompleto(),
-            event.getTelefono(),
-            event.getContrasenia(),
-            event.getPorcentajeDescuento()
-        );
-
-        servicioCarga.altaCliente(cliente);
+    public void accept(@Observes EventoTarjeta event){
+        servicioCarga.cargaAprovada(event.isAprovado(), event.getCedula());
     }
 }

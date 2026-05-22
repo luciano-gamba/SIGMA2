@@ -24,6 +24,7 @@ public class Cliente {
     protected String nombreCompleto;
     protected String telefono;
     protected String contrasenia;
+    protected double descuento;
 
     @OneToOne
     @JoinColumn(name = "carga_activa_id")
@@ -32,11 +33,16 @@ public class Cliente {
     @OneToMany(mappedBy = "miCliente")
     private List<Carga> historialCargas;
 
-    public Cliente(String cedula, String nombreCompleto, String telefono, String contrasenia) {
+    @OneToOne
+    @JoinColumn(name = "carga_pendiente_id")
+    private Carga cargaPendiente;
+
+    public Cliente(String cedula, String nombreCompleto, String telefono, String contrasenia, double descuento) {
         this.cedula = cedula;
         this.nombreCompleto = nombreCompleto;
         this.telefono = telefono;
         this.contrasenia = contrasenia;
+        this.descuento = descuento;
         this.historialCargas = new ArrayList<>();
     }
 

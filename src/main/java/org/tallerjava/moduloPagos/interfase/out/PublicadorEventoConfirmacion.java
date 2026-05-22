@@ -13,11 +13,11 @@ public class PublicadorEventoConfirmacion {
     @Inject
     private Event<EventoCuentaUTE> eventoCuentaUTE;
 
-    public void publicarEventoTarjeta(boolean aprovado, String mensaje){
-        this.eventoTarjeta.fire(new EventoTarjeta(aprovado, mensaje));
+    public void publicarEventoTarjeta(boolean aprovado, String mensaje, String cedula){
+        this.eventoTarjeta.fire(new EventoTarjeta(aprovado, mensaje, cedula));
     }
-    public void publicarEventoCuentaUTE(boolean aprovado, String mensaje){
-        this.eventoCuentaUTE.fire(new EventoCuentaUTE(aprovado, mensaje));
+    public void publicarEventoCuentaUTE(boolean aprovado, String mensaje, String cedula){
+        this.eventoCuentaUTE.fire(new EventoCuentaUTE(aprovado, mensaje, cedula));
     }
 
 }

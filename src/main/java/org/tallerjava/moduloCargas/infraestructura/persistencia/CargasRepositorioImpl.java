@@ -1,6 +1,5 @@
 package org.tallerjava.moduloCargas.infraestructura.persistencia;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.tallerjava.moduloCargas.dominio.*;
@@ -75,7 +74,7 @@ public class CargasRepositorioImpl implements CargasRepositorio{
     public EstacionCarga getEstacion(int idEstacion){
         String sql = "Select ec from estacionCarga ec where ec.id = :idEstacion" ;
 
-        TypedQuery<EstacionCarga> findById = em.createQuery(sql,EstacionCarga.class).setParameter("id", idEstacion);
+        TypedQuery<EstacionCarga> findById = em.createQuery(sql,EstacionCarga.class).setParameter("idEstacion", idEstacion);
         try {
             return findById.getSingleResult();
         } catch (NoResultException e) {
@@ -87,5 +86,10 @@ public class CargasRepositorioImpl implements CargasRepositorio{
         em.merge(cliente);
         em.merge(carga);
         em.merge(cargador);
+    }
+
+    public void guardarCargaAprobada(Cliente cliente, Carga carga) {
+        em.merge(cliente);
+        em.merge(carga);
     }
 }

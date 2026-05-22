@@ -25,4 +25,6 @@ public interface ServicioCarga {
     List<EstacionCarga> obtenerEstaciones();
 
     void altaCliente(Cliente cliente);
+
+    void cargaAprovada(boolean aceptado, String cedula);
 }
