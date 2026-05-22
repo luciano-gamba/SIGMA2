@@ -7,6 +7,7 @@ import org.tallerjava.moduloCargas.aplicacion.ServicioCarga;
 
 import jakarta.inject.Inject;
 import org.tallerjava.moduloCargas.dominio.*;
+import org.tallerjava.moduloCargas.dominio.dto.EstacionCargaDTO;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -58,7 +59,7 @@ public class CargasAPI {
     @GET
     @Path("/get/estaciones")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<EstacionCarga> obtenerEstaciones(){
+    public List<EstacionCargaDTO> obtenerEstaciones(){
         return servicioCarga.obtenerEstaciones();
     }
 
@@ -87,5 +88,11 @@ public class CargasAPI {
         Cargador c = dto.buildCargador();
         int idEstacionCarga = dto.getMiEstacionCarga();
         servicioCarga.altaCargador(c, idEstacionCarga);
+    }
+
+    @POST
+    @Path("/carga/reintentar/{id}")
+    public void reintentarPago(@PathParam("id") String cedula){
+        servicioCarga.reintentarPago(cedula);
     }
 }

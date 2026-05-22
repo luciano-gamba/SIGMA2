@@ -1,6 +1,7 @@
 package org.tallerjava.moduloCargas.aplicacion;
 
 import org.tallerjava.moduloCargas.dominio.*;
+import org.tallerjava.moduloCargas.dominio.dto.EstacionCargaDTO;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -16,13 +17,15 @@ public interface ServicioCarga {
 
     void finalizarCarga(int idCar, double tiempoRecargo);
 
+    void reintentarPago(String cedula);
+
     void altaEstacion(EstacionCarga estacion);
 
     void altaCargador(Cargador cargador, int idEstacionCarga);
 
     void altaCarga(Carga carga);
 
-    List<EstacionCarga> obtenerEstaciones();
+    List<EstacionCargaDTO> obtenerEstaciones();
 
     void altaCliente(Cliente cliente);
 

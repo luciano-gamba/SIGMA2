@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.tallerjava.moduloCargas.aplicacion.ServicioCarga;
 import org.tallerjava.moduloCargas.dominio.*;
+import org.tallerjava.moduloCargas.dominio.dto.EstacionCargaDTO;
 import org.tallerjava.moduloCargas.dominio.repo.CargasRepositorio;
 
 import jakarta.enterprise.context.ApplicationScoped;
@@ -82,6 +83,13 @@ public class ServicioCargaImpl implements ServicioCarga {
 
         evento.publicarNuevoPagoCarga(miCliente.getCedula(),importeTotal,c.getMiPago().getId());
     }
+
+    @Override
+    public void reintentarPago(String cedula){
+        Cliente miCliente = repo.getCliente(cedula);
+        Carga c = miCliente.getCargaPendiente();
+        evento.publicarNuevoPagoCarga(miCliente.getCedula(),c.getImporteTotal(),c.getMiPago().getId());
+    }
     
     @Override
     @Transactional
@@ -106,8 +114,14 @@ public class ServicioCargaImpl implements ServicioCarga {
 
     @Override
     @Transactional
-    public List<EstacionCarga> obtenerEstaciones() {
-        return repo.obtenerEstaciones();
+    public List<EstacionCargaDTO> obtenerEstaciones() {
+        List<EstacionCarga> estaciones = repo.obtenerEstaciones();
+        List<EstacionCargaDTO> estacionesDTO = new ArrayList<>();
+        for(EstacionCarga ec : estaciones){
+            EstacionCargaDTO nuevaEstacion = new EstacionCargaDTO(ec);
+            estacionesDTO.add(nuevaEstacion);
+        }
+        return estacionesDTO;
     }
 
     @Override

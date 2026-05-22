@@ -15,33 +15,13 @@ public class CargadorDTO {
     private double costePorHora;
     private int miEstacionCarga;
 
+    public CargadorDTO(Cargador c) {
+    }
+
     public Cargador buildCargador(){
-        EnumTipoCargador enumCargador;
-        if(this.tipoCargador == EnumTipoCargador.Rapido.getId()){
-            enumCargador = EnumTipoCargador.Rapido;
-        }else{
-            enumCargador = EnumTipoCargador.Lento;
-        }
+        EnumTipoCargador enumCargador = EnumTipoCargador.getById(this.tipoCargador);
+        EnumTipoConector enumConector = EnumTipoConector.getById(this.tipoConector);
 
-        EnumTipoConector enumConector;
-        switch(this.tipoConector){
-            case 1:
-                enumConector = EnumTipoConector.Tipo2;
-                break;
-            case 2:
-                enumConector = EnumTipoConector.CCS2;
-                break;
-            case 3:
-                enumConector = EnumTipoConector.CYHAdeMO;
-                break;
-            case 4:
-                enumConector = EnumTipoConector.GB_T;
-                break;
-            default:
-                enumConector = null;
-        }
-
-        Cargador cargador = new Cargador(enumCargador,this.tieneCable,enumConector,this.costePorHora);
-        return cargador;
+        return new Cargador(enumCargador,this.tieneCable,enumConector,this.costePorHora);
     }
 }
