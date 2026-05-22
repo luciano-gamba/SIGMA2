@@ -25,7 +25,13 @@ public class ServicioClientesImpl implements ServicioClientes {
     @Transactional
     public void registrarCliente(Cliente cliente){
         repo.guardarCliente(cliente);
-        evento.publicarNuevoCliente(cliente);
+        if (cliente instanceof ClienteComun){
+            evento.publicarNuevoCliente(cliente, 0);
+        }else{
+            Profesional clientePro = (Profesional)cliente;
+            evento.publicarNuevoCliente(cliente, clientePro.getPorcentajeDescuento());
+        }
+
         System.out.println("Guardando Cliente...");
     }
 

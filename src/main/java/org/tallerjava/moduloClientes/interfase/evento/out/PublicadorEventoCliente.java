@@ -20,12 +20,13 @@ public class PublicadorEventoCliente {
     @Inject
     private Event<ClienteNuevaCuentaUTE> nuevaCuentaUTE;
 
-    public void publicarNuevoCliente(Cliente cliente){
+    public void publicarNuevoCliente(Cliente cliente, double descuento){
         ClienteNuevoCliente evento = new ClienteNuevoCliente(
                 cliente.getCedula(),
                 cliente.getNombreCompleto(),
                 cliente.getTelefono(),
-                cliente.getContrasenia()
+                cliente.getContrasenia(),
+                descuento
         );
 
         nuevoCliente.fire(evento);

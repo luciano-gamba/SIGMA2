@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 
 public class Profesional extends Cliente {
 
-    private Float porcentajeDescuento;
+    private double porcentajeDescuento;
     private EnumTipoProfesional tipo;
 
 }

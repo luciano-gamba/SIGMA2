@@ -11,5 +11,6 @@ public class ClienteNuevoCliente {
     private String nombreCompleto;
     private String telefono;
     private String contrasenia;
+    private double porcentajeDescuento;
 
 }

@@ -21,7 +21,7 @@ public class ClientesDTO {
     private String nombreCompleto;
     private String telefono;
     private String contrasenia;
-    private Float porcentajeDescuento;
+    private double porcentajeDescuento;
     private EnumTipoProfesional tipo;
     private List<MedioPagoDTO> mediosDePago = new ArrayList<>();
 
@@ -33,7 +33,7 @@ public class ClientesDTO {
             medios.add(mpDTO.buildMedioPago());
         }
 
-        if(porcentajeDescuento != null){
+        if(tipo != null){
 
             Profesional p = new Profesional();
             p.setCedula(cedula);
