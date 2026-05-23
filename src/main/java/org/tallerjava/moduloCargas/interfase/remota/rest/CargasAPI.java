@@ -65,6 +65,7 @@ public class CargasAPI {
         return servicioCarga.obtenerEstaciones();
     }
 
+//    curl -X POST -v http://localhost:8080/SIGMA2/moduloCargas/carga/finalizar -H "Content-Type: application/json" -d '{"idCargador":""}
     @POST
     @Path("/carga/finalizar")
     @Consumes(MediaType.APPLICATION_JSON)

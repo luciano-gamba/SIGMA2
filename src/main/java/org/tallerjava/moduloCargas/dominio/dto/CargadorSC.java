@@ -11,6 +11,7 @@ import org.tallerjava.moduloCargas.dominio.EnumTipoConector;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CargadorSC {
+    private int id;
     private int estadoCargador;
     private EnumTipoCargador tipoCargador; // Rapida o Lenta
     private boolean tieneCable; // Si el cargador tiene cable o tenes que llevar el que te vino con el auto
@@ -18,6 +19,7 @@ public class CargadorSC {
     private double costePorHora;
 
     public CargadorSC (Cargador c){
+        this.id = c.getId();
         this.estadoCargador = c.getEstadoCargador();
         this.tipoCargador = c.getTipoCargador();
         this.tieneCable = c.isTieneCable();

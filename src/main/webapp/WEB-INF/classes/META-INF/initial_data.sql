@@ -1,17 +1,10 @@
 use tallerJava;
--- insert into peaje_Vehiculo (matricula, tag, marca, modelo, nacionalidad) values ('BAA 1234', 1111, 'Ford', 'Fiesta', 1);
--- insert into peaje_Vehiculo (matricula, tag, marca, modelo, nacionalidad) values ('AA XSD 4567', 2222, 'Hiunday', 'Tucson', 2);
 
--- insert into peaje_tarifa (DTYPE, fechaAplicacion, valor) values ('comun','2024-05-22 12:24:58.524493',180);
--- insert into peaje_tarifa (DTYPE, fechaAplicacion, valor) values ('preferencial','2024-05-22 12:24:58.524493',100);
+insert into moduloCarga_ESTACION_CARGA (descripcion,calle,departamento,longitud,latitud) values ('Estación de Carga de Parque del Plata','Calle 9 e Interbalnearia','Canelones',1330,9160);
+insert into moduloCarga_ESTACION_CARGA (descripcion,calle,departamento,longitud,latitud) values ('Estación de Carga de ANCAP','Alvariza y 18 de julio','Maldonado',1330,9160);
 
--- insert into gestion_cuenta (fechaApertura, descripcion) values ('2024-05-29 10:34:14.533008', 'Cuenta PrePaga');
--- insert into gestion_cuentaPrePaga (saldo, id) values (1000, 1);
--- insert into gestion_clienteTelepeaje (ctaPostPaga_id, ctaPrepaga_id) values (null, 1);
--- insert into gestion_usuario (clienteTelepeaje_idClienteTelepeaje, email, nacionalidad, nombre) values (1, 'nom1@gmail.com', 1, 'nom1');
-
--- insert into gestion_cuenta (fechaApertura, descripcion) values ('2024-05-29 10:34:14.533008', 'Cuenta PrePaga');
--- insert into gestion_cuentaPrePaga (saldo, id) values (0, 2);
--- insert into gestion_clienteTelepeaje (ctaPostPaga_id, ctaPrepaga_id) values (null, 2);
--- insert into gestion_usuario (clienteTelepeaje_idClienteTelepeaje, email, nacionalidad, nombre) values (2, 'nom2@gmail.com', 1, 'nom2');
+insert into moduloCarga_CARGADOR (tipoCargador,tieneCable,tipoConector,estadoCargador,costePorHora,estacion_id,potenciaMinima) values (1, false, 4, 0,150, 1,30);
+insert into moduloCarga_CARGADOR (tipoCargador,tieneCable,tipoConector,estadoCargador,costePorHora,estacion_id,potenciaMinima) values (2, true, 2, 0,50, 1,0);
+insert into moduloCarga_CARGADOR (tipoCargador,tieneCable,tipoConector,estadoCargador,costePorHora,estacion_id,potenciaMinima) values (1, false, 3,0 ,100,2,25);
+insert into moduloCarga_CARGADOR (tipoCargador,tieneCable,tipoConector,estadoCargador,costePorHora,estacion_id,potenciaMinima) values (1,true,1,0,180,2,50);
 
