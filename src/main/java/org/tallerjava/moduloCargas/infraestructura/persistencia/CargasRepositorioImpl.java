@@ -28,7 +28,7 @@ public class CargasRepositorioImpl implements CargasRepositorio{
 
     public void guardarCarga(Carga carga) {
         em.persist(carga);
-        em.persist(carga.getMiPago());
+        em.merge(carga.getMiPago());
         em.merge(carga.getMiCliente());
         em.merge(carga);
         em.merge(carga.getCargador());
@@ -63,7 +63,7 @@ public class CargasRepositorioImpl implements CargasRepositorio{
     public Cargador getCargador(int idCargador){
         String sql = "Select c from Cargador c where c.id = :idCargador" ;
 
-        TypedQuery<Cargador> findById = em.createQuery(sql,Cargador.class).setParameter("id", idCargador);
+        TypedQuery<Cargador> findById = em.createQuery(sql,Cargador.class).setParameter("idCargador", idCargador);
         try {
             return findById.getSingleResult();
         } catch (NoResultException e) {
@@ -91,5 +91,20 @@ public class CargasRepositorioImpl implements CargasRepositorio{
     public void guardarCargaAprobada(Cliente cliente, Carga carga) {
         em.merge(cliente);
         em.merge(carga);
+    }
+
+    public void guardarMedioPago(MedioPago medioPago){
+        em.persist(medioPago);
+    }
+
+    public MedioPago getMedioPago(long idPago){
+        String sql = "Select p from MedioPagoCarga p where p.id = :idPago";
+
+        TypedQuery<MedioPago> findById = em.createQuery(sql, MedioPago.class).setParameter("idPago", idPago);
+        try {
+            return findById.getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 }

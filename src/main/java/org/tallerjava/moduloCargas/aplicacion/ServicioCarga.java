@@ -11,8 +11,6 @@ public interface ServicioCarga {
 
     int verCargaActual(String cedula);
 
-    void setPorcentajeCarga(String cedula, int porcentaje);
-
     List<Carga> verHistorico(String cedula, LocalDateTime inicio, LocalDateTime fin);
 
     void finalizarCarga(int idCar, double tiempoRecargo);
@@ -30,4 +28,6 @@ public interface ServicioCarga {
     void altaCliente(Cliente cliente);
 
     void cargaAprovada(boolean aceptado, String cedula);
+
+    void altaMedioPago(MedioPago medioPago);
 }

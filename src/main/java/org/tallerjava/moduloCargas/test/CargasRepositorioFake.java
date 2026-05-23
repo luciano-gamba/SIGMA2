@@ -54,4 +54,14 @@ public class CargasRepositorioFake implements CargasRepositorio{
 
     @Override
     public void guardarCargaAprobada(Cliente cliente, Carga carga){ return; }
+
+    @Override
+    public void guardarMedioPago(MedioPago medioPago){
+        return;
+    }
+
+    @Override
+    public MedioPago getMedioPago(long idPago){
+        return new MedioPago();
+    }
 }

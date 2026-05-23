@@ -1,6 +1,5 @@
 package org.tallerjava.moduloCargas.dominio;
 
-import jakarta.json.bind.annotation.JsonbTransient;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,8 +13,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
@@ -49,12 +46,11 @@ public class Cargador {
     @JoinColumn(name = "carga_activa_id")
     private Carga cargaActiva; // si estadoCargador = ocupado
 
-    @OneToMany(mappedBy = "cargador")
-    private List<Carga> historialCargas;
+    // @OneToMany(mappedBy = "cargador")
+    // private List<Carga> historialCargas;
 
     @ManyToOne
     @JoinColumn(name = "estacion_id")
-//    @JsonbTransient
     private EstacionCarga miEstacionCarga;
 
     public Cargador(EnumTipoCargador tipoCargador, boolean tieneCable, EnumTipoConector tipoConector,
@@ -65,7 +61,7 @@ public class Cargador {
         this.estadoCargador = 0;
         this.costePorHora = costePorHora;
         this.miEstacionCarga = miEstacionCarga;
-        this.historialCargas = new ArrayList<>();
+        //this.historialCargas = new ArrayList<>();
     }
 
     public Cargador(EnumTipoCargador tipoCargador, boolean tieneCable, EnumTipoConector tipoConector,
@@ -75,7 +71,7 @@ public class Cargador {
         this.tipoConector = tipoConector;
         this.estadoCargador = 0;
         this.costePorHora = costePorHora;
-        this.historialCargas = new ArrayList<>();
+        //this.historialCargas = new ArrayList<>();
     }
 
 }

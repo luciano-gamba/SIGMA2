@@ -19,7 +19,7 @@ public class CargasAPI {
     @Inject
     ServicioCarga servicioCarga;
 
-    //curl -X POST -v http://localhost:8080/SIGMA2/moduloCarga/ -H "Content-Type: application/json" -d '{}'
+    //curl -X POST -v http://localhost:8080/SIGMA2/moduloCargas/carga/iniciar -H "Content-Type: application/json" -d '{"idCargador": 1,"cedula":"55326750","idMedioPago":1}'
     @POST
     @Path("/carga/iniciar")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -30,13 +30,15 @@ public class CargasAPI {
         servicioCarga.iniciarCarga(cargador,c,pago);
     }
 
-    @POST
-    @Path("/set/cargaActual/{id}")
-    @Consumes(MediaType.APPLICATION_JSON)
-    public void setPorcentajeCarga(@PathParam("id") String cedula, int porcentaje){ //funcionará con dos parametros????
-        servicioCarga.setPorcentajeCarga(cedula, porcentaje);
-    }
+    // @POST
+    // @Path("/set/cargaActual/{id}")
+    // @Consumes(MediaType.APPLICATION_JSON)
+    // public void setPorcentajeCarga(@PathParam("id") String cedula, int
+    // porcentaje){ //funcionará con dos parametros????
+    // servicioCarga.setPorcentajeCarga(cedula, porcentaje);
+    // }
 
+    // curl -X GET -v http://localhost:8080/SIGMA2/moduloCargas/get/cargaActual/59924162
     @GET
     @Path("/get/cargaActual/{id}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -90,6 +92,7 @@ public class CargasAPI {
         servicioCarga.altaCargador(c, idEstacionCarga);
     }
 
+    // curl -X POST -v http://localhost:8080/SIGMA2/moduloCargas/carga/reintentar/59924162
     @POST
     @Path("/carga/reintentar/{id}")
     public void reintentarPago(@PathParam("id") String cedula){

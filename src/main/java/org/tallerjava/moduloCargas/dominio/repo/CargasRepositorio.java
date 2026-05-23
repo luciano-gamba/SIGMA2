@@ -26,4 +26,8 @@ public interface CargasRepositorio {
     public void guardarFinalizacionCarga(Cliente cliente, Carga carga, Cargador cargador);
 
     void guardarCargaAprobada(Cliente cliente, Carga carga);
+
+    void guardarMedioPago(MedioPago medioPago);
+
+    MedioPago getMedioPago(long pagoId);
 }

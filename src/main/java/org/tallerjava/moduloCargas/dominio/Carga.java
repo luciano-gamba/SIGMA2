@@ -4,8 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Duration;
 import java.time.temporal.ChronoUnit;
 
 import jakarta.persistence.Entity;
@@ -26,14 +26,10 @@ import jakarta.persistence.Table;
 @Table(name = "moduloCarga_CARGA")
 
 public class Carga {
-    // private LocalDate fecha; Nos parece inecesario el atributo fecha de Carga
-    // porque podemos tomar cuando se realizo la carga conviertiendo el horaInicio
-    // en LocalDate
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id; // Podemos ver de cambiar los id para que sean longs pero por ahora da igual
-                    // creo --Att Lucas
+    private int id;
 
     private LocalDateTime horaInicio;
     private LocalDateTime horaFin;
@@ -42,8 +38,7 @@ public class Carga {
     private int porcentajeAvance; // 0-100 si cargando = true
     private LocalDateTime horaEstimadaFin; // si cargando = true
     private boolean cargando;
-    // Carga OK o carga pendiente dado lo que devuelva el modulo de pago cuando le
-    // pides que se pague la carga
+
 
     @ManyToOne
     @JoinColumn(name = "cargador_id")
@@ -56,7 +51,7 @@ public class Carga {
 
     @OneToOne
     @JoinColumn(name = "miMedioPago")
-    MedioPago miPago; // Acá no creo que me interese que tipo de MedioPago sea
+    MedioPago miPago; // Acá no me interesa que tipo de MedioPago sea
 
     public Carga(Cargador cargador, Cliente miCliente, MedioPago miPago) {
         this.cargador = cargador;
@@ -64,17 +59,19 @@ public class Carga {
         this.miPago = miPago;
         this.horaInicio = LocalDateTime.now();
         this.cargando = true;
+
+        // Como es necesario para calcularPorcentajeAvance lo seteo aca dependiendo si
+        // el cargador es de carga rapida o lenta
+        if (this.cargador.getTipoCargador().getId() == EnumTipoCargador.Rapido.getId()) {
+            this.horaEstimadaFin = this.horaInicio.plusHours(2);
+        } else {
+            this.horaEstimadaFin = this.horaInicio.plusHours(4);
+        }
     }
 
     public double generarTotal(double tiempoRecargo, double descuento) {
-        // Asumo que esta sera la operacion encargada de todo lo que tiene que ver con
-        // finalizarCarga desde tomar cual es la hora fin,
-        // marcar que ya no esta cargando y tal vez en
-        // ServicioCargaImpl hacer que el cliente deje de tener Asignada la Carga como
-        // CargaActiva y se agregue en su historial de cargas
-        double constantePrecioCarga = this.cargador.getCostePorHora(); // Preguntar a profe
 
-        // Aca setearia que es la hora fin?
+        double constantePrecioCarga = this.cargador.getCostePorHora();
 
         double tiempoConectado = (double) this.horaInicio.until(this.horaFin, ChronoUnit.MINUTES) / 60;
         // Como until me devuelve un long lo paso a horas ya que asumo que
@@ -94,4 +91,28 @@ public class Carga {
         return this.importeTotal;
     }
 
+    public int getPorcentajeAvance() {
+        if (!this.cargando) {
+            return this.porcentajeAvance;
+        }
+
+        if (this.horaEstimadaFin == null) {
+            return 0;
+        }
+
+        LocalDateTime inicio = this.horaInicio;
+        LocalDateTime fin = this.horaEstimadaFin;
+        LocalDateTime ahora = LocalDateTime.now();
+
+        long totalSegundos = Duration.between(inicio, fin).getSeconds();
+        long transcurridos = Duration.between(inicio, ahora).getSeconds();
+
+        if (totalSegundos <= 0) {
+            return 100;
+        }
+
+        int porcentaje = (int) ((transcurridos * 100) / totalSegundos);
+
+        return Math.max(0, Math.min(100, porcentaje));
+    }
 }

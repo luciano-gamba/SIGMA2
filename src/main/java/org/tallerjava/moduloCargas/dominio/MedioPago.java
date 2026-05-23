@@ -15,7 +15,6 @@ import lombok.NoArgsConstructor;
 public class MedioPago {
 
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
     private long id;
 
 }

@@ -15,11 +15,13 @@ public class CargadorSC {
     private EnumTipoCargador tipoCargador; // Rapida o Lenta
     private boolean tieneCable; // Si el cargador tiene cable o tenes que llevar el que te vino con el auto
     private EnumTipoConector tipoConector; // Tipo 2 , CCS2, CYHAdeMO, GB/T
+    private double costePorHora;
 
     public CargadorSC (Cargador c){
         this.estadoCargador = c.getEstadoCargador();
         this.tipoCargador = c.getTipoCargador();
         this.tieneCable = c.isTieneCable();
         this.tipoConector = c.getTipoConector();
+        this.costePorHora = c.getCostePorHora();
     }
 }

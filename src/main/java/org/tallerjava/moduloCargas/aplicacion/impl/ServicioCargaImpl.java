@@ -23,9 +23,12 @@ public class ServicioCargaImpl implements ServicioCarga {
     @Inject
     private PublicadorEventoCarga evento;
 
+    @Override
+    @Transactional
     public void iniciarCarga(int idCargador, String cedula, long pago) {
         Cargador cargador = repo.getCargador(idCargador);
         Cliente c = repo.getCliente(cedula);
+        MedioPago medioPago = repo.getMedioPago(pago);
 
         if(c.getCargaPendiente()!=null){
             //si tiene alguna carga pendiente de pagar, no le permite iniciar una carga nueva hasta que la pague
@@ -36,18 +39,13 @@ public class ServicioCargaImpl implements ServicioCarga {
         // if(!repo.encontreCliente(c)){
         // return;
         // }
-        this.altaCarga(new Carga(cargador, c, new MedioPago(pago))); // Verificar que exista el cliente
+        this.altaCarga(new Carga(cargador, c, medioPago)); // Verificar que exista el cliente
         // this.altaMedioPago(pago);
-    }
-
-    public void setPorcentajeCarga(String cedula, int porcentaje) {
-        Cliente c = repo.getCliente(cedula);
-        c.getCargaActiva().setPorcentajeAvance(porcentaje);
     }
 
     public int verCargaActual(String cedula) { //Esta operacion solo deberia llamarse si el cliente c tiene una carga activa
         Cliente c = repo.getCliente(cedula);
-        return c.getCargaActiva().getPorcentajeAvance(); // Me puede llegar la cedula del cliente y lo busco en el repo
+        return c.getCargaActiva().getPorcentajeAvance();
     }
 
     public List<Carga> verHistorico(String cedula, LocalDateTime inicio, LocalDateTime fin) {
@@ -73,6 +71,10 @@ public class ServicioCargaImpl implements ServicioCarga {
         Cliente miCliente = c.getMiCliente();
 
         double importeTotal = c.generarTotal(tiempoRecargo, miCliente.getDescuento());
+
+        c.setHoraFin(LocalDateTime.now());
+        c.setPorcentajeAvance(c.getPorcentajeAvance());
+        c.setCargando(false);
 
         cargador.setCargaActiva(null);
         cargador.setEstadoCargador(0);
@@ -109,6 +111,8 @@ public class ServicioCargaImpl implements ServicioCarga {
     @Override
     @Transactional
     public void altaCarga(Carga carga) {
+        carga.getCargador().setCargaActiva(carga);
+        carga.getMiCliente().setCargaActiva(carga);
         repo.guardarCarga(carga);
     }
 
@@ -147,5 +151,8 @@ public class ServicioCargaImpl implements ServicioCarga {
         }
     }
 
+    public void altaMedioPago(MedioPago medioPago){
+        repo.guardarMedioPago(medioPago);
+    }
 
 }
