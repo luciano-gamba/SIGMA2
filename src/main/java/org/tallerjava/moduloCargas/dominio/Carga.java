@@ -82,8 +82,6 @@ public class Carga {
 
         this.recargoPorDemora = totalRecargo; // Supongo que si se muestra en el historial de Cargas se debe guardar aca
 
-        this.cargando = false;
-
         double total = (totalConectado + totalRecargo);
 
         this.importeTotal = total - total*descuento;
@@ -114,5 +112,26 @@ public class Carga {
         int porcentaje = (int) ((transcurridos * 100) / totalSegundos);
 
         return Math.max(0, Math.min(100, porcentaje));
+    }
+
+    public void actualizarPorcentajeAvance(){
+        if (!this.cargando || this.horaEstimadaFin == null){
+            return;
+        }
+
+        LocalDateTime ahora = LocalDateTime.now();
+
+        long totalSegundos = Duration.between(horaInicio, horaEstimadaFin).getSeconds();
+
+        long transcurridos = Duration.between(horaInicio, ahora).getSeconds();
+
+        if (totalSegundos <= 0) {
+            this.porcentajeAvance = 100;
+            return;
+        }
+
+        int porcentaje = (int)((transcurridos * 100) / totalSegundos);
+
+        this.porcentajeAvance = Math.max(0,Math.min(100, porcentaje)); 
     }
 }

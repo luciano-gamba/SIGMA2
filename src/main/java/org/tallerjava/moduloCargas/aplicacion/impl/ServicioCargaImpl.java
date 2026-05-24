@@ -29,6 +29,17 @@ public class ServicioCargaImpl implements ServicioCarga {
         Cargador cargador = repo.getCargador(idCargador);
         Cliente c = repo.getCliente(cedula);
         MedioPago medioPago = repo.getMedioPago(pago);
+        
+        if (c == null) {
+            throw new IllegalArgumentException("El cliente no existe.");
+        }
+
+        if (cargador == null) {
+            throw new IllegalArgumentException("El cargador no existe.");
+        }
+        if (medioPago == null) {
+            throw new IllegalArgumentException("El medio de pago no existe.");
+        }
 
         if(c.getCargaPendiente() != null || c.getCargaActiva() != null){
             //si tiene alguna carga pendiente de pagar o una carga activa, no le permite iniciar una carga nueva hasta que la pague/termine la actual
@@ -71,6 +82,8 @@ public class ServicioCargaImpl implements ServicioCarga {
         return historicoSegunFecha;
     }
 
+    @Override
+    @Transactional
     public void finalizarCarga(int idCar, double tiempoRecargo) {
         Cargador cargador = repo.getCargador(idCar);
         if(cargador == null){
@@ -83,12 +96,14 @@ public class ServicioCargaImpl implements ServicioCarga {
         }
         Cliente miCliente = c.getMiCliente();
 
+        c.setHoraFin(LocalDateTime.now());
 
         double importeTotal = c.generarTotal(tiempoRecargo, miCliente.getDescuento());
 
-        c.setHoraFin(LocalDateTime.now());
-        c.setPorcentajeAvance(c.getPorcentajeAvance());
+       
+        c.actualizarPorcentajeAvance();
         c.setCargando(false);
+
 
         cargador.setCargaActiva(null);
         cargador.setEstadoCargador(0);
