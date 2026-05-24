@@ -16,8 +16,9 @@ En este taller desarrollamos el backend de servicios para una aplicación de sis
      Decidimos usar una arquitectura de monolito modular, el cual consiste de la aplicación desplegada en una sola capa física (monolito) pero dividido en varios módulos distintos bien separados.   
      Esto tiene la ventaja de que combina la simplicidad de un monolito, con la organización y desacoplamiento de los microservicios.
 
-## Modelo de dominio
+## **Modelo de dominio**
 
+<img width="1737" height="741" alt="image" src="https://github.com/user-attachments/assets/94ee9652-36fe-40be-900f-83c5901214af" />
 
 
 ## **Módulo Cargas**
@@ -111,4 +112,5 @@ Comportamiento:
 2) Luego de finalizada una carga (*MÓDULO CARGAS*) la información es procesada y almacenada en la propia persistencia.  
 3) La información del pago (*resultado de la transacción*) es publicada para ser consumida por el MÓDULO CARGAS.
 
+<img width="1152" height="550" alt="image" src="https://github.com/user-attachments/assets/5142d523-aead-4777-a456-fb32c83f2651" />
 
