@@ -29,6 +29,10 @@ Nota: posible idea para documentar las dependencias entre módulos. Los diagrama
 
 ---
 
+*Modelo de dominio utilizado como referencia*
+![image] <img width="1201" height="507" alt="image" src="https://github.com/user-attachments/assets/37f142c4-309f-4357-b1ee-4bdba301c74a" />
+
+
 **Módulo Gestión**
 ![image](https://github.com/gabrielaramburu/TallerJakartaEE/assets/63823685/63854c26-dd06-4e4e-bcf0-7544fe041fb6)
 
