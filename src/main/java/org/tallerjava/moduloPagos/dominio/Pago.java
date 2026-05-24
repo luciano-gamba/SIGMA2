@@ -33,6 +33,6 @@ public class Pago {
 
     private LocalDateTime fechaHoraPago;
     private Float importe;
-    private Boolean aprovado;
+    private Boolean aprobado;
 
 }

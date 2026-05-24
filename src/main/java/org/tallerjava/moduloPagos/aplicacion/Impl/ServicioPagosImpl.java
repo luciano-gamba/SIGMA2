@@ -10,32 +10,35 @@ import org.tallerjava.moduloPagos.dominio.MedioPago;
 import org.tallerjava.moduloPagos.dominio.Pago;
 import org.tallerjava.moduloPagos.dominio.Tarjeta;
 import org.tallerjava.moduloPagos.dominio.repositorio.PagosRepositorio;
-import org.tallerjava.moduloPagos.interfase.out.PublicadorEventoConfirmacion;
+import org.tallerjava.moduloPagos.interfase.out.PublicadorEventoPago;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
+import jakarta.transaction.Transactional;
 
 @ApplicationScoped
 public class ServicioPagosImpl implements ServicioPagos {
 
     @Inject
-    private PublicadorEventoConfirmacion publicador;
+    private PublicadorEventoPago publicador;
 
     @Inject
     private PagosRepositorio repositorio;
 
+    
     public void guardarCliente(String cedulaCliente, String nombreCompleto){
         Cliente cliente = new Cliente(cedulaCliente,nombreCompleto);
         repositorio.guardarCliente(cliente);
     }
 
+    
     public void guardarCuentaUTE(Long id, String numeroCuenta){
         CuentaUTE medioPago = new CuentaUTE();
         medioPago.setId(id);
         medioPago.setNumeroCuenta(numeroCuenta); 
-        
         repositorio.guardarMedioPago(medioPago);       
     }
 
+    
     public void guardarTarjeta(Long id, String numero, LocalDate fechaVencimiento, String digitoVerificador){
         Tarjeta medioPago = new Tarjeta();
         medioPago.setId(id);
@@ -45,6 +48,7 @@ public class ServicioPagosImpl implements ServicioPagos {
         repositorio.guardarMedioPago(medioPago);        
     }
 
+    
     public void pagarCarga(String cedulaCliente, Float importe, Long idMedioPago) {
         
         MedioPago medioPago = repositorio.getMedioPago(idMedioPago);
@@ -67,7 +71,7 @@ public class ServicioPagosImpl implements ServicioPagos {
                         
                 // por ahora los pagos son siempre exitosos
                 publicador.publicarEventoTarjeta(true, "Pago efectuado con éxito", cedulaCliente);
-                pago.setAprovado(true);
+                pago.setAprobado(true);
 
             } else if (medioPago instanceof CuentaUTE) {
                 System.out.println("Comunicacion con el sistema externo de CuentaUTE. \n" +
@@ -78,13 +82,14 @@ public class ServicioPagosImpl implements ServicioPagos {
 
                 // por ahora los pagos son siempre exitosos
                 publicador.publicarEventoCuentaUTE(true, "Pago efectuado con éxito", cedulaCliente);
-                pago.setAprovado(true);
+                pago.setAprobado(true);
             }
         }
 
         repositorio.guardarPago(pago);
     }
 
+    
     public void consultarPagos(String cedulaCliente, LocalDate inicio, LocalDate fin) {
         repositorio.consultarPagos(cedulaCliente, inicio, fin);
     }

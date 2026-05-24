@@ -5,7 +5,7 @@ import jakarta.enterprise.event.Event;
 import jakarta.inject.Inject;
 
 @ApplicationScoped
-public class PublicadorEventoConfirmacion {
+public class PublicadorEventoPago {
     
     @Inject
     private Event<EventoTarjeta> eventoTarjeta;
