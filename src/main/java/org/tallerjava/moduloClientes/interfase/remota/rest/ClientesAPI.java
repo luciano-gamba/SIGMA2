@@ -7,7 +7,6 @@ import jakarta.ws.rs.core.MediaType;
 import org.jboss.logging.Logger;
 import org.tallerjava.moduloClientes.aplicacion.ServicioClientes;
 import org.tallerjava.moduloClientes.dominio.Cliente;
-import org.tallerjava.moduloClientes.dominio.Reclamo;
 
 import java.util.List;
 

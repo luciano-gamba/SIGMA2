@@ -1,8 +1,7 @@
 package org.tallerjava.moduloCargas.dominio;
 
 public enum EnumTipoConector {
-    
-    // Tipo 2 , CCS2, CYHAdeMO, GB/T
+
     Tipo2(1),
     CCS2(2),
     CYHAdeMO(3),

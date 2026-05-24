@@ -10,7 +10,7 @@ public enum EnumTipoProfesional {
     EnumTipoProfesional(int id) { this.id = id; }
     public int getId() { return id; }
 
-    public static EnumTipoProfesional getById(int id) {//SI anda fue hecho por Nahuel, sino fue hecho por LUCAS BRITO, EL FAMILIAR DEL PROFE!
+    public static EnumTipoProfesional getById(int id) {
         switch (id) {
             case 1:
                 return TAXI;
@@ -19,8 +19,8 @@ public enum EnumTipoProfesional {
             case 3:
                 return CABIFY;
             default:
-                throw new IllegalArgumentException("Nacionalidad invalida");
-        }// Hecho mal por Nahuel no por Lucas Brito
+                throw new IllegalArgumentException("Tipo profesional invalido");
+        }
     }
 
 }

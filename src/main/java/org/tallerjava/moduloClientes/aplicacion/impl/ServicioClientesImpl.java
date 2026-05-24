@@ -15,7 +15,6 @@ import java.util.List;
 @ApplicationScoped
 public class ServicioClientesImpl implements ServicioClientes {
 
-    // aca iria to do los @Inject que se precisen
     @Inject
     private ClientesRepositorio repo;
 

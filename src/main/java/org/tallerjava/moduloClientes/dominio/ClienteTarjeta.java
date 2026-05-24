@@ -18,6 +18,5 @@ public class ClienteTarjeta extends MedioPago{
     private String numero;
     private LocalDate fechaVencimiento;
     private String digitoVerificador;
-    //private EnumTipoTarjeta tipoTarjeta; nos interesaba al final tener si es tarjeta de debito o de crédito?
 
 }

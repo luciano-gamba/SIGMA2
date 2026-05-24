@@ -6,7 +6,6 @@ import jakarta.enterprise.event.Event;
 import org.tallerjava.moduloClientes.dominio.Cliente;
 import org.tallerjava.moduloClientes.dominio.ClienteTarjeta;
 import org.tallerjava.moduloClientes.dominio.CuentaUTE;
-import org.tallerjava.moduloClientes.dominio.MedioPago;
 
 @ApplicationScoped
 public class PublicadorEventoCliente {

@@ -31,14 +31,6 @@ public class CargasAPI {
         servicioCarga.iniciarCarga(cargador,c,pago);
     }
 
-    // @POST
-    // @Path("/set/cargaActual/{id}")
-    // @Consumes(MediaType.APPLICATION_JSON)
-    // public void setPorcentajeCarga(@PathParam("id") String cedula, int
-    // porcentaje){ //funcionará con dos parametros????
-    // servicioCarga.setPorcentajeCarga(cedula, porcentaje);
-    // }
-
     // curl -X GET -v http://localhost:8080/SIGMA2/moduloCargas/get/cargaActual/59924162
     @GET
     @Path("/get/cargaActual/{id}")

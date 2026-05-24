@@ -7,7 +7,6 @@ import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.MediaType;
 import org.tallerjava.moduloClientes.aplicacion.ServicioClientes;
-import org.tallerjava.moduloClientes.dominio.Cliente;
 import org.tallerjava.moduloClientes.dominio.MedioPago;
 
 @ApplicationScoped

@@ -1,8 +1,7 @@
 package org.tallerjava.moduloCargas.dominio;
 
 public enum EnumTipoCargador {
-    
-    // Rapido , Lento , Normal
+
     Rapido(1),
     Lento(2);
 

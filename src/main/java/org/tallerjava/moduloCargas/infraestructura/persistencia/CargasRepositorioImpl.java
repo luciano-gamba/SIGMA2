@@ -36,7 +36,7 @@ public class CargasRepositorioImpl implements CargasRepositorio{
     }
 
     public List<EstacionCarga> obtenerEstaciones() {
-        String sql = "SELECT DISTINCT e FROM estacionCarga e LEFT JOIN FETCH e.misCargadores" ; //se usa el entity name Select ec from estacionCarga ec
+        String sql = "SELECT DISTINCT e FROM estacionCarga e LEFT JOIN FETCH e.misCargadores" ;
 
         TypedQuery<EstacionCarga> obtenerEstaciones = em.createQuery(sql,EstacionCarga.class);
         try{

@@ -46,16 +46,11 @@ public class ServicioCargaImpl implements ServicioCarga {
             //si tiene alguna carga pendiente de pagar o una carga activa, no le permite iniciar una carga nueva hasta que la pague/termine la actual
             throw new IllegalArgumentException("El cliente tiene una carga activa/pendiente.");
         }
-        // Esta operacion se expondra de manera remota con un endpoint
         cargador.setEstadoCargador(1);
-        // if(!repo.encontreCliente(c)){
-        // return;
-        // }
-        this.altaCarga(new Carga(cargador, c, medioPago)); // Verificar que exista el cliente
-        // this.altaMedioPago(pago);
+        this.altaCarga(new Carga(cargador, c, medioPago));
     }
 
-    public int verCargaActual(String cedula) { //Esta operacion solo deberia llamarse si el cliente c tiene una carga activa
+    public int verCargaActual(String cedula) {
         Cliente c = repo.getCliente(cedula);
         if(c == null){
             throw new IllegalArgumentException("El cliente no existe.");
@@ -187,6 +182,8 @@ public class ServicioCargaImpl implements ServicioCarga {
         }
     }
 
+    @Override
+    @Transactional
     public void altaMedioPago(MedioPago medioPago){
         repo.guardarMedioPago(medioPago);
     }

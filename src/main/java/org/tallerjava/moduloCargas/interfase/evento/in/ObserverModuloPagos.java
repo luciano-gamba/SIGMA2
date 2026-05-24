@@ -1,7 +1,5 @@
 package org.tallerjava.moduloCargas.interfase.evento.in;
 
-//import java.util.logging.Logger;
-
 import org.tallerjava.moduloCargas.aplicacion.ServicioCarga;
 
 import jakarta.enterprise.context.ApplicationScoped;
@@ -12,8 +10,6 @@ import org.tallerjava.moduloPagos.interfase.out.EventoTarjeta;
 
 @ApplicationScoped
 public class ObserverModuloPagos {
-    //private static final Logger log = Logger.getLogger(ObserverModuloCliente.class);
-
     @Inject
     private ServicioCarga servicioCarga;
 

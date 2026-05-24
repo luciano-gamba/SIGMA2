@@ -10,7 +10,6 @@ import org.tallerjava.moduloClientes.dominio.MedioPago;
 import org.tallerjava.moduloClientes.dominio.Reclamo;
 import org.tallerjava.moduloClientes.dominio.repo.ClientesRepositorio;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @ApplicationScoped
