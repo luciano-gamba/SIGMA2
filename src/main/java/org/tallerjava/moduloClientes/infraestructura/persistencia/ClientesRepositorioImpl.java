@@ -7,6 +7,7 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
 import org.tallerjava.moduloClientes.dominio.Cliente;
 import org.tallerjava.moduloClientes.dominio.MedioPago;
+import org.tallerjava.moduloClientes.dominio.Reclamo;
 import org.tallerjava.moduloClientes.dominio.repo.ClientesRepositorio;
 
 import java.util.ArrayList;
@@ -49,6 +50,15 @@ public class ClientesRepositorioImpl implements ClientesRepositorio {
     public void altaMedioPago(Cliente cliente, MedioPago medioPago){
         em.persist(medioPago);
         em.merge(cliente);
+    }
+
+    public Cliente getClienteSC(String ci){
+        return em.find(Cliente.class, ci);
+    }
+
+    @Override
+    public void guardarReclamo(Reclamo reclamo){
+        em.persist(reclamo);
     }
 
 }

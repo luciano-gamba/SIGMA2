@@ -8,6 +8,7 @@ import org.tallerjava.moduloClientes.dominio.*;
 import org.tallerjava.moduloClientes.dominio.repo.ClientesRepositorio;
 import org.tallerjava.moduloClientes.interfase.evento.out.PublicadorEventoCliente;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,8 +50,8 @@ public class ServicioClientesImpl implements ServicioClientes {
 
     @Override
     @Transactional
-    public void altaMedioPago(Cliente cliente, MedioPago medioPago){
-
+    public void altaMedioPago(String ci, MedioPago medioPago){
+        Cliente cliente = repo.getClienteSC(ci);
         if ((medioPago instanceof CuentaUTE) && (cliente instanceof Profesional)){
             throw new IllegalArgumentException(
                     "Este cliente no acepta este medio de pago"
@@ -77,8 +78,11 @@ public class ServicioClientesImpl implements ServicioClientes {
     }
 
     @Override
-    public void realizarReclamo(Cliente cliente, String comentario){
-        //aca va la implementacion
+    @Transactional
+    public void realizarReclamo(String ci, String comentario){
+        Reclamo reclamo = new Reclamo(ci, comentario, LocalDate.now());
+
+        repo.guardarReclamo(reclamo);
     }
 
 }

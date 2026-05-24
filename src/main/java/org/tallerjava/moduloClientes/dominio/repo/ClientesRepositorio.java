@@ -2,16 +2,21 @@ package org.tallerjava.moduloClientes.dominio.repo;
 
 import org.tallerjava.moduloClientes.dominio.Cliente;
 import org.tallerjava.moduloClientes.dominio.MedioPago;
+import org.tallerjava.moduloClientes.dominio.Reclamo;
 
 import java.util.List;
 
 public interface ClientesRepositorio {
 
-    public void guardarCliente(Cliente cliente);
+    void guardarCliente(Cliente cliente);
 
-    public List<Cliente> obtenerClientes();
+    List<Cliente> obtenerClientes();
 
-    public Cliente getCliente(String ci, String contrasenia);
+    Cliente getCliente(String ci, String contrasenia);
 
-    public void altaMedioPago(Cliente cliente, MedioPago medioPago);
+    void altaMedioPago(Cliente cliente, MedioPago medioPago);
+
+    Cliente getClienteSC(String ci);
+
+    void guardarReclamo(Reclamo reclamo);
 }

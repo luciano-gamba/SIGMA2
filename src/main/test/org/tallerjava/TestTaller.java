@@ -144,6 +144,16 @@ class TestTaller {
             public void altaMedioPago(Cliente cliente, MedioPago medioPago) {
 
             }
+
+            @Override
+            public Cliente getClienteSC(String ci) {
+                return null;
+            }
+
+            @Override
+            public void guardarReclamo(Reclamo reclamo) {
+
+            }
         };
     }
 

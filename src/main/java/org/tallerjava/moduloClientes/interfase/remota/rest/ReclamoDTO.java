@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ClienteMedioPagoDTO {
+public class ReclamoDTO {
 
     private ClienteCiDTO cliente;
-    private MedioPagoDTO medioPago;
+    private String comentario;
 
 }

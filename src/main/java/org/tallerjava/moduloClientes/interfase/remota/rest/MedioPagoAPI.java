@@ -18,7 +18,7 @@ public class MedioPagoAPI {
     private ServicioClientes servicioClientes;
 
     //cliente Comun (cuentaUTE)
-    //curl -X POST -v http://localhost:8080/SIGMA2/MedioPago -H "Content-Type: application/json" -d '{"cliente":{"cedula":"55326750","nombreCompleto":"Alan Nahuel Machado Sosa","telefono":"094755370","contrasenia":"1234"},"medioPago":{"numeroCuenta":"001002003"}}'
+    //curl -X POST -v http://localhost:8080/SIGMA2/MedioPago -H "Content-Type: application/json" -d '{"cliente":{"cedula":"55326750"},"medioPago":{"numeroCuenta":"001002003"}}'
 
     //cliente Profesional (CuentaUTE)
     //curl -X POST -v http://localhost:8080/SIGMA2/MedioPago -H "Content-Type: application/json" -d '{"cliente":{"cedula":"55326751","nombreCompleto":"Alan Nahuel Machado Sosa","telefono":"094755370","contrasenia":"1234","porcentajeDescuento":"20","tipo":"TAXI"},"medioPago":{"numeroCuenta":"001002003"}}'
@@ -26,12 +26,12 @@ public class MedioPagoAPI {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public void registrarMedioPago(ClienteMedioPagoDTO dto){
-        ClientesDTO cliente = dto.getCliente();
+        ClienteCiDTO cliente = dto.getCliente();
         MedioPagoDTO medio = dto.getMedioPago();
 
         MedioPago medioPago = medio.buildMedioPago();
-        Cliente cli = cliente.buildCliente();
-        servicioClientes.altaMedioPago(cli, medioPago);
+        String ci = cliente.getCedula();
+        servicioClientes.altaMedioPago(ci, medioPago);
     }
 
 }

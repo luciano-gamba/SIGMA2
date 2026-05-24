@@ -7,6 +7,7 @@ import jakarta.ws.rs.core.MediaType;
 import org.jboss.logging.Logger;
 import org.tallerjava.moduloClientes.aplicacion.ServicioClientes;
 import org.tallerjava.moduloClientes.dominio.Cliente;
+import org.tallerjava.moduloClientes.dominio.Reclamo;
 
 import java.util.List;
 
@@ -53,6 +54,18 @@ public class ClientesAPI {
             return servicioClientes.iniciarSesion(cli.getCedula(), cli.getContrasenia());
         }
 
+    }
+
+    //curl -X POST -v http://localhost:8080/SIGMA2/moduloCliente/realizarReclamo -H "Content-Type: application/json" -d '{"cliente":{"cedula":"55326750"}, "comentario":"NO FUNCIONA EL CARGADOR!"}'
+    @POST
+    @Path("/realizarReclamo")
+    @Consumes(MediaType.APPLICATION_JSON)
+    public void registrarReclamo(ReclamoDTO reclamoDTO){
+        ClienteCiDTO cliente = reclamoDTO.getCliente();
+        String comentario = reclamoDTO.getComentario();
+
+        String ci = cliente.getCedula();
+        servicioClientes.realizarReclamo(ci, comentario);
     }
 
 }

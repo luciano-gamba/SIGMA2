@@ -7,9 +7,8 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ClienteMedioPagoDTO {
+public class ClienteCiDTO {
 
-    private ClienteCiDTO cliente;
-    private MedioPagoDTO medioPago;
+    private String cedula;
 
 }
