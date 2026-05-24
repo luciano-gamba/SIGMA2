@@ -9,7 +9,6 @@ import org.tallerjava.moduloClientes.dominio.repo.ClientesRepositorio;
 import org.tallerjava.moduloClientes.interfase.evento.out.PublicadorEventoCliente;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 @ApplicationScoped
