@@ -1,6 +1,7 @@
 package org.tallerjava.moduloCargas.aplicacion;
 
 import org.tallerjava.moduloCargas.dominio.*;
+import org.tallerjava.moduloCargas.dominio.dto.CargaDTO;
 import org.tallerjava.moduloCargas.dominio.dto.EstacionCargaDTO;
 
 import java.time.LocalDateTime;
@@ -11,7 +12,7 @@ public interface ServicioCarga {
 
     int verCargaActual(String cedula);
 
-    List<Carga> verHistorico(String cedula, LocalDateTime inicio, LocalDateTime fin);
+    List<CargaDTO> verHistorico(String cedula, LocalDateTime inicio, LocalDateTime fin);
 
     void finalizarCarga(int idCar, double tiempoRecargo);
 

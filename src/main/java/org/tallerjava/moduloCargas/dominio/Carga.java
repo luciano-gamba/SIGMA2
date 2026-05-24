@@ -84,7 +84,7 @@ public class Carga {
 
         double total = (totalConectado + totalRecargo);
 
-        this.importeTotal = total - total*descuento;
+        this.importeTotal = total - total*descuento/100;
 
         return this.importeTotal;
     }

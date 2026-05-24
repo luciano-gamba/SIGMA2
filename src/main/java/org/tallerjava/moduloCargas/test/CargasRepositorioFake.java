@@ -1,5 +1,6 @@
 package org.tallerjava.moduloCargas.test;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,19 +10,13 @@ import org.tallerjava.moduloCargas.dominio.repo.CargasRepositorio;
 
 public class CargasRepositorioFake implements CargasRepositorio{
      @Override
-    public void guardarEstacion(EstacionCarga estacionCarga) {
-        return;
-    }
+    public void guardarEstacion(EstacionCarga estacionCarga) {}
 
     @Override
-    public void guardarCarga(Carga carga) {
-        return;
-    }
+    public void guardarCarga(Carga carga) {}
 
     @Override
-    public void guardarCargador(Cargador cargador) {
-        return;
-    }
+    public void guardarCargador(Cargador cargador) {}
 
     @Override
     public List<EstacionCarga> obtenerEstaciones() {
@@ -29,14 +24,10 @@ public class CargasRepositorioFake implements CargasRepositorio{
     }
 
     @Override
-    public void guardarCliente(Cliente cliente) {
-        return;
-    }
+    public void guardarCliente(Cliente cliente) {}
 
     @Override
-    public void guardarFinalizacionCarga(Cliente cliente, Carga carga, Cargador cargador) {
-        return;
-    }
+    public void guardarFinalizacionCarga(Cliente cliente, Carga carga, Cargador cargador) {}
     @Override
     public Cliente getCliente(String cedula){
         return new Cliente();
@@ -53,15 +44,15 @@ public class CargasRepositorioFake implements CargasRepositorio{
     }
 
     @Override
-    public void guardarCargaAprobada(Cliente cliente, Carga carga){ return; }
+    public void guardarCargaAprobada(Cliente cliente, Carga carga){}
 
     @Override
-    public void guardarMedioPago(MedioPago medioPago){
-        return;
-    }
+    public void guardarMedioPago(MedioPago medioPago){}
 
     @Override
     public MedioPago getMedioPago(long idPago){
         return new MedioPago();
     }
+
+    public List<Carga> getHistorialCargas(String cedula, LocalDateTime inicio, LocalDateTime fin){ return new ArrayList<>(); }
 }

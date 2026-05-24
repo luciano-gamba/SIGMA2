@@ -7,6 +7,7 @@ import org.tallerjava.moduloCargas.aplicacion.ServicioCarga;
 
 import jakarta.inject.Inject;
 import org.tallerjava.moduloCargas.dominio.*;
+import org.tallerjava.moduloCargas.dominio.dto.CargaDTO;
 import org.tallerjava.moduloCargas.dominio.dto.EstacionCargaDTO;
 
 import java.time.LocalDateTime;
@@ -46,11 +47,12 @@ public class CargasAPI {
         return servicioCarga.verCargaActual(cedula);
     }
 
-    @GET
+//     curl -X POST -v http://localhost:8080/SIGMA2/moduloCargas/get/historico -H "Content-Type: application/json" -d '{"cedula":"59924162","inicio":"2024-05-24T00:00:00","fin":"2028-05-24T00:00:00"}'
+    @POST
     @Path("/get/historico")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Carga> verHistorico(HistoricoDTO dto){
+    public List<CargaDTO> verHistorico(HistoricoDTO dto){
         String cedula = dto.getCedula();
         LocalDateTime inicio = dto.getInicio();
         LocalDateTime fin = dto.getFin();

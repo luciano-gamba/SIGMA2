@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.tallerjava.moduloCargas.aplicacion.ServicioCarga;
 import org.tallerjava.moduloCargas.dominio.*;
+import org.tallerjava.moduloCargas.dominio.dto.CargaDTO;
 import org.tallerjava.moduloCargas.dominio.dto.EstacionCargaDTO;
 import org.tallerjava.moduloCargas.dominio.repo.CargasRepositorio;
 
@@ -66,18 +67,15 @@ public class ServicioCargaImpl implements ServicioCarga {
         }
     }
 
-    public List<Carga> verHistorico(String cedula, LocalDateTime inicio, LocalDateTime fin) {
-        Cliente c = repo.getCliente(cedula);
+    @Override
+    public List<CargaDTO> verHistorico(String cedula, LocalDateTime inicio, LocalDateTime fin) {
+        // busco directo en la BD las cargas asociadas a la cedula pasada
+        List<Carga> listaCargasCliente = repo.getHistorialCargas(cedula, inicio, fin);
 
-        // Me puede llegar la cedula del cliente y lo busco en el repo
-        List<Carga> listaCargasCliente = c.getHistorialCargas();
-
-        List<Carga> historicoSegunFecha = new ArrayList<>();
-
+        List<CargaDTO> historicoSegunFecha = new ArrayList<>();
+        // las transformo a CargaDTO para pasar lo que quiero
         for (Carga carga:listaCargasCliente){
-            if(carga.getHoraFin().isAfter(inicio) && carga.getHoraFin().isBefore(fin)){
-                historicoSegunFecha.add(carga);
-            }
+                historicoSegunFecha.add(new CargaDTO(carga));
         }
         return historicoSegunFecha;
     }

@@ -1,5 +1,6 @@
 package org.tallerjava.moduloCargas.infraestructura.persistencia;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.tallerjava.moduloCargas.dominio.*;
@@ -106,5 +107,14 @@ public class CargasRepositorioImpl implements CargasRepositorio{
         } catch (NoResultException e) {
             return null;
         }
+    }
+
+    public List<Carga> getHistorialCargas(String cedula, LocalDateTime inicio, LocalDateTime fin){
+        String sql = "SELECT c FROM Carga c JOIN FETCH c.cargador JOIN FETCH c.miPago WHERE c.miCliente.cedula = :cedula AND c.horaFin BETWEEN :inicio AND :fin";
+        return em.createQuery(sql, Carga.class)
+                .setParameter("cedula", cedula)
+                .setParameter("inicio",inicio)
+                .setParameter("fin",fin)
+                .getResultList();
     }
 }
