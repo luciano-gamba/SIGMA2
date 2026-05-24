@@ -1,41 +1,114 @@
-# Taller Java 
+# **SIGMA2**
 
-## Iteración I
+## Sistema de Gestión de Movilidad Eléctrica
 
-Decisiones principales respecto al diseño del sistema:
+## Integrantes
 
-- **Modularización**: Conceptualmente los requerimientos del sistema se dividen en seis categorías. Cada categoría representa un módulo del Sistema. 
-Un módulo es una separación lógica dentro de la aplicación
+| Nombre |
+| :---: |
+| [Lucas Brito](mailto:lucas.brito@estudiantes.utec.edu.uy) |
+| [Matthew Freire](mailto:matthew.freire@estudiantes.utec.edu.uy) |
+| [Luciano Gamba](mailto:luciano.gamba@estudiantes.utec.edu.uy) |
+| [Alan Machado](mailto:alan.machado@estudiantes.utec.edu.uy) |
 
-- **Bajo acoplamiento entre módulos**: Se intenta que los módulos solo se comuniquen entre si, mediate el intercambio de eventos o uso de interfaces.
-Además cada módulo cuenta con sus propias clases de Dominio y sus repositorio propio de datos.
+En este taller desarrollamos el backend de servicios para una aplicación de sistema de gestión de movilidad eléctrica diseñado para gestionar la recarga de vehículos eléctricos.
 
-- **Separación en capas**: podemos ver a cada módulo del sistema como un corte "vertical" del sistema. Sin embargo dentro de cáda módulos existe separación de conceptos utilizando capas lógicas (corte horizotal)
+     Decidimos usar una arquitectura de monolito modular, el cual consiste de la aplicación desplegada en una sola capa física (monolito) pero dividido en varios módulos distintos bien separados.   
+     Esto tiene la ventaja de que combina la simplicidad de un monolito, con la organización y desacoplamiento de los microservicios.
 
-- **Priorización de lógica de negocio**: las dependencias entre capas lógicas determina que la capa principal es la capa de Domonio. El resto de las caps depende de su capas inferior. El esquema de capas sigue los lineamientos de una "arquitectura limpia".
-
-- **Facilidad de testeo**: el diseño en capas permite realizar test unitarios de la capa de Dominio y de Aplicación. El bajo acoplamiento entre módulos permite probar los mismos de forma independiente.
-
-![image](https://github.com/gabrielaramburu/TallerJakartaEE/assets/63823685/45eeedb5-355a-4513-9eca-b28cef2f4a8f)
-
-### Dependencias entre módulos
-
-Nota: posible idea para documentar las dependencias entre módulos. Los diagramas, son representativos, no están completos.
-
---- 
-**Módulo Peaje**
-
-![image](https://github.com/gabrielaramburu/TallerJakartaEE/assets/63823685/48db9731-0d83-4e2a-9647-8e64140ab389)
-
----
-
-*Modelo de dominio utilizado como referencia*
-![image] <img width="1201" height="507" alt="image" src="https://github.com/user-attachments/assets/37f142c4-309f-4357-b1ee-4bdba301c74a" />
+## Modelo de dominio
 
 
-**Módulo Gestión**
-![image](https://github.com/gabrielaramburu/TallerJakartaEE/assets/63823685/63854c26-dd06-4e4e-bcf0-7544fe041fb6)
+
+## **Módulo Cargas**
+
+Eventos escuchados (**/interfase/evento/in**):
+
+Mediante el **ObserverModuloCliente.java** el moduloCargas consume eventos **ClienteNuevoCliente** publicados por el ModuloCliente para insertar en sus tablas de clientes, a estos nuevos Clientes.   
+A su vez también utilizando el **ObserverModuloCliente.java** el moduloCargas consume los eventos **ClienteNuevaTarjeta** y eventos **ClienteNuevaCuentaUTE** para poder insertar en su tabla de medio de pago a estos nuevos medios de pagos.
+
+Mediante el **ObserverModuloPagos.java** este modulo consume tanto eventos **EventoTarjeta** y **EventoCuentaUTE** para poder confirmar el pago de una **Carga** manteniendo así la consistencia de los Pagos.
+
+Eventos publicados (**/interfase/evento/on**):
+
+Mediante el **PublicadorEventoCarga.java** se publican las Cargas a pagar delegando esa parte al **ModuloPagos**.
+
+Endpoints expuestos (**/interfase/remota/rest**):  
+Mediante **CargasAPI** se exponen los siguientes endpoints:
+
+* iniciarCarga  
+  * [http://localhost:8080/SIGMA2/moduloCargas/carga/iniciar](http://localhost:8080/SIGMA2/moduloCargas/carga/iniciar)  
+* obtenerCargaActual  
+  * [http://localhost:8080/SIGMA2/moduloCargas/get/cargaActual/{cedula}](http://localhost:8080/SIGMA2/moduloCargas/get/cargaActual/{cedula)  
+* obtenerHistorialDeCargas  
+  * [http://localhost:8080/SIGMA2/moduloCargas/get/historico](http://localhost:8080/SIGMA2/moduloCargas/get/historico)  
+* obtenerEstaciones  
+  * [http://localhost:8080/SIGMA2/moduloCargas/get/estaciones](http://localhost:8080/SIGMA2/moduloCargas/get/estaciones)  
+* finalizarCarga (se llama desde el Cargador \- hardware )  
+  * [http://localhost:8080/SIGMA2/moduloCargas/carga/finalizar](http://localhost:8080/SIGMA2/moduloCargas/carga/finalizar)  
+* altaEstacion  
+  * [http://localhost:8080/SIGMA2/moduloCargas/alta/estacion](http://localhost:8080/SIGMA2/moduloCargas/alta/estacion)  
+* altaCargador  
+  * [http://localhost:8080/SIGMA2/moduloCargas/alta/cargador](http://localhost:8080/SIGMA2/moduloCargas/alta/cargador)  
+* reintentarPagoCarga  
+  * [http://localhost:8080/SIGMA2/moduloCargas/carga/reintentar/{cedula}](http://localhost:8080/SIGMA2/moduloCargas/carga/reintentar/{cedula)
 
 
----
-Otra idea interesante es documentar los eventos que dispara cada módulo y quien los escucha
+## **Módulo Clientes**
+
+Eventos escuchados (**/interfase/in**):
+
+- No escucha ningún evento.
+
+Eventos publicados (**/interfase/evento/out**):
+
+Mediante el **PublicadorEventoCliente** se publica:
+
+- publicarNuevoCliente  
+- publicarNuevaTarjeta  
+- publicarNuevaCuentaUTE
+
+Endpoints expuestos (**/interfase/remota/rest**):
+
+Mediante ClientesAPI se exponen los siguientes endpoints:
+
+- http://localhost:8080/SIGMA2/moduloCliente (registrar Cliente)  
+- [http://localhost:8080/SIGMA2/moduloCliente/getClientes](http://localhost:8080/SIGMA2/moduloCliente/getClientes) (getClientes)  
+- [http://localhost:8080/SIGMA2/moduloCliente/iniciarSesion](http://localhost:8080/SIGMA2/moduloCliente/iniciarSesion) (iniciarSesion)  
+- [http://localhost:8080/SIGMA2/moduloCliente/realizarReclamo](http://localhost:8080/SIGMA2/moduloCliente/realizarReclamo) (registrarReclamo)
+
+
+Mediante MedioPagoAPI se exponen los siguientes endpoints:
+
+- [http://localhost:8080/SIGMA2/MedioPago](http://localhost:8080/SIGMA2/MedioPago) (registrarMedioPago)
+
+## **Módulo Pagos**
+
+Eventos escuchados (**/interfase/in**):
+
+1\)
+
+* Mediante el **ObservadorEventoNuevoCliente.java** consume el evento **ClienteNuevoCliente.java** del MODULO CLIENTES.
+
+* Mediante el **ObservadorEventoNuevaCuentaUTE.java** consume el evento **ClienteNuevaCuentaUTE.java** del MODULO CLIENTES.  
+* Mediante el **ObservadorEventoNuevaTarjeta.java** consume el evento **ClienteNuevaTarjeta.java** del MODULO CLIENTES.
+
+2\)
+
+* Mediante el **ObservadorEventoCargaAPagar.java** consume el evento **CargaAPagar.java** del MODULO CARGA.
+
+
+Eventos publicados (**/interfase/out**): 
+
+3\)
+
+* Mediante el **PublicadorEventoPago.java** se publica el evento **EventoCuentaUTE.java** y   
+  **EventoTarjeta.java** 
+
+Comportamiento:
+
+1) Luego de cada inserción de clientes o medios de pago (*MÓDULO CLIENTES*) la información es guardada en la propia persistencia.  
+2) Luego de finalizada una carga (*MÓDULO CARGAS*) la información es procesada y almacenada en la propia persistencia.  
+3) La información del pago (*resultado de la transacción*) es publicada para ser consumida por el MÓDULO CARGAS.
+
+
