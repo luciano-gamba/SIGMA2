@@ -31,7 +31,9 @@ public class ServicioPagosImpl implements ServicioPagos {
     public void guardarCuentaUTE(Long id, String numeroCuenta){
         CuentaUTE medioPago = new CuentaUTE();
         medioPago.setId(id);
-        medioPago.setNumeroCuenta(numeroCuenta);        
+        medioPago.setNumeroCuenta(numeroCuenta); 
+        
+        repositorio.guardarMedioPago(medioPago);       
     }
 
     public void guardarTarjeta(Long id, String numero, LocalDate fechaVencimiento, String digitoVerificador){
