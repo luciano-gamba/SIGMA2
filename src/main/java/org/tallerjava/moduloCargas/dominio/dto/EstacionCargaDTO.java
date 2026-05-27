@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.tallerjava.moduloCargas.dominio.Cargador;
 import org.tallerjava.moduloCargas.dominio.EstacionCarga;
-import org.tallerjava.moduloCargas.interfase.remota.rest.CargadorDTO;
 
 import java.util.ArrayList;
 import java.util.List;

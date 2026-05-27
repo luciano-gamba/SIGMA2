@@ -9,6 +9,7 @@ import jakarta.inject.Inject;
 import org.tallerjava.moduloCargas.dominio.*;
 import org.tallerjava.moduloCargas.dominio.dto.CargaDTO;
 import org.tallerjava.moduloCargas.dominio.dto.EstacionCargaDTO;
+import org.tallerjava.moduloCargas.infraestructura.ratelimiter.RateLimited;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -40,6 +41,7 @@ public class CargasAPI {
     }
 
 //     curl -X POST -v http://localhost:8080/SIGMA2/moduloCargas/get/historico -H "Content-Type: application/json" -d '{"cedula":"59924162","inicio":"2024-05-24T00:00:00","fin":"2028-05-24T00:00:00"}'
+    @RateLimited
     @POST
     @Path("/get/historico")
     @Consumes(MediaType.APPLICATION_JSON)
