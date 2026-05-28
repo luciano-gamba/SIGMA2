@@ -14,10 +14,10 @@ public class ObserverModuloPagos {
     private ServicioCarga servicioCarga;
 
     public void accept(@Observes EventoTarjeta event){
-        servicioCarga.cargaAprovada(event.isAprovado(), event.getCedula());
+        servicioCarga.cargaAprovada(event.isAprobado(), event.getCedula());
     }
 
     public void accept(@Observes EventoCuentaUTE event){
-        servicioCarga.cargaAprovada(event.isAprovado(), event.getCedula());
+        servicioCarga.cargaAprovada(event.isAprobado(), event.getCedula());
     }
 }

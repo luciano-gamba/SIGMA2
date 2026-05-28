@@ -1,8 +1,10 @@
 package org.tallerjava.moduloPagos.infraestructura.persistencia;
 
+import org.tallerjava.moduloPagos.dominio.CuentaUTE;
 import org.tallerjava.moduloPagos.dominio.Cliente;
 import org.tallerjava.moduloPagos.dominio.MedioPago;
 import org.tallerjava.moduloPagos.dominio.Pago;
+import org.tallerjava.moduloPagos.dominio.Tarjeta;
 import org.tallerjava.moduloPagos.dominio.repositorio.PagosRepositorio;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.persistence.EntityManager;
@@ -30,6 +32,13 @@ public class PagosRepositorioImpl implements PagosRepositorio {
 
     public MedioPago getMedioPago(Long idMedioPago) {
         return em.find(MedioPago.class, idMedioPago);
+    }
+
+    public Tarjeta getTarjeta(Long idMedioPago){
+        return em.find(Tarjeta.class, idMedioPago);
+    }
+    public CuentaUTE getCuentaUTE(Long idMedioPago){
+        return em.find(CuentaUTE.class, idMedioPago);
     }
 
     public void guardarPago(Pago pago) {

@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class EventoCuentaUTE {
-    private boolean aprovado;
+    private boolean aprobado;
     private String mensaje;
     private String cedula;
 }

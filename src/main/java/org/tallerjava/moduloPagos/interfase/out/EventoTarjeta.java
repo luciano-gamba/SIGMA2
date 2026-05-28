@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class EventoTarjeta {
-    private boolean aprovado;
+    private boolean aprobado;
     private String mensaje;
     private String cedula;
 }
