@@ -3,10 +3,12 @@ package org.tallerjava.moduloCargas.infraestructura.ratelimiter;
 import io.github.bucket4j.Bandwidth;
 import io.github.bucket4j.Bucket;
 import jakarta.annotation.PostConstruct;
+import jakarta.enterprise.context.ApplicationScoped;
 import lombok.Getter;
 
 import java.time.Duration;
 
+@ApplicationScoped
 public class RateLimiter {
     private Bucket bucket;
     @Getter
