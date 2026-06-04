@@ -1,5 +1,8 @@
 package org.tallerjava.moduloPagos.aplicacion;
 import java.time.LocalDate;
+import java.util.List;
+
+import org.tallerjava.moduloPagos.interfase.out.API.PagoDTO;
 
 public interface ServicioPagos {
     
@@ -8,6 +11,6 @@ public interface ServicioPagos {
     public void guardarTarjeta(Long id, String numero, LocalDate fechaVencimiento, String digitoVerificador);
     
     public void pagarCarga(String cedulaCliente, Float importe, Long idMedioPago);
-    public void consultarPagos(String cedulaCliente, LocalDate inicio, LocalDate fin);
+    public List<PagoDTO> consultarPagos(String cedulaCliente, LocalDate inicio, LocalDate fin);
 
 }

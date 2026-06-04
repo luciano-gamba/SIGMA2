@@ -2,6 +2,8 @@ package org.tallerjava.moduloPagos.aplicacion.Impl;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.tallerjava.moduloPagos.dominio.CuentaUTE;
 import org.tallerjava.moduloPagos.dominio.Cliente;
@@ -11,6 +13,8 @@ import org.tallerjava.moduloPagos.dominio.Pago;
 import org.tallerjava.moduloPagos.dominio.Tarjeta;
 import org.tallerjava.moduloPagos.dominio.repositorio.PagosRepositorio;
 import org.tallerjava.moduloPagos.interfase.out.PublicadorEventoPago;
+import org.tallerjava.moduloPagos.interfase.out.API.PagoDTO;
+
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.json.Json;
@@ -70,6 +74,7 @@ public class ServicioPagosImpl implements ServicioPagos {
                         .add("numero", t.getNumero())
                         .add("fechaVenciemiento", t.getFechaVencimiento().toString())
                         .add("digitoVerificador", t.getDigitoVerificador())
+                        .add("importe", importe.toString())
                         .build();
                 try {
                     Response response = client.target(url)
@@ -121,9 +126,13 @@ public class ServicioPagosImpl implements ServicioPagos {
             }
         }
     }
-
-    public void consultarPagos(String cedulaCliente, LocalDate inicio, LocalDate fin) {
-        repositorio.consultarPagos(cedulaCliente, inicio, fin);
+    
+    public List<PagoDTO> consultarPagos(String cedulaCliente, LocalDate inicio, LocalDate fin) {
+        List<PagoDTO> pagoDTOs = new ArrayList<>();
+        for (Pago pago : repositorio.consultarPagos(cedulaCliente, inicio, fin)) {
+            pagoDTOs.add(new PagoDTO(pago));
+        }
+        return pagoDTOs;
     }
 
 }

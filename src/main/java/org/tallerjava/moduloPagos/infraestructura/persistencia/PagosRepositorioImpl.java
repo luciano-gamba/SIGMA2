@@ -46,11 +46,11 @@ public class PagosRepositorioImpl implements PagosRepositorio {
     }
 
     public List<Pago> consultarPagos(String cedulaCliente, LocalDate ini, LocalDate fin) {
-        String jpql = "SELECT m FROM moduloPagos_EntityPago m WHERE m.cliente.cedula = :cedula AND m.fechaPago BETWEEN :inicio AND :fin";
+        String jpql = "SELECT m FROM moduloPagos_EntityPago m WHERE m.cliente.cedula = :cedula AND m.fechaHoraPago BETWEEN :inicio AND :fin";
         return em.createQuery(jpql, Pago.class)
                 .setParameter("cedula", cedulaCliente)
                 .setParameter("inicio", ini.atStartOfDay())
-                .setParameter("fin", fin.atStartOfDay())
+                .setParameter("fin", fin.atTime(23, 59))
                 .getResultList();
     }
 }
