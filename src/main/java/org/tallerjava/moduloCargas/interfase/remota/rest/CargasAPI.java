@@ -40,7 +40,7 @@ public class CargasAPI {
         return servicioCarga.verCargaActual(cedula);
     }
 
-//     curl -X POST -v http://localhost:8080/SIGMA2/moduloCargas/get/historico -H "Content-Type: application/json" -d '{"cedula":"59924162","inicio":"2024-05-24T00:00:00","fin":"2028-05-24T00:00:00"}'
+//  curl -X POST -v http://localhost:8080/SIGMA2/moduloCargas/get/historico -H "Content-Type: application/json" -d '{"cedula":"59924162","inicio":"2024-05-24T00:00:00","fin":"2028-05-24T00:00:00"}'
     @RateLimited
     @POST
     @Path("/get/historico")
@@ -83,7 +83,7 @@ public class CargasAPI {
     @Path("/alta/cargador")
     @Consumes(MediaType.APPLICATION_JSON)
     public void altaCargador(CargadorDTO dto){
-        System.out.println("ID ESTACION CARGA: " + dto.getMiEstacionCarga());
+        // System.out.println("ID ESTACION CARGA: " + dto.getMiEstacionCarga());
         Cargador c = dto.buildCargador();
         int idEstacionCarga = dto.getMiEstacionCarga();
         servicioCarga.altaCargador(c, idEstacionCarga);

@@ -13,12 +13,16 @@ import jakarta.ws.rs.ext.Provider;
 import org.tallerjava.moduloClientes.dominio.Cliente;
 import org.tallerjava.moduloClientes.dominio.repo.ClientesRepositorio;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.lang.reflect.Method;
 import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.List;
 
 @Provider
 @Priority(Priorities.AUTHENTICATION)
@@ -74,6 +78,28 @@ public class SecurityFilter implements ContainerRequestFilter {
                 System.out.println("Contraseña incorrecta");
                 abortar(requestContext, "Credenciales incorrectas");
                 return;
+            }
+
+            //Control de que cedula de login sea igual a la de body
+            try {
+                byte[] bytes = requestContext.getEntityStream().readAllBytes();
+
+                String body = new String(bytes, StandardCharsets.UTF_8);
+
+                String[] bodyArray = body.split("\"");
+                
+               //System.out.println("Cedula del Body: " + bodyArray[5]);
+               
+               if(bodyArray[5] != ci){
+                   System.out.println("Cedulas no coinciden");
+                   abortar(requestContext, "Credenciales no coinciden");
+                   return; 
+               }
+
+                requestContext.setEntityStream(new ByteArrayInputStream(bytes));
+
+            } catch (IOException e) {
+                e.printStackTrace();
             }
 
             System.out.println("¡Login exitoso! Dejando pasar la petición...");
