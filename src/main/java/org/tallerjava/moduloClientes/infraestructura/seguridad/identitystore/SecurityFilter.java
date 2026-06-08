@@ -78,28 +78,6 @@ public class SecurityFilter implements ContainerRequestFilter {
                 return;
             }
 
-            //Control de que cedula de login sea igual a la de body
-            try {
-                byte[] bytes = requestContext.getEntityStream().readAllBytes();
-
-                String body = new String(bytes, StandardCharsets.UTF_8);
-
-                String[] bodyArray = body.split("\"");
-                
-               //System.out.println("Cedula del Body: " + bodyArray[5]);
-               //System.out.println("Cedula ci : " + ci);
-               if(!bodyArray[5].equals(ci)){
-                   System.out.println("Cedulas no coinciden");
-                   abortar(requestContext, "Credenciales no coinciden");
-                   return; 
-               }
-
-                requestContext.setEntityStream(new ByteArrayInputStream(bytes));
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
             System.out.println("¡Login exitoso! Dejando pasar la petición...");
             System.out.println("===========================");
 
