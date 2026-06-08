@@ -102,6 +102,29 @@ public class SecurityFilter implements ContainerRequestFilter {
 
             System.out.println("¡Login exitoso! Dejando pasar la petición...");
             System.out.println("===========================");
+
+            requestContext.setSecurityContext(new jakarta.ws.rs.core.SecurityContext() {
+                @Override
+                public java.security.Principal getUserPrincipal() {
+                    return () -> ci;
+                }
+
+                @Override
+                public boolean isUserInRole(String role) {
+                    return "USER".equals(role);
+                }
+
+                @Override
+                public boolean isSecure() {
+                    return requestContext.getSecurityContext().isSecure();
+                }
+
+                @Override
+                public String getAuthenticationScheme() {
+                    return "BASIC";
+                }
+            });
+
         }
     }
 

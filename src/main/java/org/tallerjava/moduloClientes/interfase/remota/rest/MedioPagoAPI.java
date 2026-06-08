@@ -7,8 +7,11 @@ import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import org.tallerjava.moduloClientes.aplicacion.ServicioClientes;
 import org.tallerjava.moduloClientes.dominio.MedioPago;
+import jakarta.ws.rs.core.Context;
+import jakarta.ws.rs.core.SecurityContext;
 
 @ApplicationScoped
 @Path("/MedioPago")
@@ -29,13 +32,25 @@ public class MedioPagoAPI {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @RolesAllowed("USER")
-    public void registrarMedioPago(ClienteMedioPagoDTO dto){
+    public Response registrarMedioPago(ClienteMedioPagoDTO dto, @Context SecurityContext securityContext){
         ClienteCiDTO cliente = dto.getCliente();
         MedioPagoDTO medio = dto.getMedioPago();
+
+        String cedulaAutenticada = securityContext.getUserPrincipal().getName();
+        String cedulaDestino = dto.getCliente().getCedula();
+
+        if (!cedulaAutenticada.equals(cedulaDestino)) {
+            System.out.println("¡ALERTA! El usuario " + cedulaAutenticada + " intentó modificar al usuario " + cedulaDestino);
+
+            return Response.status(Response.Status.FORBIDDEN)
+                    .entity("{\"error\": \"No tienes permiso para agregar medios de pago a otro usuario.\"}")
+                    .build();
+        }
 
         MedioPago medioPago = medio.buildMedioPago();
         String ci = cliente.getCedula();
         servicioClientes.altaMedioPago(ci, medioPago);
+        return Response.status(Response.Status.OK).build();
     }
 
 }
