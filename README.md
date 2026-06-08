@@ -1,16 +1,25 @@
-<p align="center"># **SIGMA2**</p>
+<h1 align="center"> SIGMA2</h1>
 
-## Sistema de Gestión de Movilidad Eléctrica
+<h2 align="center">Sistema de Gestión de Movilidad Eléctrica</h2>
 
-<p align="center">## Integrantes</p>
-<p align="center">
-| Nombre |
-| :---: |
-| [Lucas Brito](mailto:lucas.brito@estudiantes.utec.edu.uy) |
-| [Matthew Freire](mailto:matthew.freire@estudiantes.utec.edu.uy) |
-| [Luciano Gamba](mailto:luciano.gamba@estudiantes.utec.edu.uy) |
-| [Alan Machado](mailto:alan.machado@estudiantes.utec.edu.uy) |
-</p>
+<h2 align="center"> Integrantes</h2>
+<table align="center">
+  <tr>
+    <th>Nombre</th>
+  </tr>
+  <tr>
+    <td><a href="mailto:lucas.brito@estudiantes.utec.edu.uy">Lucas Brito</a></td>
+  </tr>
+  <tr>
+    <td><a href="mailto:matthew.freire@estudiantes.utec.edu.uy">Matthew Freire</a></td>
+  </tr>
+  <tr>
+    <td><a href="mailto:luciano.gamba@estudiantes.utec.edu.uy">Luciano Gamba</a></td>
+  </tr>
+  <tr>
+    <td><a href="mailto:alan.machado@estudiantes.utec.edu.uy">Alan Machado</a></td>
+  </tr>
+</table>
 En este taller desarrollamos el backend de servicios para una aplicación de sistema de gestión de movilidad eléctrica diseñado para gestionar la recarga de vehículos eléctricos.
 
      Decidimos usar una arquitectura de monolito modular, el cual consiste de la aplicación desplegada en una sola capa física (monolito) pero dividido en varios módulos distintos bien separados.   
