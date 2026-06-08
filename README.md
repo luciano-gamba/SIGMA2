@@ -93,7 +93,9 @@ Mediante **CargasAPI** se exponen los siguientes endpoints:
   * [http://localhost:8080/SIGMA2/moduloCargas/carga/reintentar/{**cedula**}](http://localhost:8080/SIGMA2/moduloCargas/carga/reintentar/{cedula)
 
 Debido al consumo de recursos que genera consultar el histórico de cargas, este quedó protegida por un rate limiter, el cual tiene por defecto una implementación refillGreedy con capacidad de 20 tokens, rellenando de forma distribuida 10 tokens cada segundo.  
-//Agregar imagen desde github
+<img width="926" height="305" alt="image4" src="https://github.com/user-attachments/assets/87a20217-1e32-45ad-b996-7c0e71e75acf" />
+<img width="537" height="418" alt="image5" src="https://github.com/user-attachments/assets/ec075f8e-cbe9-4c6d-8ad3-e8cf2c32bd81" />
+<img width="612" height="294" alt="image1" src="https://github.com/user-attachments/assets/a809937f-8e3d-43d5-8ab3-effa5bdf8d24" />
 
 Test en JMeter
 
