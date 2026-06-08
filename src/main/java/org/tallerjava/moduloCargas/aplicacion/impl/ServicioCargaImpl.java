@@ -171,7 +171,7 @@ public class ServicioCargaImpl implements ServicioCarga {
     public void cargaAprovada(boolean aceptado, String cedula) {
         if(!aceptado){
             System.out.println("Pago rechazado.");
-            throw new IllegalArgumentException("Pago rechazado.");
+            return; //Si el pago no se acepto no se hace nd se deja la carga en pendiente
         }else{
             Cliente c = repo.getCliente(cedula);
             Carga carga = c.getCargaPendiente();
