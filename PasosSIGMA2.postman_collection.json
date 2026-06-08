@@ -1,0 +1,463 @@
+{
+	"info": {
+		"_postman_id": "17526333-915e-42ea-86ea-a2971a2f4f1f",
+		"name": "PasosSIGMA2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "53691731",
+		"_collection_link": "https://luciano-gamba-3538424.postman.co/workspace/Luciano-Gamba's-Workspace~ed618820-0628-413e-8c60-333b2a0581d3/collection/53691731-17526333-915e-42ea-86ea-a2971a2f4f1f?action=share&source=collection_link&creator=53691731"
+	},
+	"item": [
+		{
+			"name": "1) Agregar Cliente Común",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"cedula\": \"1111\",\n    \"nombreCompleto\": \"Alan Alvarez\",\n    \"telefono\": \"1111\",\n    \"contrasenia\": \"1111\",\n    \"mediosDePago\": []\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/SIGMA2/moduloCliente",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"SIGMA2",
+						"moduloCliente"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "2) Agregar Cliente Profesional",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"cedula\": \"2222\",\n    \"nombreCompleto\": \"Belen Borges\",\n    \"telefono\": \"2222\",\n    \"contrasenia\": \"2222\",\n    \"porcentajeDescuento\": \"20\",\n    \"tipo\": \"TAXI\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/SIGMA2/moduloCliente",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"SIGMA2",
+						"moduloCliente"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "3) Agrega CuentaUTE Cliente Común",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "username",
+							"value": "1111",
+							"type": "string"
+						},
+						{
+							"key": "password",
+							"value": "1111",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"cliente\": {\n        \"cedula\": \"1111\"\n    },\n    \"medioPago\": {\n        \"numeroCuenta\": \"11111111\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/SIGMA2/MedioPago",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"SIGMA2",
+						"MedioPago"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "4) Agrega Tarjeta Cliente Común",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "1111",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "1111",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"cliente\": {\n        \"cedula\": \"1111\"\n    },\n    \"medioPago\": {\n        \"numero\":\"1111\",\n        \"fechaVencimiento\":\"2030-01-01\",\n        \"digitoVerificador\":\"111\"\n    }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/SIGMA2/MedioPago",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"SIGMA2",
+						"MedioPago"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "5) Agregar Estacion",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"descripcion\": \"Estacion de carga Artigas-1\",\n    \"calle\": \"Av 18 de Julio\",\n    \"departamento\": \"Artigas\",\n    \"longitud\": \"1111\",\n    \"latitud\": \"1111\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/SIGMA2/moduloCargas/alta/estacion",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"SIGMA2",
+						"moduloCargas",
+						"alta",
+						"estacion"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "6) Agregar Cargador Rapido",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"tipoCargador\": 1,\n    \"tieneCable\": true,\n    \"tipoConector\": 2,\n    \"costePorHora\": 50,\n    \"miEstacionCarga\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/SIGMA2/moduloCargas/alta/cargador",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"SIGMA2",
+						"moduloCargas",
+						"alta",
+						"cargador"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "7) Obtener Estaciones",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/SIGMA2/moduloCargas/get/estaciones",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"SIGMA2",
+						"moduloCargas",
+						"get",
+						"estaciones"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "8) Iniciar Carga",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"idCargador\": 1,\"cedula\":\"1111\",\"idMedioPago\":1}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/SIGMA2/moduloCargas/carga/iniciar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"SIGMA2",
+						"moduloCargas",
+						"carga",
+						"iniciar"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "9) Consultar Carga",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/SIGMA2/moduloCargas/get/cargaActual/1111",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"SIGMA2",
+						"moduloCargas",
+						"get",
+						"cargaActual",
+						"1111"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "11)  Reintentar Pago",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/SIGMA2/moduloCargas/carga/reintentar/1111",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"SIGMA2",
+						"moduloCargas",
+						"carga",
+						"reintentar",
+						"1111"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "12) Histórico de Cargas",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"cedula\":\"1111\",\"inicio\":\"2024-05-24T00:00:00\",\"fin\":\"2028-05-24T00:00:00\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/SIGMA2/moduloCargas/get/historico",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"SIGMA2",
+						"moduloCargas",
+						"get",
+						"historico"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "13) Histórico de Pagos",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"cedula\":\"1111\",\"inicio\":\"2024-05-24\",\"fin\":\"2028-05-24\"}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/SIGMA2/moduloPagos/pagos",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"SIGMA2",
+						"moduloPagos",
+						"pagos"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "10) Finalizar Carga",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"idCargador\":1,\"tiempoRecargo\":0}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/SIGMA2/moduloCargas/carga/finalizar",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"SIGMA2",
+						"moduloCargas",
+						"carga",
+						"finalizar"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -20,9 +20,7 @@ import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
 import java.util.Base64;
-import java.util.List;
 
 @Provider
 @Priority(Priorities.AUTHENTICATION)
@@ -89,8 +87,8 @@ public class SecurityFilter implements ContainerRequestFilter {
                 String[] bodyArray = body.split("\"");
                 
                //System.out.println("Cedula del Body: " + bodyArray[5]);
-               
-               if(bodyArray[5] != ci){
+               //System.out.println("Cedula ci : " + ci);
+               if(!bodyArray[5].equals(ci)){
                    System.out.println("Cedulas no coinciden");
                    abortar(requestContext, "Credenciales no coinciden");
                    return; 

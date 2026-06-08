@@ -74,7 +74,7 @@ public class ServicioPagosImpl implements ServicioPagos {
                         .add("numero", t.getNumero())
                         .add("fechaVenciemiento", t.getFechaVencimiento().toString())
                         .add("digitoVerificador", t.getDigitoVerificador())
-                        .add("importe", importe.toString())
+                        .add("importe", importe.floatValue())
                         .build();
                 try {
                     Response response = client.target(url)
