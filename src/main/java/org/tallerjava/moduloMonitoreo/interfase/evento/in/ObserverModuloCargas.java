@@ -1,0 +1,27 @@
+package org.tallerjava.moduloMonitoreo.interfase.evento.in;
+
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.event.Observes;
+import jakarta.inject.Inject;
+import org.jboss.logging.Logger;
+import org.tallerjava.moduloCargas.interfase.evento.out.CargaAPagar;
+import org.tallerjava.moduloMonitoreo.infraestructura.RegistradorDeMetricas;
+
+@ApplicationScoped
+public class ObserverModuloCargas {
+    private static final Logger log = Logger.getLogger(ObserverModuloCargas.class);
+
+    @Inject
+    private RegistradorDeMetricas register;
+/*
+    FALTA CANTIDAD DE CARGAS ACTIVAS!!!!!!
+    public void accept(@Observes PeajeVehiculoNoEncontrado event) {
+        log.infof("Carga activa procesada: %s", event.getDescripcion());
+       register.incrementarCounter(RegistradorDeMetricas.a_cantidad_de_cargas_activas);
+    }
+ */
+    public void accept(@Observes CargaAPagar event) {
+        log.infof("Carga procesada: %s", event.toString());
+        register.incrementarCounter(RegistradorDeMetricas.b_cantidad_de_cargas_realizadas);
+    }
+}

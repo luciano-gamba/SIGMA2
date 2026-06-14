@@ -19,8 +19,6 @@ import org.tallerjava.moduloClientes.dominio.*;
 import org.tallerjava.moduloClientes.aplicacion.impl.ServicioClientesImpl;
 import org.tallerjava.moduloClientes.dominio.repo.ClientesRepositorio;
 import org.tallerjava.moduloClientes.interfase.evento.out.PublicadorEventoCliente;
-import org.tallerjava.moduloPagos.aplicacion.ServicioPagos;
-import org.tallerjava.moduloPagos.aplicacion.Impl.ServicioPagosImpl;
 
 import java.util.List;
 
