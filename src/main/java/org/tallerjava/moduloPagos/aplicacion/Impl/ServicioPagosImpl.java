@@ -109,11 +109,11 @@ public class ServicioPagosImpl implements ServicioPagos {
                             .post(Entity.entity(jsonRequest, MediaType.APPLICATION_JSON));
                     if (response.getStatus() == 200) {
                         JsonObject jsonResponse = response.readEntity(JsonObject.class);
-                        publicador.publicarEventoTarjeta(true, jsonResponse.getString("mensaje"), cedulaCliente);
+                        publicador.publicarEventoCuentaUTE(true, jsonResponse.getString("mensaje"), cedulaCliente);
                         pago.setAprobado(true);
                         repositorio.guardarPago(pago);
                     } else {
-                        publicador.publicarEventoTarjeta(false, response.toString(), cedulaCliente);
+                        publicador.publicarEventoCuentaUTE(false, response.toString(), cedulaCliente);
                     }
                     response.close();
 

@@ -36,7 +36,7 @@ public class RegistradorDeMetricas {
 
             @Override
             public String db() {
-                return "metricasTallerJava";
+                return "metricasSIGMA2";
             }
         };
 
