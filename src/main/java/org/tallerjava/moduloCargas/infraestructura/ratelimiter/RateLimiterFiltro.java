@@ -6,8 +6,6 @@ import jakarta.ws.rs.container.ContainerRequestFilter;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.ext.Provider;
 
-import java.io.IOException;
-
 @RateLimited
 @Provider
 public class RateLimiterFiltro implements ContainerRequestFilter {
@@ -16,7 +14,7 @@ public class RateLimiterFiltro implements ContainerRequestFilter {
     private RateLimiter rateLimiter;
 
     @Override
-    public void filter(ContainerRequestContext requestContext) throws IOException {
+    public void filter(ContainerRequestContext requestContext) {
         if (rateLimiter.isActivo()) { //siempre true probablemente
             boolean sePermiteEjecutar = rateLimiter.consumir();
             if (!sePermiteEjecutar) { //si está vacio el bucket rechaza el request
