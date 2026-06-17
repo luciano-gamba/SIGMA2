@@ -48,6 +48,7 @@ public class ServicioCargaImpl implements ServicioCarga {
         }
         cargador.setEstadoCargador(1);
         this.altaCarga(new Carga(cargador, c, medioPago));
+        evento.publicarCambioCarga(true);
     }
 
     public int verCargaActual(String cedula) {
@@ -105,7 +106,7 @@ public class ServicioCargaImpl implements ServicioCarga {
 
         repo.guardarFinalizacionCarga(miCliente, c, cargador);
 
-        evento.publicarNuevoPagoCarga(miCliente.getCedula(),importeTotal,c.getMiPago().getId());
+        evento.publicarNuevoPagoCarga(miCliente.getCedula(),importeTotal,c.getMiPago().getId(), true);
     }
 
     @Override
@@ -118,7 +119,7 @@ public class ServicioCargaImpl implements ServicioCarga {
         if(c == null){
             throw new IllegalArgumentException("El cliente no tiene una carga pendiente.");
         }
-        evento.publicarNuevoPagoCarga(miCliente.getCedula(),c.getImporteTotal(),c.getMiPago().getId());
+        evento.publicarNuevoPagoCarga(miCliente.getCedula(),c.getImporteTotal(),c.getMiPago().getId(), false);
     }
     
     @Override

@@ -10,9 +10,17 @@ public class PublicadorEventoCarga {
     @Inject
     private Event<CargaAPagar> nuevoPago;
 
-    public void publicarNuevoPagoCarga(String cedula, double importeTotal, long idPago){
-        CargaAPagar evento = new CargaAPagar(cedula, importeTotal, idPago);
+    @Inject
+    private Event<EventoCargaActiva> cargaCambiada;
 
+    public void publicarNuevoPagoCarga(String cedula, double importeTotal, long idPago, boolean finalizoCarga){
+        CargaAPagar evento = new CargaAPagar(cedula, importeTotal, idPago, finalizoCarga);
         nuevoPago.fire(evento);
+    }
+
+    public void publicarCambioCarga(boolean activo){
+        EventoCargaActiva evento = new EventoCargaActiva(activo);
+
+        cargaCambiada.fire(evento);
     }
 }
