@@ -40,7 +40,12 @@ Mediante el **ObserverModuloPagos.java** este modulo consume tanto eventos **Eve
 
 ### Eventos publicados (**/interfase/evento/on**):
 
-Mediante el **PublicadorEventoCarga.java** se publican las Cargas a pagar delegando esa parte al **ModuloPagos**.
+Mediante el **PublicadorEventoCarga** se publican eventos tipo:
+
+- **CargaAPagar**  
+  - Al finalizar una carga o al reintentar un pago  
+- **EventoCargaActiva**  
+  - Al iniciar una carga nueva
 
 ### Endpoints expuestos (**/interfase/remota/rest**):
 
@@ -243,3 +248,120 @@ Mediante MedioPagoAPI se exponen los siguientes endpoints:
   * Con importe igual a 0, darán error.  
   * Con número (de tarjeta) igual a 0, darán error.  
   * Aleatoriamente (1/5) darán error.
+
+## **Módulo Monitoreo**
+
+Para medir las métricas de ciertas acciones sucedidas en la aplicación se envían eventos el cuál este módulo escucha para incrementar los contadores de dichas acciones.
+
+Para registrar esas métricas usamos la dependencia **Micrometer**, el cual que se comunica con la base de datos **InfluxDB** para que luego **Grafana** tome esos datos para mostrarlos en gráficas, estos dos últimos los corremos dentro de un contenedor **Docker**, más específicamente usando la imagen de Docker “[philhawthorne/docker-influxdb-grafana](https://hub.docker.com/r/philhawthorne/docker-influxdb-grafana/)” el cuál ya incluye configurado InfluxDB y Grafana.  
+
+<img width="379" height="85" alt="image8" src="https://github.com/user-attachments/assets/0e971a9d-d23b-4eb0-8495-78ebd7927326" /> 
+<img width="911" height="154" alt="image6" src="https://github.com/user-attachments/assets/1a4609b9-082f-4683-8070-d8430ea35408" />
+<img width="495" height="104" alt="image7" src="https://github.com/user-attachments/assets/562a1283-c7ff-42b7-934a-8c05caceed54" />  
+RegistradorDeMetricas
+
+### Métricas que mide
+
+* Cantidad de cargas activas
+
+* Cantidad de cargas realizadas
+
+* Cantidad de pagos realizados con cuenta UTE
+
+* Cantidad de pagos realizados con Tarjetas
+
+* Cuando ocurrió un error al pagar con Tarjeta
+
+### 
+
+### Eventos escuchados (**/interfase/evento/in**)
+
+Mediante el **ObserverModuloCargas** se escuchan eventos tipo:
+
+- **EventoCargaActiva**  
+  - Aumenta contador “**a\_cantidad\_de\_cargas\_activas**”  
+- **CargaAPagar**  
+  - Aumenta contador “**b\_cantidad\_de\_cargas\_realizadas**”
+
+Mediante el **ObserverModuloPagos** se escuchan eventos tipo:
+
+- **EventoCuentaUTE**  
+  - Aumenta contador “**c\_cantidad\_de\_pagos\_realizados\_con\_UTE**”  
+- **EventoTarjeta**  
+  - Si se aprobó el pago, aumenta contador “**d\_cantidad\_de\_pagos\_realizados\_con\_Tarjetas**”  
+  - Si no se aprobó el pago, aumenta contador “**e\_ocurrió\_un\_error\_al\_pagar\_con\_Tarjeta**”
+
+### 
+
+### Pasos para activar monitoreo
+
+Si se desea tener este monitoreo es necesario tener instalado Docker Engine en el sistema ([Descarga en Ubuntu](https://docs.docker.com/engine/install/ubuntu/)), luego seguir estos pasos:
+
+* Descargar y correr imagen por primera vez  
+  * **sudo docker run \-d \\**
+
+    **\--name docker-influxdb-grafana \\**
+
+    **\-p 3003:3003 \\**
+
+    **\-p 3004:8083 \\**
+
+    **\-p 8086:8086 \\**
+
+    **\-v /path/for/influxdb:/var/lib/influxdb \\**
+
+    **\-v /path/for/grafana:/var/lib/grafana \\**
+
+    **philhawthorne/docker-influxdb-grafana:latest**
+
+Con el contenedor levantado se puede acceder a la base de datos como se indicó antes o también a los gráficos de Grafana.
+
+* Entrar a [http://localhost:3003](http://localhost:3003) (Grafana)
+
+* Ingresar con:  
+  * Usuario: **root**  
+  * Contraseña: **root**
+
+* Primero se debe crear el data source de la base de datos, para que el dashboard sepa de donde debe agarrar la info.  
+  * Entrar a **Configuración→Data Sources→Add data source→InfluxDB**, y crearlo como a continuación:
+
+<img width="492" height="700" alt="image4" src="https://github.com/user-attachments/assets/c739695c-84ec-4e1c-ab25-deda9dd00c03" />
+
+Lo más importante es que quede exactamente igual:
+
+* Name: **SIGMA2InfluxDB**  
+  * Los dashboards tomarán del data source con este nombre
+
+* HTTP → URL: **http://localhost:8086**  
+  * Lugar donde encuentra la base de datos
+
+* InfluxDB Details → Database: **metricasSIGMA2**  
+  * El data source tomará de esta base de datos
+
+Cuando se llamen a los endpoints correspondientes a las métricas se creará la base de datos en InfluxDB si no existe, y creará (si no existen) e incrementará los contadores para que luego los tome Grafana y los muestre.
+
+<img width="1851" height="938" alt="image10" src="https://github.com/user-attachments/assets/f38718d7-63fa-44a7-98ee-82dcbf51466c" />
+
+### Comandos extras
+
+* Subir el contenedor  
+  * **sudo docker start docker-influxdb-grafana**
+
+* Bajar el contenedor  
+  * **sudo docker stop docker-influxdb-grafana**
+
+* Mostrar contenedores activos y su info (incluyendo su id)  
+  * **sudo docker stats**
+
+* Abrir el CLI de un contenedor activo  
+  * **sudo docker exec \-it {idContenedor} bash**
+
+* Entrar a InfluxDB  
+  * **influx \-host localhost \-port 8086**
+
+* Comandos básicos de InfluxDB  
+  * show databases  
+  * use {nombreBD}  
+  * show measurements (“tablas”)  
+  * select \* from {tabla}
+
