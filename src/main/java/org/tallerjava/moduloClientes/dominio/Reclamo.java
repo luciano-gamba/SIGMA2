@@ -24,10 +24,12 @@ public class Reclamo {
     private String ci;
     private String comentario;
     private LocalDate fecha;
+    private String clasificacion;
 
-    public Reclamo(String ci, String comentario, LocalDate fecha) {
-        this.ci = ci;
-        this.comentario = comentario;
-        this.fecha = fecha;
+    public Reclamo(ReclamoRealizadoMessage r, String clasificacion) {
+        this.ci = r.cedula();
+        this.comentario = r.mensaje();
+        this.fecha = r.fechaReclamo();
+        this.clasificacion = clasificacion;
     }
 }

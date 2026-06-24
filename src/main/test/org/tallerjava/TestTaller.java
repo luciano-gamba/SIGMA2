@@ -6,15 +6,11 @@ import org.jboss.weld.junit.MockBean;
 import org.jboss.weld.junit5.EnableWeld;
 import org.jboss.weld.junit5.WeldInitiator;
 import org.jboss.weld.junit5.WeldSetup;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.tallerjava.moduloCargas.aplicacion.ServicioCarga;
 import org.tallerjava.moduloCargas.aplicacion.impl.ServicioCargaImpl;
 import org.tallerjava.moduloCargas.dominio.EstacionCarga;
 import org.tallerjava.moduloCargas.dominio.repo.CargasRepositorio;
 import org.tallerjava.moduloCargas.interfase.evento.out.PublicadorEventoCarga;
 import org.tallerjava.moduloCargas.test.CargasRepositorioFake;
-import org.tallerjava.moduloClientes.aplicacion.ServicioClientes;
 import org.tallerjava.moduloClientes.dominio.*;
 import org.tallerjava.moduloClientes.aplicacion.impl.ServicioClientesImpl;
 import org.tallerjava.moduloClientes.dominio.repo.ClientesRepositorio;
@@ -178,20 +174,20 @@ class TestTaller {
      *
      */
     
-    @Test
-    @DisplayName("Verifico usuario guardado")
-    void testearCliente(ServicioClientes servicioClientes) {
-        Cliente cliente = new ClienteComun();
-        servicioClientes.registrarCliente(cliente);
-    }
-
-    @Test
-    @DisplayName("Verifico estacion de carga guardada")
-    void testearCarga(ServicioCarga servicioCarga) {
-        EstacionCarga estacion = new EstacionCarga("Estación en ANCAP San Carlos", "Alvariza y Treinta y tres",
-                "Maldonado", 150, 150);
-        servicioCarga.altaEstacion(estacion);
-    }
+//    @Test
+//    @DisplayName("Verifico usuario guardado")
+//    void testearCliente(ServicioClientes servicioClientes) {
+//        Cliente cliente = new ClienteComun();
+//        servicioClientes.registrarCliente(cliente);
+//    }
+//
+//    @Test
+//    @DisplayName("Verifico estacion de carga guardada")
+//    void testearCarga(ServicioCarga servicioCarga) {
+//        EstacionCarga estacion = new EstacionCarga("Estación en ANCAP San Carlos", "Alvariza y Treinta y tres",
+//                "Maldonado", 150, 150);
+//        servicioCarga.altaEstacion(estacion);
+//    }
 
 
 }

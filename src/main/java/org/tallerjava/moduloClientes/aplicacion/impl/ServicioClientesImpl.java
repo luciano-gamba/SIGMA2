@@ -6,6 +6,7 @@ import jakarta.transaction.Transactional;
 import org.tallerjava.moduloClientes.aplicacion.ServicioClientes;
 import org.tallerjava.moduloClientes.dominio.*;
 import org.tallerjava.moduloClientes.dominio.repo.ClientesRepositorio;
+import org.tallerjava.moduloClientes.infraestructura.messaging.EnviarReclamoUtil;
 import org.tallerjava.moduloClientes.interfase.evento.out.PublicadorEventoCliente;
 
 import java.time.LocalDate;
@@ -19,6 +20,9 @@ public class ServicioClientesImpl implements ServicioClientes {
 
     @Inject
     private PublicadorEventoCliente evento;
+
+    @Inject
+    private EnviarReclamoUtil mensajeReclamo;
 
     @Override
     @Transactional
@@ -78,9 +82,14 @@ public class ServicioClientesImpl implements ServicioClientes {
     @Override
     @Transactional
     public void realizarReclamo(String ci, String comentario){
-        Reclamo reclamo = new Reclamo(ci, comentario, LocalDate.now());
+        ReclamoRealizadoMessage reclamo = new ReclamoRealizadoMessage(ci, comentario, LocalDate.now());
+        mensajeReclamo.enviarMensaje(reclamo.toJson());
+    }
 
-        repo.guardarReclamo(reclamo);
+    @Override
+    @Transactional
+    public void guardarReclamo(ReclamoRealizadoMessage reclamo, String clasificacion){
+        repo.guardarReclamo(new Reclamo(reclamo, clasificacion));
     }
 
 }

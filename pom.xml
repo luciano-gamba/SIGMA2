@@ -151,6 +151,7 @@
 					<scripts>
 						<!-- ver archivo config.cli que está en ./ -->
 						<script>config.cli</script>
+						<script>queue.config</script>
 					</scripts>
 				</configuration>
 			</plugin>

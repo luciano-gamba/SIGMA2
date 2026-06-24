@@ -2,6 +2,7 @@ package org.tallerjava.moduloClientes.aplicacion;
 
 import org.tallerjava.moduloClientes.dominio.Cliente;
 import org.tallerjava.moduloClientes.dominio.MedioPago;
+import org.tallerjava.moduloClientes.dominio.ReclamoRealizadoMessage;
 
 import java.util.List;
 
@@ -16,5 +17,7 @@ public interface ServicioClientes {
     List<Cliente> obtenerClientes();
 
     void realizarReclamo(String ci, String comentario);
+
+    void guardarReclamo(ReclamoRealizadoMessage reclamo, String clasificacion);
 
 }

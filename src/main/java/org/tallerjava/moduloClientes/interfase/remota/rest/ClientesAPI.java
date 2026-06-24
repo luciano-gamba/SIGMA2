@@ -4,6 +4,7 @@ import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import org.jboss.logging.Logger;
 import org.tallerjava.moduloClientes.aplicacion.ServicioClientes;
 import org.tallerjava.moduloClientes.dominio.Cliente;
@@ -55,16 +56,19 @@ public class ClientesAPI {
 
     }
 
-    //curl -X POST -v http://localhost:8080/SIGMA2/moduloCliente/realizarReclamo -H "Content-Type: application/json" -d '{"cliente":{"cedula":"55326750"}, "comentario":"NO FUNCIONA EL CARGADOR!"}'
+    //curl -X POST -v http://localhost:8080/SIGMA2/moduloCliente/realizarReclamo -H "Content-Type: application/json" -d '{"cedula":"55326750", "comentario":"NO FUNCIONA EL CARGADOR!"}'
     @POST
     @Path("/realizarReclamo")
     @Consumes(MediaType.APPLICATION_JSON)
-    public void registrarReclamo(ReclamoDTO reclamoDTO){
-        ClienteCiDTO cliente = reclamoDTO.getCliente();
+    public Response registrarReclamo(ReclamoDTO reclamoDTO){
+        String ci = reclamoDTO.getCedula();
         String comentario = reclamoDTO.getComentario();
 
-        String ci = cliente.getCedula();
         servicioClientes.realizarReclamo(ci, comentario);
+
+        return Response.status(Response.Status.OK)
+                .entity("{\"mensaje\": \"Gracias por su reclamo. Lo tomaremos en cuenta.\"}")
+                .build();
     }
 
 }

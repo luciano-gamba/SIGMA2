@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ReclamoDTO {
 
-    private ClienteCiDTO cliente;
+    private String cedula;
     private String comentario;
 
 }
