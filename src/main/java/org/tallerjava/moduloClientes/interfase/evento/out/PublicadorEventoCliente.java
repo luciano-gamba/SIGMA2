@@ -19,6 +19,9 @@ public class PublicadorEventoCliente {
     @Inject
     private Event<ClienteNuevaCuentaUTE> nuevaCuentaUTE;
 
+    @Inject
+    private Event<ClienteNuevoReclamo> nuevoReclamo;
+
     public void publicarNuevoCliente(Cliente cliente, double descuento){
         ClienteNuevoCliente evento = new ClienteNuevoCliente(
                 cliente.getCedula(),
@@ -49,6 +52,12 @@ public class PublicadorEventoCliente {
         );
 
         nuevaCuentaUTE.fire(evento);
+    }
+
+    public void publicarNuevoReclamo(String clasificacion){
+        ClienteNuevoReclamo evento = new ClienteNuevoReclamo(clasificacion);
+
+        nuevoReclamo.fire(evento);
     }
 
 }

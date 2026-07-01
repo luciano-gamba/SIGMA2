@@ -89,6 +89,7 @@ public class ServicioClientesImpl implements ServicioClientes {
     @Override
     @Transactional
     public void guardarReclamo(ReclamoRealizadoMessage reclamo, String clasificacion){
+        evento.publicarNuevoReclamo(clasificacion);
         repo.guardarReclamo(new Reclamo(reclamo, clasificacion));
     }
 

@@ -18,6 +18,11 @@ public class RegistradorDeMetricas {
     public static final String d_cantidad_de_pagos_realizados_con_Tarjetas = "d_cantidad_de_pagos_realizados_con_Tarjetas";
     public static final String e_ocurrió_un_error_al_pagar_con_Tarjeta = "e_ocurrió_un_error_al_pagar_con_Tarjeta";
 
+    public static final String f_reclamo_urgente = "f_reclamo_urgente";
+    public static final String g_reclamo_normal = "g_reclamo_normal";
+    public static final String h_reclamo_baja = "h_reclamo_baja";
+
+
     private InfluxConfig config;
     
     @PostConstruct
