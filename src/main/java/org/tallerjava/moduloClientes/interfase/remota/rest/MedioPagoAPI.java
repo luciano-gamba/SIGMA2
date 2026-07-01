@@ -49,8 +49,8 @@ public class MedioPagoAPI {
 
         MedioPago medioPago = medio.buildMedioPago();
         String ci = cliente.getCedula();
-        servicioClientes.altaMedioPago(ci, medioPago);
-        return Response.status(Response.Status.OK).build();
+        return servicioClientes.altaMedioPago(ci, medioPago);
+//        return Response.status(Response.Status.OK).build();
     }
 
 }

@@ -26,11 +26,11 @@ public class ClientesAPI {
     //curl -X POST -v http://localhost:8080/SIGMA2/moduloCliente -H "Content-Type: application/json" -d '{"cedula":"55326751","nombreCompleto":"Alan Nahuel Machado Sosa","telefono":"094755370","contrasenia":"1234","porcentajeDescuento":"20","tipo":"TAXI"}'
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    public void registrarCliente(ClientesDTO clienteDTO){
+    public Response registrarCliente(ClientesDTO clienteDTO){
         log.infof("Nuevo usuario: %s", clienteDTO);
 
         Cliente cli = clienteDTO.buildCliente();
-        servicioClientes.registrarCliente(cli);
+        return servicioClientes.registrarCliente(cli);
     }
 
     //curl http://localhost:8080/SIGMA2/moduloCliente/getClientes
@@ -46,10 +46,12 @@ public class ClientesAPI {
     @Path("/iniciarSesion")
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
-    public Cliente iniciarSesion(ClienteSesionDTO clienteSesionDTO){
+    public Response iniciarSesion(ClienteSesionDTO clienteSesionDTO){
         Cliente cli = clienteSesionDTO.buildCliente();
         if (cli == null) {
-            return null;
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity("{\"error\": \"Error en el request, Revisa el request e intentelo nuevamente.\"}")
+                    .build();
         }else{
             return servicioClientes.iniciarSesion(cli.getCedula(), cli.getContrasenia());
         }
@@ -64,11 +66,7 @@ public class ClientesAPI {
         String ci = reclamoDTO.getCedula();
         String comentario = reclamoDTO.getComentario();
 
-        servicioClientes.realizarReclamo(ci, comentario);
-
-        return Response.status(Response.Status.OK)
-                .entity("{\"mensaje\": \"Gracias por su reclamo. Lo tomaremos en cuenta.\"}")
-                .build();
+        return servicioClientes.realizarReclamo(ci, comentario);
     }
 
 }

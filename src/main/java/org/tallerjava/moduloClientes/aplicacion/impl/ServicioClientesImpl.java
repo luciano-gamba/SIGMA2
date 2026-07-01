@@ -3,6 +3,7 @@ package org.tallerjava.moduloClientes.aplicacion.impl;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
+import jakarta.ws.rs.core.Response;
 import org.tallerjava.moduloClientes.aplicacion.ServicioClientes;
 import org.tallerjava.moduloClientes.dominio.*;
 import org.tallerjava.moduloClientes.dominio.repo.ClientesRepositorio;
@@ -26,7 +27,7 @@ public class ServicioClientesImpl implements ServicioClientes {
 
     @Override
     @Transactional
-    public void registrarCliente(Cliente cliente){
+    public Response registrarCliente(Cliente cliente){
         repo.guardarCliente(cliente);
         if (cliente instanceof ClienteComun){
             evento.publicarNuevoCliente(cliente, 0);
@@ -35,29 +36,35 @@ public class ServicioClientesImpl implements ServicioClientes {
             evento.publicarNuevoCliente(cliente, clientePro.getPorcentajeDescuento());
         }
 
-        System.out.println("Guardando Cliente...");
+        return Response.status(Response.Status.OK)
+                .entity("{\"mensaje\": \"Usuario creado correctamente.\"}")
+                .build();
     }
 
     @Override
     @Transactional
-    public Cliente iniciarSesion(String ci, String contrasenia){
+    public Response iniciarSesion(String ci, String contrasenia){
         Cliente c = repo.getCliente(ci, contrasenia);
         if (c == null) {
-            return null;
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("{\"error\": \"Usuario, no encontrado o cedula o contraseña incorrecta\"}")
+                    .build();
         }else {
-            return c;
+            return Response.status(Response.Status.OK)
+                    .entity("{\"mensaje\": \"Inicio de sesion correcto!\"}")
+                    .build();
         }
 
     }
 
     @Override
     @Transactional
-    public void altaMedioPago(String ci, MedioPago medioPago){
+    public Response altaMedioPago(String ci, MedioPago medioPago){
         Cliente cliente = repo.getClienteSC(ci);
         if ((medioPago instanceof CuentaUTE) && (cliente instanceof Profesional)){
-            throw new IllegalArgumentException(
-                    "Este cliente no acepta este medio de pago"
-            );
+            return Response.status(Response.Status.FORBIDDEN)
+                    .entity("{\"error\": \"Este cliente no acepta este medio de pago.\"}")
+                    .build();
         }else{
             cliente.getMediosDePago().add(medioPago);
             repo.altaMedioPago(cliente, medioPago);
@@ -66,6 +73,9 @@ public class ServicioClientesImpl implements ServicioClientes {
             }else {
                 evento.publicarNuevaCuentaUTE((CuentaUTE)medioPago);
             }
+            return Response.status(Response.Status.OK)
+                    .entity("{\"mensaje\": \"Medio de pago agregado correctamente.\"}")
+                    .build();
         }
 
     }
@@ -81,9 +91,21 @@ public class ServicioClientesImpl implements ServicioClientes {
 
     @Override
     @Transactional
-    public void realizarReclamo(String ci, String comentario){
+    public Response realizarReclamo(String ci, String comentario){
+        Cliente cliente = repo.getClienteSC(ci);
+
+        if (cliente == null) {
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("{\"error\": \"Usuario no encontrado.\"}")
+                    .build();
+        }
+
         ReclamoRealizadoMessage reclamo = new ReclamoRealizadoMessage(ci, comentario, LocalDate.now());
         mensajeReclamo.enviarMensaje(reclamo.toJson());
+
+        return Response.status(Response.Status.OK)
+                .entity("{\"mensaje\": \"Gracias por su reclamo. Lo tomaremos en cuenta.\"}")
+                .build();
     }
 
     @Override
