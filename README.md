@@ -218,7 +218,7 @@ Mediante MedioPagoAPI se exponen los siguientes endpoints:
 		},
 	"medioPago":
 		{
-			“numero”: “string”,
+			"numero": "string",
 	 		"fechaVencimiento": "LocalDate",
 	 		"digitoVerificador": “string”
 		}
