@@ -162,9 +162,10 @@ Debido al consumo de recursos que genera consultar el histórico de cargas, este
 
 Mediante el **PublicadorEventoCliente** se publica:
 
-- publicarNuevoCliente  
-- publicarNuevaTarjeta  
-- publicarNuevaCuentaUTE
+- ClienteNuevoCliente  
+- ClienteNuevaTarjeta  
+- ClienteNuevaCuentaUTE  
+- ClienteNuevoReclamo
 
 ### Endpoints expuestos (**/interfase/remota/rest**):
 
@@ -248,6 +249,36 @@ Mediante MedioPagoAPI se exponen los siguientes endpoints:
 }
 ```
 
+### Realizar Reclamos
+
+A la hora de realizar reclamos se implementó un sistema de queue donde los reclamos realizados por los clientes serán clasificados utilizando un LLM corriendo de manera local.  
+Con el fin de no frenar las respuestas de la API se llena la queue de manera asincrónica.
+
+En cuanto al LLM utilizado se eligió [Llama 3.1 con 8B de datos](https://ollama.com/library/llama3.1:8b), debido a que no consume tantos recursos como muchos otros y clasifica rápidamente los reclamos, ideal para el uso que le queremos dar.  
+
+<div align="center">
+<img width="447" height="447" alt="image10" src="https://github.com/user-attachments/assets/4e9b3d53-997d-4188-94d3-2b416cb3bf68" />
+</div>
+
+<br>
+<br>
+Los reclamos se clasifican en:
+
+* **Urgente**: Caídas de sistema, problemas de seguridad, pérdidas de datos, clientes extremadamente enojados exigiendo reembolsos inmediatos, cargadores que no funcionan, problemas con el pago.
+
+* **Normal**: Errores en funciones de la app, dudas de facturación, problemas de acceso que no bloquean todo el sistema, estaciones de carga con cargadores lentos.
+
+* **Baja**: Sugerencias de mejora, preguntas frecuentes, saludos o felicitaciones.  
+  	
+
+En nuestro caso utilizamos [Ollama](https://ollama.com/), una herramienta de código abierto que permite ejecutar modelos de inteligencia artificial tanto para descargar como para ejecutar Llama 3.1 8B. 
+
+Para poder utilizar el modelo desde cualquier computadora configuramos [ngrok](https://ngrok.com/) en la PC más potente que teníamos disponible dentro de los integrantes del grupo, para luego hacerle llamados con Ollama.  
+
+ <div align="center">
+ <img width="576" height="264" alt="image7" src="https://github.com/user-attachments/assets/8f5e1384-ac72-4ade-b402-a13e3c9a25f1" />
+ </div>
+
 ## **Módulo Pagos**
 
 ### Eventos escuchados (**/interfase/in**):
@@ -328,14 +359,15 @@ Para medir las métricas de ciertas acciones sucedidas en la aplicación se env�
 
 Para registrar esas métricas usamos la dependencia **Micrometer**, el cual que se comunica con la base de datos **InfluxDB** para que luego **Grafana** tome esos datos para mostrarlos en gráficas, estos dos últimos los corremos dentro de un contenedor **Docker**, más específicamente usando la imagen de Docker “[philhawthorne/docker-influxdb-grafana](https://hub.docker.com/r/philhawthorne/docker-influxdb-grafana/)” el cuál ya incluye configurado InfluxDB y Grafana.  
 
-<img width="379" height="85" alt="image8" src="https://github.com/user-attachments/assets/0e971a9d-d23b-4eb0-8495-78ebd7927326" /> 
-
-<img width="911" height="154" alt="image6" src="https://github.com/user-attachments/assets/1a4609b9-082f-4683-8070-d8430ea35408" />
-
-<img width="495" height="104" alt="image7" src="https://github.com/user-attachments/assets/562a1283-c7ff-42b7-934a-8c05caceed54" />  
+<img width="497" height="101" alt="image2" src="https://github.com/user-attachments/assets/29ac52f8-d33f-43c2-830d-9f70979c806c" /> 
 <br>
 <br>
-RegistradorDeMetricas
+<img width="1205" height="268" alt="image12" src="https://github.com/user-attachments/assets/c055a0ed-f5be-4961-9056-e7b9d1a09c08" />
+<br>
+<br>
+<img width="703" height="122" alt="image1" src="https://github.com/user-attachments/assets/0016e705-e680-4ba0-9f1e-784860173fae" />
+<br>
+<p align="center">RegistradorDeMetricas</p>
 
 ### Métricas que mide
 
@@ -348,6 +380,12 @@ RegistradorDeMetricas
 * Cantidad de pagos realizados con Tarjetas
 
 * Cuando ocurrió un error al pagar con Tarjeta
+
+* Cantidad de reclamos Urgentes
+
+* Cantidad de reclamos Normales
+
+* Cantidad de reclamos Bajos
 
 ### 
 
@@ -367,6 +405,13 @@ Mediante el **ObserverModuloPagos** se escuchan eventos tipo:
 - **EventoTarjeta**  
   - Si se aprobó el pago, aumenta contador “**d\_cantidad\_de\_pagos\_realizados\_con\_Tarjetas**”  
   - Si no se aprobó el pago, aumenta contador “**e\_ocurrió\_un\_error\_al\_pagar\_con\_Tarjeta**”
+
+Mediante el **ObserverModuloClientes** se escuchan eventos tipo:
+
+- **ClienteNuevoReclamo**  
+  - Si el reclamo es urgente, aumenta contador “**f\_reclamo\_urgente**”  
+  - Si el reclamo es normal, aumenta contador “**g\_reclamo\_normal**”  
+  - Si el reclamo es bajo, aumenta contador "**h\_reclamo\_baja**"
 
 ### 
 
@@ -415,7 +460,7 @@ Lo más importante es que quede exactamente igual:
 Cuando se llamen a los endpoints correspondientes a las métricas se creará la base de datos en InfluxDB si no existe, y creará (si no existen) e incrementará los contadores para que luego los tome Grafana y los muestre.
 <br>
 <br>
-<img width="1851" height="938" alt="image10" src="https://github.com/user-attachments/assets/f38718d7-63fa-44a7-98ee-82dcbf51466c" />
+<img width="1849" height="933" alt="image9" src="https://github.com/user-attachments/assets/3341f568-3f66-4752-bb59-6bd179259e95" />
 <br>
 ### Comandos extras
 
