@@ -1,0 +1,612 @@
+{
+	"info": {
+		"_postman_id": "03f42585-3f50-4198-a254-b80230bdc3d5",
+		"name": "SIGMA2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "49958990",
+		"_collection_link": "https://matthew-freire-2827313.postman.co/workspace/mafiu's-Workspace~70eb252c-4104-40bd-8635-eb5c98c0ce52/collection/49958990-03f42585-3f50-4198-a254-b80230bdc3d5?action=share&source=collection_link&creator=49958990"
+	},
+	"item": [
+		{
+			"name": "clientes",
+			"item": [
+				{
+					"name": "registrar",
+					"item": [
+						{
+							"name": "registrarClienteComun",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"cedula\": \"59924162\",\n    \"nombreCompleto\": \"Lamine Yamal\",\n    \"telefono\": \"099353228\",\n    \"contrasenia\": \"1234\",\n    \"mediosDePago\": []\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/SIGMA2/moduloCliente",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"SIGMA2",
+										"moduloCliente"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "registrarClientePro",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"cedula\": \"55326750\",\n    \"nombreCompleto\": \"Alan Nahuel Machado Sosa\",\n    \"telefono\": \"094755370\",\n    \"contrasenia\": \"1234\",\n    \"porcentajeDescuento\": \"20\",\n    \"tipo\": \"TAXI\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/SIGMA2/moduloCliente",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"SIGMA2",
+										"moduloCliente"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "registrarMedioPagoComun",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"cliente\": {\n        \"cedula\": \"59924162\"\n    },\n    \"medioPago\": {\n        \"numero\": \"5555666677778888\",\n        \"fechaVencimiento\": \"2028-05-01\",\n        \"digitoVerificador\": \"111\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/SIGMA2/MedioPago",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"SIGMA2",
+										"MedioPago"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "registrarMedioPagoComunUTE",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"cliente\": {\n        \"cedula\": \"59924162\"\n    },\n    \"medioPago\": {\n        \"numeroCuenta\": \"001002003\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/SIGMA2/MedioPago",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"SIGMA2",
+										"MedioPago"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "registrarMedioPagoPro",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"cliente\": {\n        \"cedula\": \"55326750\"\n    },\n    \"medioPago\": {\n        \"numero\": \"6068182739184018\",\n        \"fechaVencimiento\":\"2028-05-01\",\n        \"digitoVerificador\":\"958\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/SIGMA2/MedioPago",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"SIGMA2",
+										"MedioPago"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "registrarMedioPagoProUTE (error)",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"cliente\": {\n        \"cedula\": \"55326750\"\n    },\n    \"medioPago\": {\n        \"numeroCuenta\": \"001002003\"\n    }\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/SIGMA2/MedioPago",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"SIGMA2",
+										"MedioPago"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "iniciarSesion",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"cedula\": \"59924162\",\n    \"contrasenia\": \"1234\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/SIGMA2/moduloCliente/iniciarSesion",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"SIGMA2",
+								"moduloCliente",
+								"iniciarSesion"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getClientes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/SIGMA2/moduloCliente/getClientes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"SIGMA2",
+								"moduloCliente",
+								"getClientes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "realizarReclamo",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"cedula\": \"55326750\",\n    \"comentario\": \"SON UNA BASURA, LOS ODIOOOOOOO!\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/SIGMA2/moduloCliente/realizarReclamo",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"SIGMA2",
+								"moduloCliente",
+								"realizarReclamo"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "cargas",
+			"item": [
+				{
+					"name": "estaciones",
+					"item": [
+						{
+							"name": "altaEstacion",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"descripcion\": \"Estacion de carga Parque del Plata\",\n    \"calle\": \"calle 20 y F\",\n    \"departamento\": \"Canelones\",\n    \"longitud\": \"1822\",\n    \"latitud\": \"9999\"\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/SIGMA2/moduloCargas/alta/estacion",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"SIGMA2",
+										"moduloCargas",
+										"alta",
+										"estacion"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "altaCargador",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"tipoCargador\": 1, //1=rapido, 2=lento\n    \"tieneCable\": false,\n    \"tipoConector\": 1, //1=Tipo 2 , 2=CCS2, 3=CYHAdeMO, 4=GB/T\n    \"costePorHora\": 10,\n    \"miEstacionCarga\": 1\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "http://localhost:8080/SIGMA2/moduloCargas/alta/cargador",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"SIGMA2",
+										"moduloCargas",
+										"alta",
+										"cargador"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "obtenerEstaciones",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "http://localhost:8080/SIGMA2/moduloCargas/get/estaciones",
+									"protocol": "http",
+									"host": [
+										"localhost"
+									],
+									"port": "8080",
+									"path": [
+										"SIGMA2",
+										"moduloCargas",
+										"get",
+										"estaciones"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "iniciarCarga",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"idCargador\": 4,\n    \"cedula\": \"59924162\",\n    \"idMedioPago\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/SIGMA2/moduloCargas/carga/iniciar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"SIGMA2",
+								"moduloCargas",
+								"carga",
+								"iniciar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "finalizarCarga",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"idCargador\":\"4\",\n    \"tiempoRecargo\":\"1.3\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/SIGMA2/moduloCargas/carga/finalizar",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"SIGMA2",
+								"moduloCargas",
+								"carga",
+								"finalizar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "verCargaActual",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/SIGMA2/moduloCargas/get/cargaActual/59924162",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"SIGMA2",
+								"moduloCargas",
+								"get",
+								"cargaActual",
+								"59924162"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reintentarPago",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/SIGMA2/moduloCargas/carga/reintentar/59924162",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"SIGMA2",
+								"moduloCargas",
+								"carga",
+								"reintentar",
+								"59924162"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "verHistorico",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"cedula\": \"59924162\",\n    \"inicio\": \"2024-05-24T00:00:00\",\n    \"fin\": \"2028-05-24T00:00:00\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/SIGMA2/moduloCargas/get/historico",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"SIGMA2",
+								"moduloCargas",
+								"get",
+								"historico"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "pagos",
+			"item": [
+				{
+					"name": "getPagos",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"cedula\": \"59924162\",\n    \"inicio\": \"2024-05-24\",\n    \"fin\": \"2028-05-24\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/SIGMA2/moduloPagos/pagos",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"SIGMA2",
+								"moduloPagos",
+								"pagos"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
