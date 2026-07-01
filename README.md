@@ -45,12 +45,14 @@ Mediante **CargasAPI** se exponen los siguientes endpoints:
 * iniciarCarga  
   * [http://localhost:8080/SIGMA2/moduloCargas/carga/iniciar](http://localhost:8080/SIGMA2/moduloCargas/carga/iniciar)
 
-		body:
+	body:
 
 ```json
-{“idCargador”: int, 
- "cedula": "string", 
- "idMedioPago": int}
+{
+	"idCargador": int, 
+	"cedula": "string", 
+ 	"idMedioPago": int
+}
 ```
 
  	  
@@ -65,12 +67,14 @@ Mediante **CargasAPI** se exponen los siguientes endpoints:
   body: 
 
 ```json
-{"cedula": "string", 
- "inicio": "LocalDateTime", 
- "fin": "LocalDateTime"}
+{
+	"cedula": "string", 
+ 	"inicio": "LocalDateTime", 
+ 	"fin": "LocalDateTime"
+}
 ```
 
-		(LocalDateTime format: aaaa-mm-ddThh:mm:ss)
+(LocalDateTime format: aaaa-mm-ddThh:mm:ss)
 
 * obtenerEstaciones  
   * [http://localhost:8080/SIGMA2/moduloCargas/get/estaciones](http://localhost:8080/SIGMA2/moduloCargas/get/estaciones)  
@@ -80,21 +84,25 @@ Mediante **CargasAPI** se exponen los siguientes endpoints:
   body:  
 
 ```json
-{"idCargador": int, 
- "tiempoRecargo": int}
+{
+	"idCargador": int, 
+ 	"tiempoRecargo": int
+}
 ```
 
 * altaEstacion  
   * [http://localhost:8080/SIGMA2/moduloCargas/alta/estacion](http://localhost:8080/SIGMA2/moduloCargas/alta/estacion)
 
-		body:
+	body:
 
 ```json
- {"descripcion": "string",
- "calle": "string",
- "departamento": "string",
- "longitud": int,
- "latitud": int}
+{
+	"descripcion": "string",
+ 	"calle": "string",
+ 	"departamento": "string",
+ 	"longitud": int,
+ 	"latitud": int
+}
 ```
 
 * altaCargador  
@@ -103,11 +111,13 @@ Mediante **CargasAPI** se exponen los siguientes endpoints:
   body: 
 
 ```json
-{"tipoCargador": int,
- "tieneCable": bool,
- "tipoConector": int,
- "costePorHora": double,
- "miEstacionCarga": int}
+{
+	"tipoCargador": int,
+	"tieneCable": bool,
+	"tipoConector": int,
+	"costePorHora": double,
+	"miEstacionCarga": int
+}
 ```
 
 reintentarPagoCarga
@@ -141,14 +151,15 @@ Mediante ClientesAPI se exponen los siguientes endpoints:
 - body:
 
 ```json
- {"cedula": "string",
-"nombreCompleto": "string",
-"telefono": “string”,
-"contrasenia": ”string”,
-"mediosDePago":[]
-//si es profesional//
-"porcentajeDescuento": double,
-"tipo": “EnumTipoProfesional(opciones: TAXI,UBER,CABIFY)”
+{
+	"cedula": "string",
+	"nombreCompleto": "string",
+	"telefono": "string",
+	"contrasenia": "string",
+	"mediosDePago":[]
+	//si es profesional//
+	"porcentajeDescuento": double,
+	"tipo": "EnumTipoProfesional(opciones: TAXI,UBER,CABIFY)"
 }
 ```
 
@@ -159,8 +170,9 @@ Mediante ClientesAPI se exponen los siguientes endpoints:
  
 
 ```json
-{"cedula":"string",
-"contrasenia":"string"
+{
+	"cedula":"string",
+	"contrasenia":"string"
 }
 ```
 
@@ -169,9 +181,12 @@ Mediante ClientesAPI se exponen los siguientes endpoints:
 - body: 
 
 ```json
- {"cliente":
-{"cedula":"string"}, 
-"comentario":"string"
+{
+	"cliente":
+	{
+		"cedula":"string"
+	}, 
+	"comentario":"string"
 }
 ```
 
@@ -182,14 +197,31 @@ Mediante MedioPagoAPI se exponen los siguientes endpoints:
   - body:
 
 ```json
- {
- "cliente":
-{"cedula": "string"},
-"medioPago":
-{"numeroCuenta": "string"} // Cuenta UTE
-{“numero”: “string”,
- “fechaVencimiento”: “LocalDate”,
- “digitoVerificador”: “string”} // Tarjeta
+// Cuenta UTE
+{
+	"cliente":
+		{
+			"cedula": "string"
+		},
+	"medioPago":
+		{
+			"numeroCuenta": "string"
+		}
+}
+```
+```json
+// Tarjeta
+{
+	"cliente":
+		{
+			"cedula": "string"
+		},
+	"medioPago":
+		{
+			“numero”: “string”,
+	 		"fechaVencimiento": "LocalDate",
+	 		"digitoVerificador": “string”
+		}
 }
 ```
 
@@ -231,7 +263,6 @@ Mediante MedioPagoAPI se exponen los siguientes endpoints:
 	"cedula" : "string",
 	"inicio" : "LocalDate",
 	"fin" : "LocalDate"
-
 } 
 ```
 
