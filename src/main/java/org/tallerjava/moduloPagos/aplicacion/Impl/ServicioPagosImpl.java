@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.transaction.Transactional;
 import org.tallerjava.moduloPagos.dominio.CuentaUTE;
 import org.tallerjava.moduloPagos.dominio.Cliente;
 import org.tallerjava.moduloPagos.aplicacion.ServicioPagos;
@@ -34,11 +35,15 @@ public class ServicioPagosImpl implements ServicioPagos {
     @Inject
     private PagosRepositorio repositorio;
 
+    @Override
+    @Transactional
     public void guardarCliente(String cedulaCliente, String nombreCompleto) {
         Cliente cliente = new Cliente(cedulaCliente, nombreCompleto);
         repositorio.guardarCliente(cliente);
     }
 
+    @Override
+    @Transactional
     public void guardarCuentaUTE(Long id, String numeroCuenta) {
         CuentaUTE medioPago = new CuentaUTE();
         medioPago.setId(id);
@@ -46,6 +51,8 @@ public class ServicioPagosImpl implements ServicioPagos {
         repositorio.guardarMedioPago(medioPago);
     }
 
+    @Override
+    @Transactional
     public void guardarTarjeta(Long id, String numero, LocalDate fechaVencimiento, String digitoVerificador) {
         Tarjeta medioPago = new Tarjeta();
         medioPago.setId(id);
@@ -55,6 +62,8 @@ public class ServicioPagosImpl implements ServicioPagos {
         repositorio.guardarMedioPago(medioPago);
     }
 
+    @Override
+    @Transactional
     public void pagarCarga(String cedulaCliente, Float importe, Long idMedioPago) {
 
         MedioPago medioPago = repositorio.getMedioPago(idMedioPago);
@@ -126,7 +135,8 @@ public class ServicioPagosImpl implements ServicioPagos {
             }
         }
     }
-    
+
+    @Override
     public List<PagoDTO> consultarPagos(String cedulaCliente, LocalDate inicio, LocalDate fin) {
         List<PagoDTO> pagoDTOs = new ArrayList<>();
         for (Pago pago : repositorio.consultarPagos(cedulaCliente, inicio, fin)) {

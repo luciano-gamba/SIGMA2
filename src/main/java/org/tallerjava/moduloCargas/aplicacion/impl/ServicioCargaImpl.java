@@ -65,6 +65,10 @@ public class ServicioCargaImpl implements ServicioCarga {
 
     @Override
     public List<CargaDTO> verHistorico(String cedula, LocalDateTime inicio, LocalDateTime fin) {
+        if(repo.getCliente(cedula) == null){
+            throw new IllegalArgumentException("El cliente no existe.");
+        }
+
         // busco directo en la BD las cargas asociadas a la cedula pasada
         List<Carga> listaCargasCliente = repo.getHistorialCargas(cedula, inicio, fin);
 
@@ -169,7 +173,7 @@ public class ServicioCargaImpl implements ServicioCarga {
 
     @Override
     @Transactional
-    public void cargaAprovada(boolean aceptado, String cedula) {
+    public void cargaAprobada(boolean aceptado, String cedula) {
         if(!aceptado){
             System.out.println("Pago rechazado.");
             return; //Si el pago no se acepto no se hace nd se deja la carga en pendiente

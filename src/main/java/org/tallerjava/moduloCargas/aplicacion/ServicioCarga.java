@@ -28,7 +28,7 @@ public interface ServicioCarga {
 
     void altaCliente(Cliente cliente);
 
-    void cargaAprovada(boolean aceptado, String cedula);
+    void cargaAprobada(boolean aceptado, String cedula);
 
     void altaMedioPago(MedioPago medioPago);
 }
