@@ -1,15 +1,28 @@
-# **SIGMA2**
+<h1 align="center"> SIGMA2</h1>
 
-## Sistema de Gestión de Movilidad Eléctrica
 
-## Integrantes
+<h2 align="center">Sistema de Gestión de Movilidad Eléctrica</h2>
 
-| Nombre |
-| :---: |
-| [Lucas Brito](mailto:lucas.brito@estudiantes.utec.edu.uy) |
-| [Matthew Freire](mailto:matthew.freire@estudiantes.utec.edu.uy) |
-| [Luciano Gamba](mailto:luciano.gamba@estudiantes.utec.edu.uy) |
-| [Alan Machado](mailto:alan.machado@estudiantes.utec.edu.uy) |
+
+<h2 align="center"> Integrantes</h2>
+
+<table align="center">
+  <tr>
+    <th>Nombre</th>
+  </tr>
+  <tr>
+    <td><a href="mailto:lucas.brito@estudiantes.utec.edu.uy">Lucas Brito</a></td>
+  </tr>
+  <tr>
+    <td><a href="mailto:matthew.freire@estudiantes.utec.edu.uy">Matthew Freire</a></td>
+  </tr>
+  <tr>
+    <td><a href="mailto:luciano.gamba@estudiantes.utec.edu.uy">Luciano Gamba</a></td>
+  </tr>
+  <tr>
+    <td><a href="mailto:alan.machado@estudiantes.utec.edu.uy">Alan Machado</a></td>
+  </tr>
+</table>
 
 En este taller desarrollamos el backend de servicios para una aplicación de sistema de gestión de movilidad eléctrica diseñado para gestionar la recarga de vehículos eléctricos.
 
@@ -18,7 +31,7 @@ En este taller desarrollamos el backend de servicios para una aplicación de sis
 
 ## Modelo de dominio
 
-![][image1]
+<img width="1737" height="741" alt="image" src="https://github.com/user-attachments/assets/94ee9652-36fe-40be-900f-83c5901214af" />
 
 ## **Módulo Cargas**
 
@@ -124,10 +137,20 @@ reintentarPagoCarga
 
 * [http://localhost:8080/SIGMA2/moduloCargas/carga/reintentar/{**cedula**}](http://localhost:8080/SIGMA2/moduloCargas/carga/reintentar/{cedula)
 
-Debido al consumo de recursos que genera consultar el histórico de cargas, este quedó protegida por un rate limiter, el cual tiene por defecto una implementación refillGreedy con capacidad de 20 tokens, rellenando de forma distribuida 10 tokens cada segundo.  
-![][image2]
+Debido al consumo de recursos que genera consultar el histórico de cargas, este quedó protegida por un rate limiter, el cual tiene por defecto una implementación refillGreedy con capacidad de 20 tokens, rellenando de forma distribuida 10 tokens cada segundo.
 
-Test en JMeter
+<img width="926" height="305" alt="image4" src="https://github.com/user-attachments/assets/87a20217-1e32-45ad-b996-7c0e71e75acf" align="center"/>
+
+<br>
+<br>
+<p align="center">Test en JMeter</p>
+<div align="center">
+<img width="537" height="418" alt="image5" src="https://github.com/user-attachments/assets/ec075f8e-cbe9-4c6d-8ad3-e8cf2c32bd81" />
+
+<br>
+<br>
+<img width="612" height="294" alt="image1" src="https://github.com/user-attachments/assets/a809937f-8e3d-43d5-8ab3-effa5bdf8d24" />
+</div>
 
 ## **Módulo Clientes**
 
@@ -275,7 +298,7 @@ Mediante MedioPagoAPI se exponen los siguientes endpoints:
 3) La información del pago (*resultado de la transacción*) es publicada para ser consumida por el MÓDULO CARGAS.  
 4) A la hora de consultar los pagos de un usuario particular, filtrados por un intervalo de fechas, se recurre a dicho endpoint.
 
-![][image3]
+<img width="1152" height="550" alt="image" src="https://github.com/user-attachments/assets/5142d523-aead-4777-a456-fb32c83f2651" />
 
 ### Para agregar el SistemaExternoPAGOS.war manualmente : 
 
@@ -304,9 +327,14 @@ Mediante MedioPagoAPI se exponen los siguientes endpoints:
 Para medir las métricas de ciertas acciones sucedidas en la aplicación se envían eventos el cuál este módulo escucha para incrementar los contadores de dichas acciones.
 
 Para registrar esas métricas usamos la dependencia **Micrometer**, el cual que se comunica con la base de datos **InfluxDB** para que luego **Grafana** tome esos datos para mostrarlos en gráficas, estos dos últimos los corremos dentro de un contenedor **Docker**, más específicamente usando la imagen de Docker “[philhawthorne/docker-influxdb-grafana](https://hub.docker.com/r/philhawthorne/docker-influxdb-grafana/)” el cuál ya incluye configurado InfluxDB y Grafana.  
-![][image4]  
-![][image5]  
-![][image6]  
+
+<img width="379" height="85" alt="image8" src="https://github.com/user-attachments/assets/0e971a9d-d23b-4eb0-8495-78ebd7927326" /> 
+
+<img width="911" height="154" alt="image6" src="https://github.com/user-attachments/assets/1a4609b9-082f-4683-8070-d8430ea35408" />
+
+<img width="495" height="104" alt="image7" src="https://github.com/user-attachments/assets/562a1283-c7ff-42b7-934a-8c05caceed54" />  
+<br>
+<br>
 RegistradorDeMetricas
 
 ### Métricas que mide
@@ -369,7 +397,10 @@ Con el contenedor levantado se puede acceder a la base de datos como se indicó 
 
 * Primero se debe crear el data source de la base de datos, para que el dashboard sepa de donde debe agarrar la info.  
   * Entrar a **Configuración→Data Sources→Add data source→InfluxDB**, y crearlo como a continuación:
-
+<div align="center">
+<img width="492" height="700" alt="image4" src="https://github.com/user-attachments/assets/c739695c-84ec-4e1c-ab25-deda9dd00c03" />
+</div>
+<br>
 Lo más importante es que quede exactamente igual:
 
 * Name: **SIGMA2InfluxDB**  
@@ -382,9 +413,10 @@ Lo más importante es que quede exactamente igual:
   * El data source tomará de esta base de datos
 
 Cuando se llamen a los endpoints correspondientes a las métricas se creará la base de datos en InfluxDB si no existe, y creará (si no existen) e incrementará los contadores para que luego los tome Grafana y los muestre.
-
-![][image7]
-
+<br>
+<br>
+<img width="1851" height="938" alt="image10" src="https://github.com/user-attachments/assets/f38718d7-63fa-44a7-98ee-82dcbf51466c" />
+<br>
 ### Comandos extras
 
 * Subir el contenedor
