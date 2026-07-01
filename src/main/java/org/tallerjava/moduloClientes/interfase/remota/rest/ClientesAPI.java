@@ -5,16 +5,12 @@ import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import org.jboss.logging.Logger;
 import org.tallerjava.moduloClientes.aplicacion.ServicioClientes;
 import org.tallerjava.moduloClientes.dominio.Cliente;
-
-import java.util.List;
 
 @ApplicationScoped
 @Path("/moduloCliente")
 public class ClientesAPI {
-    private static final Logger log = Logger.getLogger(ClientesAPI.class);
 
     @Inject
     private ServicioClientes servicioClientes;
@@ -27,8 +23,6 @@ public class ClientesAPI {
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     public Response registrarCliente(ClientesDTO clienteDTO){
-        log.infof("Nuevo usuario: %s", clienteDTO);
-
         Cliente cli = clienteDTO.buildCliente();
         return servicioClientes.registrarCliente(cli);
     }
@@ -37,7 +31,7 @@ public class ClientesAPI {
     @GET
     @Path("/getClientes")
     @Produces(MediaType.APPLICATION_JSON)
-    public List<Cliente> getClientes(){
+    public Response getClientes(){
         return servicioClientes.obtenerClientes();
     }
 
@@ -50,7 +44,7 @@ public class ClientesAPI {
         Cliente cli = clienteSesionDTO.buildCliente();
         if (cli == null) {
             return Response.status(Response.Status.BAD_REQUEST)
-                    .entity("{\"error\": \"Error en el request, Revisa el request e intentelo nuevamente.\"}")
+                    .entity("{\"Error en el request, Revisa el request e intentelo nuevamente.\"}")
                     .build();
         }else{
             return servicioClientes.iniciarSesion(cli.getCedula(), cli.getContrasenia());

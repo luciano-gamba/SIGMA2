@@ -60,4 +60,16 @@ public class ClientesRepositorioImpl implements ClientesRepositorio {
         em.persist(reclamo);
     }
 
+    @Override
+    public List<MedioPago> getMediosPago(){
+        String sql = "SELECT m FROM MedioPagoClientes m";
+
+        TypedQuery<MedioPago> obtenerMedioPagos = em.createQuery(sql, MedioPago.class);
+        try {
+            return obtenerMedioPagos.getResultList();
+        } catch (NoResultException e) {
+            return null;
+        }
+    }
+
 }

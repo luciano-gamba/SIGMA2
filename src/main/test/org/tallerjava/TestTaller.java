@@ -150,6 +150,11 @@ class TestTaller {
             public void guardarReclamo(Reclamo reclamo) {
 
             }
+
+            @Override
+            public List<MedioPago> getMediosPago() {
+                return List.of();
+            }
         };
     }
 

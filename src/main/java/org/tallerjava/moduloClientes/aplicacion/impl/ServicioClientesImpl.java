@@ -37,7 +37,7 @@ public class ServicioClientesImpl implements ServicioClientes {
         }
 
         return Response.status(Response.Status.OK)
-                .entity("{\"mensaje\": \"Usuario creado correctamente.\"}")
+                .entity("{\"Usuario creado correctamente.\"}")
                 .build();
     }
 
@@ -47,11 +47,11 @@ public class ServicioClientesImpl implements ServicioClientes {
         Cliente c = repo.getCliente(ci, contrasenia);
         if (c == null) {
             return Response.status(Response.Status.NOT_FOUND)
-                    .entity("{\"error\": \"Usuario, no encontrado o cedula o contraseña incorrecta\"}")
+                    .entity("{\"Usuario no encontrado, o cedula o contraseña incorrecta.\"}")
                     .build();
         }else {
             return Response.status(Response.Status.OK)
-                    .entity("{\"mensaje\": \"Inicio de sesion correcto!\"}")
+                    .entity(c)
                     .build();
         }
 
@@ -60,10 +60,29 @@ public class ServicioClientesImpl implements ServicioClientes {
     @Override
     @Transactional
     public Response altaMedioPago(String ci, MedioPago medioPago){
+
+        for (MedioPago mp : repo.getMediosPago()){
+            if ((medioPago instanceof CuentaUTE) && (mp instanceof CuentaUTE)){
+                if(((CuentaUTE) medioPago).getNumeroCuenta().equals(((CuentaUTE) mp).getNumeroCuenta())){
+                    return Response.status(Response.Status.CONFLICT)
+                            .entity("{\"Este medio de pago ya esta añadido a otro cliente\"}")
+                            .build();
+                }
+            }
+            if ((medioPago instanceof ClienteTarjeta) && (mp instanceof ClienteTarjeta)){
+                if(((ClienteTarjeta) medioPago).getNumero().equals(((ClienteTarjeta) mp).getNumero())){
+                    return Response.status(Response.Status.CONFLICT)
+                            .entity("{\"Este medio de pago ya esta añadido a otro cliente\"}")
+                            .build();
+                }
+            }
+        }
+
+
         Cliente cliente = repo.getClienteSC(ci);
         if ((medioPago instanceof CuentaUTE) && (cliente instanceof Profesional)){
             return Response.status(Response.Status.FORBIDDEN)
-                    .entity("{\"error\": \"Este cliente no acepta este medio de pago.\"}")
+                    .entity("{\"Este cliente no acepta este medio de pago.\"}")
                     .build();
         }else{
             cliente.getMediosDePago().add(medioPago);
@@ -74,19 +93,22 @@ public class ServicioClientesImpl implements ServicioClientes {
                 evento.publicarNuevaCuentaUTE((CuentaUTE)medioPago);
             }
             return Response.status(Response.Status.OK)
-                    .entity("{\"mensaje\": \"Medio de pago agregado correctamente.\"}")
+                    .entity("{\"Medio de pago agregado correctamente.\"}")
                     .build();
         }
 
     }
 
     @Override
-    public List<Cliente> obtenerClientes(){
+    public Response obtenerClientes(){
         List<Cliente> listaClientes;
 
         listaClientes = repo.obtenerClientes();
 
-        return listaClientes;
+        return Response.status(Response.Status.OK)
+                .entity(listaClientes)
+                .build();
+//        return listaClientes;
     }
 
     @Override
@@ -96,7 +118,7 @@ public class ServicioClientesImpl implements ServicioClientes {
 
         if (cliente == null) {
             return Response.status(Response.Status.NOT_FOUND)
-                    .entity("{\"error\": \"Usuario no encontrado.\"}")
+                    .entity("{\"Usuario no encontrado.\"}")
                     .build();
         }
 
@@ -104,7 +126,7 @@ public class ServicioClientesImpl implements ServicioClientes {
         mensajeReclamo.enviarMensaje(reclamo.toJson());
 
         return Response.status(Response.Status.OK)
-                .entity("{\"mensaje\": \"Gracias por su reclamo. Lo tomaremos en cuenta.\"}")
+                .entity("{\"Gracias por su reclamo. Lo tomaremos en cuenta.\"}")
                 .build();
     }
 

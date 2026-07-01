@@ -15,7 +15,7 @@ public interface ServicioClientes {
 
     Response altaMedioPago(String ci, MedioPago medioPago);
 
-    List<Cliente> obtenerClientes();
+    Response obtenerClientes();
 
     Response realizarReclamo(String ci, String comentario);
 

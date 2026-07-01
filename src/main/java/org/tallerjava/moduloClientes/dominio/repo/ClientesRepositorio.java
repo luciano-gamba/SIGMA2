@@ -19,4 +19,6 @@ public interface ClientesRepositorio {
     Cliente getClienteSC(String ci);
 
     void guardarReclamo(Reclamo reclamo);
+
+    List<MedioPago> getMediosPago();
 }
